@@ -10,7 +10,7 @@ export CMAKE_EXPORT_COMPILE_COMMANDS=1        # see  ${BASH_DIR}/app/vscode/conf
 export cmake_debug="--trace-expand --debug-output -DCMAKE_VERBOSE_MAKEFILE=ON "
 # stdbuf -oL cmake ...  2>&1 |&  tee log.txt
 alias  sync_cmd_output='stdbuf -oL '
-alias gcmake='cd ${EXT_DIR}/repo/linux_pratice/mini_mpl/cmake/usage_example ; ll ;'
+alias   cdcmake='cd ${EXT_DIR}/repo/linux_pratice/mini_mpl/cmake/usage_example ; ll ;'
 
 function show_cmake_reference() {
     dumpinfo "${BASH_DIR}/app/cmake/alias_cmake_build.sh"
@@ -134,7 +134,7 @@ function find_cmds_in_cmake_files()  {
                        find_text_in_xxx_file "execute_process"  "CMakeLists.txt|.cmake"  "${1:-$(pwd -L)}" ; 
                     }
 
-# conflict with llvm tool ${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/opt
+# conflict with llvm tool ${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/opt
 # list all cmake options and help on specific cmake option
 # cmake --help-variable-list 
 # cmake --help-variable VARIABLE_NAME

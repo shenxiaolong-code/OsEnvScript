@@ -247,7 +247,8 @@ alias iid=show_git_commit_id_related_cmd
 alias gid=show_git_commit_id_info
 function gid2()     { git diff-tree --no-commit-id --name-only -r $1 ; echo   ; }   # list only file change in one commit id
 # git diff --name-status <sha>^ <sha>
-function gidx()     { git diff --name-only  HEAD..HEAD~$1 ; echo   ;            }   # list file change in HEAD index range
+function diff_git_index_range() { git diff --name-only  HEAD..HEAD~$1 ; echo   ; }   # list file change in HEAD index range
+alias gidx=diff_git_index_range
 # try below every to check what is best for your scenario.
 # git show --pretty="" --name-only b406ee5a2cd06843bb5af0eece17bdfc943f6cdd
 # git diff-tree --no-commit-id --name-only -r b406ee5a2cd06843bb5af0eece17bdfc943f6cdd

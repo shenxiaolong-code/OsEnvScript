@@ -12,6 +12,7 @@ import argparse
 import re
 import inspect
 import subprocess
+from script_path_config import *
 
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
@@ -50,7 +51,7 @@ class RedirOutput(gdb.Command):
             return current_work_dir
         else:
             print("Could not find the current working directory, use default dir.")
-            return "${EXT_DIR}/build/_bd_template_cask6"
+            return "{EXT_DIR}/build/_bd_template_cask6"
     
     def invoke(self, argstr, from_tty):
         print(f'\033[92m[debug] \033[91m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
@@ -59,7 +60,7 @@ class RedirOutput(gdb.Command):
         parser.add_argument('-o', "--outfile", required=True, help="output file")
 
         nm = parser.parse_args(argstr.split())
-        outfile = convert_path(os.path.join( '${EXT_DIR}/tmp', nm.outfile ))
+        outfile = convert_path(os.path.join( f'{TEMP_DIR}', nm.outfile ))
 
         with open(outfile, "w") as output_file:
             try:
@@ -68,7 +69,7 @@ class RedirOutput(gdb.Command):
                 print(str(e))
         print(os.path.abspath(outfile))
 
-        bash_script_path="${BASH_DIR}/app/gdb/feature/parse_cmd_output/rdr_post_process.sh"
+        bash_script_path=f"{BASH_DIR}/app/gdb/feature/parse_cmd_output/rdr_post_process.sh"
         current_work_dir=self.get_current_work_dir()
         subprocess.run(['bash', '-c', f". {bash_script_path} {current_work_dir} {os.path.abspath(outfile)}"])
 

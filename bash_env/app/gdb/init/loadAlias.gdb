@@ -1,6 +1,6 @@
 
 # bash_script_i
-
+echo \r\n+++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:3 ...\r\n
 # ugly gdb command alias , it doesn't support any argugments
 # the ony useful is :
 # alias spe = set print elements
@@ -13,24 +13,24 @@
 # alias hh=help
 
 define rinit
-    source ${BASH_DIR}/app/gdb/gdb_init.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/gdb_init.gdb
 end
 document rinit
-	reload gdb init procedure : source ${BASH_DIR}/app/gdb/gdb_init.gdb
+	reload gdb init procedure : source /home/xlshen/scratch/bash_env/app/gdb/gdb_init.gdb
 end
 
 define rload
-    source ${BASH_DIR}/app/gdb/init/loadAlias.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb
 end
 document rload
-	reload the gdb alias script : source ${BASH_DIR}/app/gdb/init/loadAlias.gdb
+	reload the gdb alias script : source /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb
 end 
 
 define ipath
-    source ${BASH_DIR}/app/gdb/feature/cmds/info_path.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/cmds/info_path.gdb
 end
 document ipath
-	source  ${BASH_DIR}/app/gdb/feature/cmds/info_path.gdb
+	source  /home/xlshen/scratch/bash_env/app/gdb/feature/cmds/info_path.gdb
     show all path-related information.
 end
 
@@ -59,7 +59,7 @@ end
 define fh
 if $_isvoid($_gdb_major)==0    
     # command "|" is supported after gdb 9.0
-    | echo . | cat ${EXT_DIR}/myReference/gdb_debug_cmd_list_all.txt | grep "$arg0"
+    | echo . | cat /home/xlshen/scratch/myReference/gdb_debug_cmd_list_all.txt | grep "$arg0"
 end
     echo  \033[32muse built-in command '\033[33m apropos word \033[32m' to list all word related command.\033[37m\r\n
 end
@@ -79,14 +79,14 @@ define hh
     echo \r\n show user xxx          -- show user customized command 'xxx' implement body    
     echo \r\n ff xxx                 -- search gdb command which is related to string 'xxx'   
     echo \r\n apropos xxx            -- \033[32msearch gdb command which is related to string '\033[33mxxx\033[32m' by gdb built-in command\033[37m
-    echo \r\n all cmd                :  \033[35m${EXT_DIR}/myReference/gdb_debug_cmd_list_all.txt\033[37m
+    echo \r\n all cmd                :  \033[35m/home/xlshen/scratch/myReference/gdb_debug_cmd_list_all.txt\033[37m
     echo \r\n link                   :  \033[35mhttps://visualgdb.com/gdbreference/commands/\033[37m
     echo \r\n
 end
 document hh
     list all internal/user-defined finction and alias 
     use help <cmd> to show detail usage
-    all cmd   : ${EXT_DIR}/myReference/gdb_debug_cmd_list_all.txt
+    all cmd   : /home/xlshen/scratch/myReference/gdb_debug_cmd_list_all.txt
     link      : https://visualgdb.com/gdbreference/commands/ 
 end
 
@@ -133,8 +133,8 @@ document uc
 end
 
 define bte
-    # source ${BASH_DIR}/app/gdb/feature/pretty_printer/hide_library_function_in_callstack_bt.py
-    source ${BASH_DIR}/app/gdb/feature/pretty_printer/enhance_callstack_bt_frame_filter.py
+    # source /home/xlshen/scratch/bash_env/app/gdb/feature/pretty_printer/hide_library_function_in_callstack_bt.py
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/pretty_printer/enhance_callstack_bt_frame_filter.py
 end
 document bte
 	enhanced thread stack show
@@ -177,12 +177,12 @@ document le
 end
 
 define bd
-    source ${BASH_DIR}/app/gdb/feature/cmds/show_compiler.py
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/cmds/show_compiler.py
     echo Done to show comipler info \r\n
 end
 document bd
     show compiler information when build this module.
-    source ${BASH_DIR}/app/gdb/feature/cmds/show_compiler.py
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/cmds/show_compiler.py
     https://stackoverflow.com/questions/28295075/determine-compiler-name-version-from-gdb
 end
 
@@ -195,37 +195,37 @@ document sx
 end
 
 define sxe    
-    source ${BASH_DIR}/app/gdb/feature/bp/load_sx_exception_signal.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_sx_exception_signal.gdb
 
-    echo summary :\033[32m ${BASH_DIR}/app/gdb/feature/bp/load_sx_exception_signal.gdb \033[37m
+    echo summary :\033[32m /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_sx_exception_signal.gdb \033[37m
     echo \r\nif break when process exit ( windbg : sxe epr ) , run below commnad :
     echo \r\ncatch syscall exit exit_group\r\n\r\n
 end
 document sxe
     catch exception
-    ${BASH_DIR}/app/gdb/init/loadAlias.gdb:207
+    /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:207
 end
 
 define sxenv    
-    source ${EXT_DIR}/myReference/note/cask_breakpoints/load_sx_exception_signal_nvidia.gdb.gdb
+    source /home/xlshen/scratch/myReference/note/cask_breakpoints/load_sx_exception_signal_nvidia.gdb.gdb
 
-    echo summary :\033[32m ${EXT_DIR}/myReference/note/cask_breakpoints/load_sx_exception_signal_nvidia.gdb.gdb \033[37m \r\n
+    echo summary :\033[32m /home/xlshen/scratch/myReference/note/cask_breakpoints/load_sx_exception_signal_nvidia.gdb.gdb \033[37m \r\n
 end
 document sxenv
     catch nvidia exception
-    ${BASH_DIR}/app/gdb/init/loadAlias.gdb:214
+    /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:214
 end
 
 define test
-    source ${BASH_DIR}/app/gdb/test/test.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/test/test.gdb
 end
 define testpy
-    source ${BASH_DIR}/app/gdb/test/test_python_in_gdb.py
+    source /home/xlshen/scratch/bash_env/app/gdb/test/test_python_in_gdb.py
 end
 
 define rdrtest
-    rdr test 1 -o ${EXT_DIR}/tmp/to_del/test.gdb.log
-    echo \r\n ${BASH_DIR}/app/gdb/test/test.gdb \r\n
+    rdr test 1 -o /home/xlshen/scratch/tmp/to_del/test.gdb.log
+    echo \r\n /home/xlshen/scratch/bash_env/app/gdb/test/test.gdb \r\n
 end
 
 # watch : gdb will break when a write occurs
@@ -323,7 +323,7 @@ document offsetx
 end
 
 define hh_replaced_by_help
-   !grep -iR $arg0 ${BASH_DIR}/app/gdb/test/gdbCmd.gdb
+   !grep -iR $arg0 /home/xlshen/scratch/bash_env/app/gdb/test/gdbCmd.gdb
 end
 document hh_replaced_by_help
    show a command usage, regular is supported.
@@ -366,7 +366,7 @@ end
 
 define on
     echo open verbose message mode ... \r\n
-    source ${BASH_DIR}/app/gdb/init/mode_verbose.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/init/mode_verbose.gdb
 end
 document on
     open verbose message mode ... 
@@ -374,7 +374,7 @@ end
 
 define off
     echo close verbose message mode ... \r\n
-    source ${BASH_DIR}/app/gdb/init/mode_quiet.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/init/mode_quiet.gdb
 end
 document off
     close verbose message mode ...
@@ -429,7 +429,7 @@ end
 document bc
 	cleanup all expected/unnecessary breakpoint : @plt
     https://stackoverflow.com/questions/28243549/prevent-plt-procedure-linkage-table-breakpoints-in-gdb
-    ${BASH_DIR}/app/gdb/feature/bp/regular_delete_breakpoint.py
+    /home/xlshen/scratch/bash_env/app/gdb/feature/bp/regular_delete_breakpoint.py
 end
 
 define bm    
@@ -558,7 +558,7 @@ define syms
     echo \033[32mshow virtual member function of a object :\033[33m info vtbl obj\033[37m\r\n
     echo \033[32mshow anyone member function of a object :\033[33m p pObj->execute\033[37m\r\n
     echo \r\n
-    echo \r\n ${BASH_DIR}/app/gdb/init/loadAlias.gdb:453\r\n
+    echo \r\n /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:453\r\n
 end
 document syms
     list all cmd which is related to a symbol ( class or var name)
@@ -677,19 +677,19 @@ document xx
 end
 
 define xxt
-    rdr info line $arg0 -o ${EXT_DIR}/myReference/note/info_line.txt
-    ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    rdr info line $arg0 -o /home/xlshen/scratch/myReference/note/info_line.txt
+    ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
     
 if $_isvoid($_gdb_major)==0    
     # command "|" is supported after gdb 9.0
     # | pt $arg0 | grep "type ="
     # | info types $arg0 | grep -v "typedef" | sed 's/File //'  | tr '\n' ' ' |  sed 's#/home/.*:  /home/#/home/#g' | sed 's#/home/#\n/home/#g' | grep -v "/home/utils/" | sed 's#: \([0-9]*\):#:\1 \1: #' | sed 's#/home/#\n/home/#g' | sed 's# \([0-9]*\):#\n\1:#g' | sed 's#;#  ;#g'
     # info line $arg0
-    # ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    # ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
 else
     # info types $arg0    
     # info line $arg0
-    # ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    # ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
 end
     echo done to enumerate all class symbols    : \033[32minfo types $arg0  \033[37m\r\n
 end
@@ -702,17 +702,17 @@ document xxt
 end
 
 define xxf
-    rdr info line $arg0 -o ${EXT_DIR}/myReference/note/info_line.txt
-    ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    rdr info line $arg0 -o /home/xlshen/scratch/myReference/note/info_line.txt
+    ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
 if $_isvoid($_gdb_major)==0    
     # command "|" is supported after gdb 9.0
     # | info func $arg0 | sed 's/File //'  | tr '\n' '!' | sed 's#!\+#!#g' | sed 's#:!\([0-9]*\):#:\1!\1:#g' | sed 's#!#\n#g' | sed 's#/home/#\n/home/#g' | sed 's#Non-debugging#\nNon-debugging#g' | sed 's#/home/\(.*\)/\(.*\):#\2\n/home/\1/\2:#g' | sed 's#std::.*>#std...#g'
     # info line $arg0
-    # ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    # ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
 else
     # info func $arg0
     # info line $arg0
-    # ! source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/parse_info_line.sh
+    # ! source /home/xlshen/scratch/bash_env/app/gdb/feature/parse_cmd_output/parse_info_line.sh
 end    
     echo done to enumerate all func symbols     : \033[32minfo func $arg0  \033[37m\r\n
     echo try  \033[32minfo line $arg0  \033[37m for more detail \r\n
@@ -859,7 +859,7 @@ define exepath
     echo TODO.\r\n
 end
 document exepath    
-    show current modules search path. TODO : ${BASH_DIR}/app/gdb/init/loadAlias.gdb
+    show current modules search path. TODO : /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb
 end
 
 define color    
@@ -874,7 +874,7 @@ define color
     printf "=0x%016lX  ", 6
     echo \033[35mr13
     printf "=0x%016lX  ", 7
-    echo \r\n\033[36m${BASH_DIR}/app/gdb/init/loadAlias.gdb:752
+    echo \r\n\033[36m/home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:752
 
     echo \033[37m\r\n
 end
@@ -885,5 +885,7 @@ end
 # https://sourceware.org/gdb/onlinedocs/gdb/Define.html
 # _________________ map gdb feature to simple windbg command _________________
 
-source ${BASH_DIR}/app/gdb/cuda_gdb/loadAlias_nvidia.gdb
-echo \r\n--------- leaving \033[32m${BASH_DIR}/app/gdb/init/loadAlias.gdb\033[37m ...\r\n
+source /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/loadAlias_nvidia.gdb
+
+
+echo \r\n--------- leaving /home/xlshen/scratch/bash_env/app/gdb/init/loadAlias.gdb:891 \r\n

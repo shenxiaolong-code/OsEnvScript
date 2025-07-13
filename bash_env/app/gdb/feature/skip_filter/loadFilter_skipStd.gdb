@@ -1,6 +1,8 @@
 # bash_script_i
 # Note : skip without arguments will skip current function, it is useful.
 
+echo +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:4 ...\r\n
+
 if  0
     skip -gfi c++/*
 else
@@ -24,7 +26,7 @@ end
 if $_isvoid($_gdb_major)==0    
     # https://stackoverflow.com/questions/5676241/tell-gdb-to-skip-standard-files
     # https://sourceware.org/gdb/onlinedocs/gdb/Skipping-Over-Functions-and-Files.html
-    echo \033[32m skip -gfi : ${EXT_DIR}/myDepency/src_in_docker \033[33m \033[37m
+    echo \033[32m skip -gfi : /home/xlshen/scratch/third_part_dependency/src_in_docker \033[33m \033[37m
     #  skip -gfi c++/*    
     #  skip -rfu ^std::(allocator|basic_string)<.*>::~?\1 *\(
     #  skip -rfu ^std::([a-zA-z0-9_]+)<.*>::~?\1 *\(
@@ -46,4 +48,6 @@ end
 # To skip all .h files in /usr/include/c++/9/bits
 # skip -gfi /usr/include/c++/9/bits/*.h
 
-echo \r\n--------- leaving ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb ...\r\n
+echo \r\n--------- leaving /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:51 ...\r\n
+
+

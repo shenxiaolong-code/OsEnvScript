@@ -3,7 +3,7 @@
 import gdb
 from print_python_color             import *    # import  {py_xxx}, e.g. {py_green}, {py_end}
 
-print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 # Register GDB command to set verbose mode
 def set_verbose_mode():

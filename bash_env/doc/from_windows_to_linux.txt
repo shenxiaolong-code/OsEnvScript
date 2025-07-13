@@ -121,6 +121,7 @@
    sudo apt update
    sudo apt upgrade -y
    sudo apt install build-essential cmake gdb subversion git vim zsh Python Clang -y
+   # source ${BASH_DIR}/doc/setup_linux_cpp_dev_env.sh
    ```
    这将安装编译工具(cmake)、调试器(dbg)、版本控制工具(svn.git)和编辑器(vim), Python, clang等。
 

@@ -13,7 +13,7 @@ function quick_delete_folder_check(){
         is_inside_git_svn_repo ${to_del_folder}                          && { dumperr "can't quickly deleted git svn repo folder : ${brown}${to_del_folder}${end}"   ; return 1 ; }
         is_same_path ${to_del_folder} "${EXT_DIR}"             && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
         is_same_path ${to_del_folder} "${EXT_DIR}/build"       && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
-        is_same_path ${to_del_folder} "${EXT_DIR}/myDepency"   && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
+        is_same_path ${to_del_folder} "${DEPENDENCY_DIR}"   && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
         is_same_path ${to_del_folder} "${EXT_DIR}/tmp"         && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
         is_same_path ${to_del_folder} "${EXT_DIR}/myTasks"     && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"      ; return 1 ; }
         is_same_path ${to_del_folder} "${EXT_DIR}/repo/linux_pratice"  && { dumperr "can't quickly deleted necessary folder : ${brown}${to_del_folder}${end}"    ; return 1 ; }
@@ -29,7 +29,7 @@ function quick_delete_folder_check_inusing() {
     if lsof "$to_del_folder" >/dev/null 2>&1; then
         dumpinfo "Directory $to_del_folder is in use, need L kill -9 pid \n"
         lsof "$to_del_folder" 2> /dev/null | grep "${to_del_folder}" | grep "${USER}" # | awk 'NR>1 {print $2}' | xargs  echo kill -9 ${1}
-        return 1
+        return 0
     fi
     return 0
 }

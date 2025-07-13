@@ -3,7 +3,7 @@
 
 return
 # it is replace by  convert_name : 
-# ${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py:34
+# ${DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py:34
 : '
 def convert_name(name):
     if re.match(r'^(_ZN7|_ZN4|__device_stub__ZN)', name):

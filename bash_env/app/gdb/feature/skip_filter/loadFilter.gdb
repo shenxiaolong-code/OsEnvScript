@@ -13,16 +13,16 @@
 # skip function [linespec]          # -fu linespec
 # skip -rfunction regexp            # -rfu regexp , e.g.  skip -rfu .*::getInstance
 
-# source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_skipNoSrc.py
-source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_step2SpecSrc.py
-source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb
+# source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipNoSrc.py
+source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_step2SpecSrc.py
+source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb
 
 define filter
-    source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter.gdb
 end
 
 document filter
-	reload the gdb alias script : source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter.gdb
+	reload the gdb alias script : source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter.gdb
 end 
 
 # bash_script_o

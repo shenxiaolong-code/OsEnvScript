@@ -1,10 +1,10 @@
 
 
-echo \033[36m+++++++++ loading \033[35m${BASH_DIR}/app/gdb/feature/bp/load_breakpoint_examples.gdb \033[37m...\r\n
+echo \033[36m+++++++++ loading \033[35m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb \033[37m...\r\n
 echo loading breakpoints ..
 
-# source ${BASH_DIR}/app/gdb/feature/bp/load_app_spec_breakpoint.py
-source ${BASH_DIR}/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
+# source /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py
+source /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
 
 # breakpoint on funcName No 3 line
 # b funcName + 3
@@ -111,5 +111,5 @@ if 0
     
 end
 
-echo \033[36m\r\n--------- leaving \033[35m${BASH_DIR}/app/gdb/feature/bp/load_breakpoint_examples.gdb:79  \033[37m ... \r\n
+echo \033[36m\r\n--------- leaving \033[35m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb:79  \033[37m ... \r\n
 

@@ -4,7 +4,6 @@ import gdb.printing
 
 
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-# print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py ...")
 
 class bcolors:
     PURPLE = '\033[95m'
@@ -42,8 +41,8 @@ class nv_KernelLaunch:
         self.val = val
 
     def to_string(self):
-        # print('pretty-printer :${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py:41')
-        # print( bcolors.GREEN + '${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py:60' + bcolors.END )
+        # print(f'pretty-printer :{BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py:41')
+        # print( bcolors.GREEN + f'{BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py:60' + bcolors.END )
         print(f'\n\033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
         valStr="pr *({}*){} \nname_={} \nkernel_name_= {} \nis_ref_={}\nrun_info_->runtimeKernelName={}\ntensor_descs_={}\ntensors_={}\nxformed_tensor_buffs_={}...".format(
             str(self.val.type)  , self.val.address, self.val['name_'] , self.val['kernel_name_'] , self.val['is_ref_'] , 
@@ -293,7 +292,5 @@ def pretty_printer_nvidia_list(val):
     if(str(val.type) == 'cask6::ManagedString'): return nv_ManagedString(val)
 
 gdb.pretty_printers.append(pretty_printer_nvidia_list)
-
-# print("--------- leaving ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py ...")
 print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 

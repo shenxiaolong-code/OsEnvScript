@@ -2,7 +2,7 @@
     "[cpp]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
-    "clangd.path": "${EXT_DIR}/myDepency/clang/clangd",
+    "clangd.path": "${DEPENDENCY_DIR}/clang/clangd",
     "clangd.arguments": [
         "--pretty",
         "--clang-tidy",

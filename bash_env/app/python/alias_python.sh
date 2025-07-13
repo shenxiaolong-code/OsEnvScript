@@ -27,13 +27,13 @@ function install_pdb_dependency_module(){
 }
 
 function  show_python_information() {
-    echo "PYTHON3_PATH          : ${PYTHON3_PATH}"
-    echo "PYTHONPATH            : ${PYTHONPATH}"
-    echo "python path           : $(which python)"
-    echo "python version        : $(python --version)"
-    echo "python user lib path  : ${python_cusotmized_lib_dir}      # PYTHONUSERBASE"
-    echo "python cache path     : ${python_cusotmized_cache_dir}                  # PYTHONPYCACHEPREFIX"
-    echo "my own python utils   : ${PYTHONPATH_MY}                            # PYTHONPATH_MY"
+    echo    "PYTHON3_PATH          : ${PYTHON3_PATH}"
+    echo -e "PYTHONPATH            : ${PYTHONPATH//:/\\r\\n                        }"
+    echo    "python path           : $(which python3)"
+    echo    "python version        : $(python3 --version)"
+    echo    "python user lib path  : ${python_cusotmized_lib_dir}      # PYTHONUSERBASE"
+    echo    "python cache path     : ${python_cusotmized_cache_dir}                  # PYTHONPYCACHEPREFIX"
+    echo    "my own python utils   : ${PYTHONPATH_MY}                      # PYTHONPATH_MY"
     is_python_running_virtual_env
     dumpinfo "frequently used python virtual env cmd :${brown} setup_python_environment_for_dkg ${green} active_python_virtual_env_last ${red} deactivate "
     dumpinfo "installed python poackages , cmd :${brown} pip list"
@@ -75,7 +75,7 @@ alias install_cask6_needed_python_componmnet=" pip install --upgrade setuptools 
 alias pipnv6=install_cask6_needed_python_componmnet
 
 alias       svnpy='svn commit -m "update" ${PYTHONPATH_MY}'
-alias       gpy="cd ${PYTHONPATH_MY}/ ; ll ;"
+alias   cdpy="cd ${PYTHONPATH_MY}/ ; ll ;"
 alias       testpy='python ${PYTHONPATH_MY}/test/test.py'
 
 function ffpy ()    {

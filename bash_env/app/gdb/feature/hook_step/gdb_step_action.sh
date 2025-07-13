@@ -1,7 +1,7 @@
 #!/bin/bash
 # bash_script_i
 
-# chmod +x  ${EXT_DIR}/tmp/cache/gdb_test/gdb_step_action.sh
+# chmod +x  ${CACHE_DIR}/gdb_test/gdb_step_action.sh
 
 # echo -e "# +++++++++ loading ${BASH_SOURCE[0]}:$LINENO ..."
 

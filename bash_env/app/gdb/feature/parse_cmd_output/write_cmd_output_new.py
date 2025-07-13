@@ -4,6 +4,7 @@ import datetime
 import argparse
 import gdb
 import inspect
+from script_path_config import TEMP_DIR
 
 def convert_path(original_path):
     current_date = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -39,7 +40,7 @@ def get_outfile_path(nm):
 
     nm = parser.parse_args(nm.split())
 
-    outfile = nm.outfile if nm.outfile and os.path.exists(nm.outfile) else generate_outfile_path(nm.command[-1], get_app_name(), app_group_map, '${EXT_DIR}/tmp')
+    outfile = nm.outfile if nm.outfile and os.path.exists(nm.outfile) else generate_outfile_path(nm.command[-1], get_app_name(), app_group_map, f'{TEMP_DIR}')
 
     return outfile
 

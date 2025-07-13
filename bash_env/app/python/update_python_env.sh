@@ -5,7 +5,7 @@ bash_script_i
 # install to user dir to avoid permission issue , will install to PYTHONUSERBASE folder , default is ~/.local
 # pip install --user <package_name>
 # pip uninstall <package_name>          # e.g. pip uninstall pyyaml
-python_cusotmized_lib_dir=${EXT_DIR}/myDepency/python_suite/python_cusotmized_lib_dir
+python_cusotmized_lib_dir=${DEPENDENCY_DIR}/python_suite/python_cusotmized_lib_dir
 [[ ! -d "${python_cusotmized_lib_dir}"  ]] && mkdir -p "${python_cusotmized_lib_dir}"
 [[ ! -d "${python_cusotmized_lib_dir}"  ]] && dumperr "invalid path python_cusotmized_lib_dir : ${brown}${python_cusotmized_lib_dir}${end}"
 export    PYTHONUSERBASE=${python_cusotmized_lib_dir}
@@ -13,7 +13,7 @@ export    PYTHONUSERBASE=${python_cusotmized_lib_dir}
 # change the path of python compile cache folder path : __pycache__  after python 3.8
 # https://stackoverflow.com/questions/3522079/changing-the-directory-where-pyc-files-are-created
 # In the result, you can control using PYTHONPYCACHEPREFIX=path, -X pycache_prefix=path and sys.pycache_prefix.
-python_cusotmized_cache_dir=${EXT_DIR}/myDepency/python_suite/runtime_cache
+python_cusotmized_cache_dir=${DEPENDENCY_DIR}/python_suite/runtime_cache
 [[ ! -d "${python_cusotmized_cache_dir}"  ]] && mkdir -p "${python_cusotmized_cache_dir}"
 [[ ! -d "${python_cusotmized_cache_dir}"  ]] && dumperr "invalid path python_cusotmized_cache_dir : ${brown}${python_cusotmized_cache_dir}${end}"
 
@@ -29,14 +29,14 @@ export      PYTHONDONTWRITEBYTECODE=1
 
 ## --------------------------------------------------------------------------------------------------------------------------
 #  PYTHONPATH : python search path
-PYTHONPATH_MY=${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice
+PYTHONPATH_MY=${EXT_DIR}/repo/linux_pratice/linux_repo/python_pratice
 [[ ! -d "${PYTHONPATH_MY}" ]] && dumperr "invalid path PYTHONPATH_MY : ${brown}${PYTHONPATH_MY}${end}"
 
 ## --------------------------------------------------------------------------------------------------------------------------
-# export  PYTHONPATH=/home/utils/Python-3.9.1:${EXT_DIR}/myDepency/tools/python_cusotmized_lib_dir:${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils
+# export  PYTHONPATH=/home/utils/Python-3.9.1:${DEPENDENCY_DIR}/tools/python_cusotmized_lib_dir:${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils
 function setup_python_path_predef() {
   if [[ "${envMode}" == "303" ]] ; then
-    # PYTHON3_PATH_303="${EXT_DIR}/myDepency/tools/pyenv/versions/3.11.0"
+    # PYTHON3_PATH_303="${DEPENDENCY_DIR}/tools/pyenv/versions/3.11.0"
     PYTHON_PATH=/home/utils/Python-3.9.1
   elif [[ "${envMode}" == "docker" ]] ; then
     # /usr/local/bin/python3
@@ -45,7 +45,7 @@ function setup_python_path_predef() {
     # A new build is created every 2 weeks and installed under /home/utils/Python/builds/
     # https://confluence.nvidia.com/display/PYTHON/Python+on+LSF+Farm
     # PYTHON_PATH=/home/utils/Python/builds/3.11.9-20241001
-    PYTHON_PATH=/home/utils/Python/builds/3.12.5-20241215
+    PYTHON_PATH=/usr/bin
   fi
   PYTHON3_PATH="${PYTHON_PATH}"
   if [[ ! -d $PYTHON3_PATH ]] ; then
@@ -57,7 +57,7 @@ function setup_python_path_predef() {
 function export_python_path() {
     [[ ! -d "${PYTHON3_PATH}" ]] && { dumperr "invalid path PYTHON3_PATH : ${brown}${PYTHON3_PATH}${end}" ; return 1 ;}
     export  PYTHON3_PATH="${PYTHON3_PATH}"
-    export  PYTHONPATH="${PYTHON3_PATH}:${python_cusotmized_lib_dir}:${PYTHONPATH_MY}/utils"
+    export  PYTHONPATH="${BASH_DIR}/app/python/utils:${python_cusotmized_lib_dir}:${PYTHONPATH_MY}:${PYTHON3_PATH}"
     export  PATH="${PYTHON3_PATH}/bin:${python_cusotmized_lib_dir}/bin::${PATH}"
     export  LIBRARY_PATH="${PYTHON3_PATH}/lib:${LIBRARY_PATH}"
     export  LD_LIBRARY_PATH="${PYTHON3_PATH}/lib:${LD_LIBRARY_PATH}"
@@ -71,7 +71,7 @@ function export_python_path() {
 }
 
 function update_python_alias() {
-  alias     python=${PYTHON3_PATH}/bin/python3
+  alias     python=$(which python3)
   # alias   pythonx='python -m ipdb '
   # alias   pythonx='python -m pdbpp '           # pip install pdbpp
   # alias   pythonx='python3 -m pdb '
@@ -81,9 +81,9 @@ function update_python_alias() {
   # alias     pythonx=' install_ipdb_dependency_module ;  ${PYTHON3_PATH}/bin/python3  -m ipdb '
   # alias     pythonx=' install_ipdb_dependency_module ;  ${PYTHON3_PATH}/bin/python3  -m ipdb -c ${python_debug_init_script} '
   # alias   py=python3
-  alias     py=${PYTHON3_PATH}/bin/python3
+  alias     py=$(which python3)
   # alias     py=${VIRTUAL_ENV:-${PYTHON3_PATH}}/bin/python3
-  alias     py3=${PYTHON3_PATH}/bin/python3
+  alias     py3=$(which python3)
   alias     pyx=pythonx
   alias     cdpy='cd ${PYTHON3_PATH}; dumpinfo "goto the python lib folder , cmd :${brown} cdpylib" ;  '
   alias     cdpylib='cd ${python_cusotmized_lib_dir} ; dumpinfo "installed python poackages , cmd :${brown} pip list" ; '

@@ -26,7 +26,7 @@ bash_script_i
 
 alias   color='   source ${BASH_DIR}/init/init_color_variables.sh                   "showTest" '
 alias   colorsed='source ${BASH_DIR}/init/init_color_variables_sed.sh               "showTest" '
-alias   colorpy=' python ${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils/print_python_color.py  "showTest" '
+alias   colorpy=' python3 ${BASH_DIR}/app/python/utils/print_python_color.py         "showTest" '
 
 # export  GREP_COLOR='0;32'   # set grep filter output color (not include the path color) : 0;32 : green
 

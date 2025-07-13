@@ -23,7 +23,7 @@ cat  ${smi_file} | grep -A 2 "Driver Version"
 dumpinfo "full smi info :  ${red} ${smi_file} ${end}"
 
 echo
-dumpinfox "bash builtin var :${green} ${EXT_DIR}/tmp/cache/all_builtin_internal_variable.sh  ${end}"
+dumpinfox "bash builtin var :${green} ${CACHE_DIR}/all_builtin_internal_variable.sh  ${end}"
 
 echo
 bash_script_o

@@ -51,7 +51,7 @@ logging.info ("server is started")
 httpd.serve_forever()
 logging.info ("serve exit !")
 
-print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m\r\n\r\n')
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 # if port is used by previous run , kill the process
 # lsof -i:8000

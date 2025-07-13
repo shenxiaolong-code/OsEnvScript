@@ -21,7 +21,7 @@
 
 # copy from with improvement :
 # https://github.com/jefftrull/gdb_python_api 
-# ${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
+# ${DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
 
 import gdb
 import re

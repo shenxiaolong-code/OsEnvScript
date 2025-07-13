@@ -1,8 +1,8 @@
 bash_script_i
 # prefix :
-# h | i  :  help | info
-# l      :  list
-# g | cd :  go | change directory
+# h | i | x :  help | info | query,  e.g.  hsvn , icpp , xcpp
+# l      :  list,  e.g.  ldel
+# cd     :  change directory,  e.g.  cdroot
 # f      :  find   # ff : find file ,  fd : find dir   , ft : find text
 
 source ${BASH_DIR}/init/is_test_function.sh
@@ -106,6 +106,16 @@ fi
 # linebuffered cmake ... ; linebuffered make ... ; linebuffered make install
 alias linebuffered='stdbuf -oL'
 
+# https://cloud.tencent.com/developer/article/1452456
+# https://askubuntu.com/questions/636944/how-to-change-the-title-of-the-current-terminal-tab-using-only-the-command-line
+# https://tldp.org/HOWTO/Xterm-Title-4.html
+function title() {
+  # TITLE="\[\e]2;[ `date "+%Y-%m-%d_%H:%M"` \h : \W ] $*\a\]"
+  # TITLE="\[\e]2;[ `date "+%Y-%m-%d_%H:%M"` ] ${imageName} : \w ] $*\a\]"  
+  TITLE="\[\e]2;[ `date "+%Y-%m-%d_%H:%M"` ${envMode}] $*\a\]"  
+  PS1=${PS1_RAW}${TITLE}
+}
+
 function md5_string(){
     echo -n "$1" | md5sum | cut -f1 -d " "
 }
@@ -120,6 +130,10 @@ function fullpath {                                             # get full path 
         echo "$(cd "$(dirname "$1")"; pwd -L)/$(basename "$1")"
     }
 }
+
+
+alias runcmd='eval'                     # run a command comes from string
+alias expandStr='envsubst'              # expand possible variable included in a string
 
 # list path : list file and folder full path , depth : 1
 # find_all_path_in_dir_depth_1  .  "*.json"
@@ -623,7 +637,7 @@ function pack()        {  source ${BASH_DIR}/bin/packFolder.sh   "$@"         ; 
 # read_variable <src_var> <dst_var> [default_ini_path]
 function read_variable() {
     unset $1
-    default_ini_path=${3:-"${EXT_DIR}/myDepency/ini_input/default.ini"}
+    default_ini_path=${3:-"${DEPENDENCY_DIR}/ini_input/default.ini"}
     # export $2=$(cat ${default_ini_path} | grep -v '^# ' | grep -oP "(?<=$1=).*")
     export $2=$(grep -m 1 -oP "^\s*(?!#)\s*$1=\K.*" "${default_ini_path}")
     echo -e "# ${color_gen}export ${color_key}${2}${end} = ${color_value}${!2}${end}      [ ${cyan}read ${green}$1 ${end}from ${default_ini_path} ]"
@@ -631,7 +645,7 @@ function read_variable() {
 
 # write_variable <var_name> <var_value> [default_ini_path]
 function write_variable() {
-    default_ini_path=${3:-"${EXT_DIR}/myDepency/ini_input/default.ini"}
+    default_ini_path=${3:-"${DEPENDENCY_DIR}/ini_input/default.ini"}
     # grep -cP "^$1="  ${default_ini_path}  &> /dev/null  &&  sed -i -- "s#^$1=.*#$1=$2#" ${default_ini_path} || echo "$1=$2"  >> ${default_ini_path}
     grep -cP "^\s*(?!#)\s*$1="  ${default_ini_path}  &> /dev/null  &&  sed -i -- "s#^$1=.*#$1=$2#" ${default_ini_path} || echo "$1=$2"  >> ${default_ini_path}
     echo "# ${color_gen}export ${color_key}$1${end} = ${color_value}$2${end}      [ ${cyan}update${green} $1 ${end}to ${default_ini_path} ]"
@@ -673,9 +687,6 @@ alias ofl2=' vscode_open_newest_text_file_by_find $(pwd -L) '    # open last tex
 alias osh="vscode_add_folder ${BASH_DIR}/"
 alias ocsh="vscode_add_folder ${EXT_DIR}/bash_env/"
 
-alias cdroot="cd ${EXT_DIR} ; list_dir_with_reversed_index ;"
-alias cdsh="cd ${BASH_DIR} ; list_dir_with_reversed_index ;"
-alias cdcsh="cd ${EXT_DIR}/csh_env ; list_dir_with_reversed_index ;"
 
 # generate_cpp_source_from_td_file ${EXT_DIR}/repo/dkg_root/dkg_debug_dkg/collective_ir/include/collective_ir/Dialect/Collective/IR/CollectiveDialect.td
 function load_cmd_and_generate_log(){
@@ -720,9 +731,6 @@ function goto_sub_folder_by_index_or_name()  {
                                                 [[ -f ./cur_job/alias_task.sh ]] && load_build_foler
                                                 # is_function_defined load_build_foler && [[ -f "./cmds/_1_cmake.sh" ]] && load_build_foler
                                              }
-
-alias   cds=goto_sub_folder_by_index_or_name            # change directory to sub folder by index or name
-alias   cdp='cd $(pwd -P)'                              # cd to physical path
 
 function cpc()       { cp       "$1"    ./            ; }           # copy file to current folder 
 function cpf()       { cp -rf   "$1"    ${2:-"./"}    ; }           # copy folder 

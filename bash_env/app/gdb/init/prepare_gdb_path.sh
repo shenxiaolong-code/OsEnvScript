@@ -1,15 +1,20 @@
 echo
 echo "+++++++++ loading ${BASH_DIR}/app/gdb/init/prepare_gdb_path.sh ..."
-
-echo "install python module : ${BASH_DIR}/app/gdb/requirements.txt "
-pip install -r  ${BASH_DIR}/app/gdb/requirements.txt
-
 echo
-if [[ ! -d "${EXT_DIR}/tmp/cache/gdb_tmp" ]] ; then 
-    mkdir -p "${EXT_DIR}/tmp/cache/gdb_tmp"
-fi
-echo "gdb temporary path : ${EXT_DIR}/tmp/cache/gdb_tmp"
 
+cache_dir_gdb="${CACHE_DIR}/gdb_tmp"
+if [[ ! -d "${cache_dir_gdb}" ]] ; then 
+    mkdir -p "${cache_dir_gdb}"
+fi
+echo "gdb temporary path : ${cache_dir_gdb}"
+
+gdb_py_init_file="${cache_dir_gdb}/py_init_$(hostname).txt"
+[[ ! -f "${gdb_py_init_file}" ]] && {
+    # avoid repeat init
+    echo "install python module : ${BASH_DIR}/app/gdb/requirements.txt "
+    pip install -r  ${BASH_DIR}/app/gdb/requirements.txt
+    touch "${gdb_py_init_file}"
+}
 
 # https://docs.nvidia.com/cuda/cuda-gdb/index.html
 # Temporary Directory

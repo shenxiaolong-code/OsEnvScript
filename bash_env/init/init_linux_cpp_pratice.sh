@@ -1,7 +1,6 @@
 bash_script_i
 
 alias cdrepo='cd ${EXT_DIR}/repo/linux_pratice ; ll ; dumpinfo "run ${red}rtest${blue} to initize a test repo and then run${red} tbd ${blue}cmd to build repo" ; '
-alias grepo=cdrepo
 
 alias rtest='source $(find_file_in_dir_cmd alias_test_cmds.sh)'
 

@@ -28,8 +28,8 @@ alias rjob='source $(get_job_folder_from_paramter)/alias_task.sh'
 alias fjobs='ffa ${EXT_DIR}/myTasks/curTask'
 alias fjob=' ffa ${job_path}'
 
-alias gjobs='cd ${EXT_DIR}/myTasks/curTask ; ll ;'
-alias gjob=' cd ${job_path}  ; ll ;'
+alias   cdjobs='cd ${EXT_DIR}/myTasks/curTask ; ll ;'
+alias   cdjob=' cd ${job_path}  ; ll ;'
 alias oxjob='vscode_add_folder ${job_path}'
 alias oxjobs='vscode_add_folder ${EXT_DIR}/myTasks'
 alias cdjob=gjob

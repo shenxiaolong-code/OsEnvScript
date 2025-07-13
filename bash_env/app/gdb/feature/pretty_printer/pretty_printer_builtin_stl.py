@@ -1,5 +1,8 @@
 
 # info pretty-printer
+import sys 
+import inspect
+from exception_handler import pauseInvalidPathError, pauseGeneralError
 
 # should copy from /usr/share/gcc/python
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
@@ -7,24 +10,26 @@ print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]
 # see ${BASH_DIR}/app/gdb/feature/pretty_printer/debug_pretty_printer.py
 # next 
 # > /usr/share/gcc/python/libstdcxx/v6/printers.py(1530)__call__()
-# e.g. ${EXT_DIR}/myDepency/gdb_pretty_printer/python/libstdcxx/v6/printers.py
+# e.g. ${DEPENDENCY_DIR}/gdb_pretty_printer/python/libstdcxx/v6/printers.py
 
-import sys 
 # need libstdcxx exist
 # /home/utils/gdb-12.1-2  has not include libstdcxx
 # sys.path.insert(0, '/home/utils/gdb-12.1-2/share/gdb/python')
 
-# see :  ${BASH_DIR}/nvidia/loadEnv/loadEnv_build_farm_cask6_sm100_amodel.sh:59
-# see :  ${BASH_DIR}/nvidia/loadEnv/loadEnv_build_farm_cask6_sm90_not_amodel.sh:27
-sys.path.insert(0, '/home/utils/gcc-11.2.0/share/gcc-11.2.0/python')
+try:
+    sys.path.insert(0, '/home/utils/gcc-11.2.0/share/gcc-11.2.0/python')
+except Exception as e:
+    raise pauseInvalidPathError("Fails to set gdb python path.")
+
 # make a copy because the original path is not editable. we need to update/log it
-# sys.path.insert(0, '${EXT_DIR}/myDepency/gdb_pretty_printer/python_from_gcc_1120')
+# sys.path.insert(0, f'{DEPENDENCY_DIR}/gdb_pretty_printer/python_from_gcc_1120')
 
-from libstdcxx.v6.printers import register_libstdcxx_printers
-# after 9.0 , register_libstdcxx_printers is loaded automatically.  previous gdb version need to be load manual.
-register_libstdcxx_printers (None)
+if 0:
+    # after 9.0 , register_libstdcxx_printers is loaded automatically.  previous gdb version need to be load manual.
+    from libstdcxx.v6.printers import register_libstdcxx_printers
+    register_libstdcxx_printers (None)
 
-# print("--------- leaving ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_builtin_stl.py ...")
+
 print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 # Note

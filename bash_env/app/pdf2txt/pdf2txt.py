@@ -12,7 +12,7 @@ from customized_common_function     import *    # import  addPath2Env
 from print_current_callstack        import *
 
 python_script_i()
-# print(f'{py_green}+++++++++ loading {inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+# print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 # pprint(sys.path)
 
 """

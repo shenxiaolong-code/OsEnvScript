@@ -4,10 +4,10 @@ import inspect
 import gdb
 from print_python_color             import *
 from print_obj_members              import *
+from script_path_config             import BASH_DIR
 
-
-print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
-print(f'{py_red}test color in py :{py_cyan} ${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils/print_python_color.py {py_end}')
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
+print(f'{py_red}test color in py :{py_cyan} {BASH_DIR}/app/python/utils/print_python_color.py {py_end}')
 print(f'{py_black}black : 90 {py_red}  red : 91 {py_green}  green : 92 {py_brown}  brown : 93 {py_blue}  blue : 94 {py_purple}  purple : 95 {py_cyan}  cyan : 96 {py_black}  gray : 97 {py_end}\n')
 
 # refer to : ${BASH_DIR}/app/gdb/feature/parse_cmd_output/write_cmd_output.py
@@ -27,4 +27,4 @@ print("use cmd 'py <py_script_file_path>' to run python script \n")
 
 
 
-print(f'--------- leaving {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

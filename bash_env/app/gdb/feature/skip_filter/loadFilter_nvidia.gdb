@@ -53,11 +53,11 @@ skip file       testcase.hpp
 
 
 define filter
-    source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
+    source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
 end
 
 document filter
-	reload the gdb alias script : source ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
+	reload the gdb alias script : source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
 end 
 
 # bash_script_o

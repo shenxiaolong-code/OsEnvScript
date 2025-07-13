@@ -1,8 +1,9 @@
 # https://stackoverflow.com/questions/5676241/tell-gdb-to-skip-standard-files
 
 import os.path
+import inspect
 
-print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_step2SpecSrc.py ...")
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 class StepSource(gdb.Command):
     def __init__(self):
@@ -40,5 +41,5 @@ class StepSource(gdb.Command):
                     break
 StepSource()
 
-print("--------- leaving ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_step2SpecSrc.py ...")
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 

@@ -270,7 +270,7 @@ function list_git_backup() {
 # backup folder
 alias lbak=list_git_backup
 
-alias cdbak='cd ${BACKUP_DIR}/git_backup/`/bin/ls -rthF ${BACKUP_DIR}/git_backup | tail -n 1` ;  list_dir_with_reversed_index ; '
+alias cdgbak='cd ${BACKUP_DIR}/git_backup/`/bin/ls -rthF ${BACKUP_DIR}/git_backup | tail -n 1` ;  list_dir_with_reversed_index ; '
 
 if [[ 1 -eq 2 ]] ; then
     alias gsave=export_git_diff_2_patch

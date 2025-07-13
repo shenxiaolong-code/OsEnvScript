@@ -21,7 +21,7 @@
 
 # copy from with improvement :
 # https://github.com/jefftrull/gdb_python_api 
-# ${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
+# ${DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
 
 import gdb
 import re
@@ -44,12 +44,12 @@ from customized_common_function     import *
 import inspect
 from print_python_color             import *
 
-print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 # add cuda path to env
 addPath2Env('/home/scratch.dllibs_jenkins_tmp/cask-cicd-cloud/cuda/gpgpu_internal/34380583')
 
-# print(get_trimmed_line('${EXT_DIR}/repo/kernel_store/debug_cutlass_worktree/cutlass/test/unit/conv/device/conv3d_testbed.h',254))
+# print(get_trimmed_line(f'{EXT_DIR}/repo/kernel_store/debug_cutlass_worktree/cutlass/test/unit/conv/device/conv3d_testbed.h',254))
 def get_trimmed_line(filepath, line_number):
     # Check if the filepath is empty
     # print(f'{py_red}debug src parameters: {filepath}, {line_number}{py_end}')
@@ -77,7 +77,7 @@ def get_trimmed_line(filepath, line_number):
     # print(f'{py_red}Invalid parameters: {filepath}, {line_number}{py_end}')
     return ""
 
-# print(get_location_line('${EXT_DIR}/repo/kernel_store/debug_cutlass_worktree/cutlass/test/unit/conv/device/conv3d_testbed.h:254'))
+# print(get_location_line(f'{EXT_DIR}/repo/kernel_store/debug_cutlass_worktree/cutlass/test/unit/conv/device/conv3d_testbed.h:254'))
 def get_location_line(location):
     # Check if location is a string
     if not isinstance(location, str):
@@ -213,5 +213,5 @@ def toggleNvidiaStackFrameFilter():
 # removeNvidiaStackFrameFilter()
 toggleNvidiaStackFrameFilter()
 
-print(f'--------- leaving {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 

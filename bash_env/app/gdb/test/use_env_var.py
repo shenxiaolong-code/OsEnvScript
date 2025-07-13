@@ -1,6 +1,6 @@
 # https://stackoverflow.com/questions/9814185/how-to-access-environment-variables-inside-gdbinit-and-inside-gdb-itself
 
-print("+++++++++ loading ${BASH_DIR}/app/gdb/test/use_env_var.py ...\r\n")
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 import os
 
@@ -12,4 +12,4 @@ gdb.execute('directory' + os.environ['CMAKE_PATH'] + '/bin')
 # run below cmd to check the result :
 # show directories
 
-print("--------- leaving ${BASH_DIR}/app/gdb/test/use_env_var.py ...\r\n\r\n")
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

@@ -1,15 +1,18 @@
 import gdb
 import sys
 import inspect
+from script_path_config import *
+
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
+
 app_script_map = {
-    "cask_tester"   : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/bp_cask_tester.gdb",
-    "cask_forge"    : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/bp_forge.gdb",
-    "cask_test_unit_dynamic_shader"    : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/TestConvDynamicShader.gdb",
-    "cutlass_test_unit_conv_device_simt_sm100"    : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/cutlass_test_unit_conv_device_simt_sm100.gdb",
-#   "default"       : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/bp_cutlass.gdb",
-    "unittest"      : "${BASH_DIR}/app/gdb/feature/bp/bp_google_unittest.gdb",
-    "default"       : "${EXT_DIR}/myDepency/gdb_nvidia/breakpoint/bp_except_launch.gdb"
+    "cask_tester"   : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/bp_cask_tester.gdb",
+    "cask_forge"    : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/bp_forge.gdb",
+    "cask_test_unit_dynamic_shader"    : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/TestConvDynamicShader.gdb",
+    "cutlass_test_unit_conv_device_simt_sm100"    : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/cutlass_test_unit_conv_device_simt_sm100.gdb",
+#   "default"       : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/bp_cutlass.gdb",
+    "unittest"      : f"{BASH_DIR}/app/gdb/feature/bp/bp_google_unittest.gdb",
+    "default"       : f"{DEPENDENCY_DIR}/gdb_nvidia/breakpoint/bp_except_launch.gdb"
 }
 
 #####################################################################################################################

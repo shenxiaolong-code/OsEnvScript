@@ -1,5 +1,4 @@
 
-print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/parse_cmd_output/test/tcsh_gdb_cmd_output.py ...")
 #  https://stackoverflow.com/questions/5941158/gdb-print-to-file-instead-of-stdout
 # Inside gdb
 # (gdb) rdr info -o /absolute/path/info.txt
@@ -12,6 +11,8 @@ import os
 import gdb
 import argparse
 import inspect
+
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 class CmdParseOutput(gdb.Command):
     def __init__(self):
@@ -54,4 +55,4 @@ class GrepCmd (gdb.Command):
 
 GrepCmd()
 
-print("--------- leaving ${BASH_DIR}/app/gdb/feature/parse_cmd_output/test/tcsh_gdb_cmd_output.py ...")
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

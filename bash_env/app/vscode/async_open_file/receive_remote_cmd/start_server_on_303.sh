@@ -12,7 +12,7 @@ if [[ "computelab-303.nvidia.com" =~ "$(hostname)" ]] ; then
         # else sometime there is the python syntax error, so we need to use the python303_env
         # print(f'cmd: python {" ".join(sys.argv)}\r\n\x1b[30m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\x1b[0m')
         # SyntaxError: invalid syntax
-        python303_env="${EXT_DIR}/myDepency/python_suite/generated_virtual_env/dkg_303/env/bin/python"
+        python303_env="${DEPENDENCY_DIR}/python_suite/generated_virtual_env/dkg_303/env/bin/python"
 
         # sleep 2
         dumpcmd "python ${BASH_SOURCE[0]%/*}/impl/server_listen_on_303.py"

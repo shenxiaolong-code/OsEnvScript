@@ -3,6 +3,8 @@
 import sys
 import os
 import inspect
+from exception_handler import pauseInvalidPathError
+from script_path_config import *
 
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 # all device entry function : ${CUDA_PATH}/include/cuda_runtime.h
@@ -15,33 +17,13 @@ print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]
 
 python_paths = ''
 
-# Custom exception for invalid paths
-# class pauseInvalidPathError(Exception):
-#     pass
-
-# Custom exception for invalid paths
-class pauseInvalidPathError(Exception):
-    def __init__(self, path):
-        # super().__init__(f"{py_red}Invalid path:{py_brown} {path} {py_end}")
-        super().__init__(f"\033[91mInvalid path :\033[93m {path} \033[0m")
-        self.path = path
-        self.handle_error()  # call the method to handle the error
-
-    def handle_error(self):
-        print(f"\033[91mError: {self}")
-        # print(f'\033[94m       PYTHONPATH   :\033[92m {os.environ['PYTHONPATH']}\033[0m')
-        print(f'\033[94m       PYTHONPATH   :\033[92m {os.environ["PYTHONPATH"]}\033[0m')
-        # pdb.post_mortem()  # pause the program and enter pdb debugger
-        print(f'\033[94m       Position     :\033[92m {inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-        input("\n\033[95mpause to check error\n\n\033[0m")  # pause the program and wait for user input
-
 # set environment PYTHONPATH /path/to/your/modules
 # show environment PYTHONPATH
 # Check if the environment variable exists
 def setup_python_paths():
     global python_paths  # declare the variable as global
     if 'PYTHONPATH' in os.environ:
-        python_paths = os.environ['PYTHONPATH'] + ':${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util'
+        python_paths = os.environ['PYTHONPATH'] + f':{DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util'
         # print(f"PYTHONPATH = {python_paths}")
         return python_paths
     else:
@@ -50,9 +32,9 @@ def setup_python_paths():
 setup_python_paths()
 # print(f"PYTHONPATH = {python_paths}")
 # test error
-# python_paths = '/home/utils/Python-3.9.1:${EXT_DIR}/myDepency/tools/python_cusotmized_lib_dir:${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils:${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util_error'
+# python_paths = f'/home/utils/Python-3.9.1:{DEPENDENCY_DIR}/tools/python_cusotmized_lib_dir:{EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils:{DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util_error'
 # load normal
-# python_paths = '/home/utils/Python-3.9.1:${EXT_DIR}/myDepency/tools/python_cusotmized_lib_dir:${EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils:${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util'
+# python_paths = f'/home/utils/Python-3.9.1:{DEPENDENCY_DIR}/tools/python_cusotmized_lib_dir:{EXT_DIR}/repo/linux_pratice/linuxRepo/python_pratice/utils:{DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util'
 
 # Check if all paths are valid
 def check_paths_validity(load_paths):

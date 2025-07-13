@@ -3,8 +3,8 @@
 bash_script_i
 echo
 
-git_src_download_dir=${EXT_DIR}/tmp/cache/git_src
-git_install_dir=${EXT_DIR}/myDepency/tools/git_local_build
+git_src_download_dir=${CACHE_DIR}/git_src
+git_install_dir=${DEPENDENCY_DIR}/tools/git_local_build
 
 function download_git_source(){
     dumppos

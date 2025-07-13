@@ -6,4 +6,4 @@
 
 
 
-echo \r\n--------- leaving ${BASH_DIR}/app/gdb/test/test.gdb ...\r\n 
+echo \r\n--------- leaving /home/xlshen/scratch/bash_env/app/gdb/test/test.gdb ...\r\n 

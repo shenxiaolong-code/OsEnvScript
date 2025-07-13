@@ -3,7 +3,6 @@ import inspect
 import gdb.printing
 
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-# print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_nvidia.py ...")
 
 # https://www.youtube.com/watch?v=6DBV4uQ_COc
 # https://sourceware.org/gdb/onlinedocs/gdb/Writing-a-Pretty_002dPrinter.html
@@ -15,7 +14,7 @@ print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]
 # print with defaut printer : p /r skyline_
 
 # see :  /usr/share/gcc/python/libstdcxx/v6/printers.py
-# ${EXT_DIR}/myDepency/gdb_pretty_printer/python/libstdcxx/v6/printers.py:234
+# ${DEPENDENCY_DIR}/gdb_pretty_printer/python/libstdcxx/v6/printers.py:234
 
 # for C++ template class cast, refer to : SharedPointerPrinter  in printers.py
 # single void* member type cast : return self.val['_M_ptr'].cast(self.val.type.template_argument(0).pointer()).dereference()

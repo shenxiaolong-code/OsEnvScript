@@ -7,7 +7,7 @@
 # enable source mode to view realtime source code
 # layout src
 
-# cudagdb is defined in $env::HOME/bash_env/app_init/cuda-gdbinit
+# cudagdb is defined in /home/xlshen/bash_env/app_init/cuda-gdbinit
 if $_isvoid($cudagdb)==1      
     # set window border split-line
     set tui border-kind ascii

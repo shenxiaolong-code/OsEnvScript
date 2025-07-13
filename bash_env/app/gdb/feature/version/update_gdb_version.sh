@@ -17,8 +17,8 @@ if [[ ${gdbVer} < 9 ]] ; then
         echo update gdb path.
     fi
     
-    gdb_install_dir="${EXT_DIR}/myDepency/tools/gdb"
-    # set gdb_install_dir="${EXT_DIR}/myDepency/tools/gdb-11"
+    gdb_install_dir="${DEPENDENCY_DIR}/tools/gdb"
+    # set gdb_install_dir="${DEPENDENCY_DIR}/tools/gdb-11"
     
     alias   gdb="${gdb_install_dir}/bin/gdb"
     export  LIBDIR="${gdb_install_dir}/lib"

@@ -2,8 +2,9 @@
 import sys
 import inspect
 from print_python_color             import *
+from script_path_config             import *    # import BASH_DIR, ...
 
-print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 import os
 import argparse
@@ -20,8 +21,8 @@ class GdbCommandToShell(gdb.Command):
         # Parse the arguments
         parser = argparse.ArgumentParser()
         parser.add_argument('-g', '--gdb-cmd', required=True, help='The GDB command to execute')
-        parser.add_argument('-c', '--shell-cmd', default=f"source ${BASH_DIR}/app/gdb/feature/parse_cmd_output/gdb_cmd_output_2_shell_cmd.sh", help='The shell command to execute')
-        parser.add_argument('-p', '--gdb-cmd-output-file', default=f"${EXT_DIR}/tmp/to_del/gdb2shell_{datetime.now().strftime('%Y%m%d%H%M%S')}.txt", help='The file to store the output of the GDB command')
+        parser.add_argument('-c', '--shell-cmd', default=f"source {BASH_DIR}/app/gdb/feature/parse_cmd_output/gdb_cmd_output_2_shell_cmd.sh", help='The shell command to execute')
+        parser.add_argument('-p', '--gdb-cmd-output-file', default=f"{TEMP_DIR}/to_del/gdb2shell_{datetime.now().strftime('%Y%m%d%H%M%S')}.txt", help='The file to store the output of the GDB command')
         args = parser.parse_args(shlex.split(arg))
 
         # Execute the GDB command and get the output
@@ -41,4 +42,4 @@ GdbCommandToShell()
 
 
 
-print(f'--------- leaving {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

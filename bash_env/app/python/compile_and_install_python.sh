@@ -10,7 +10,7 @@ echo
 # this script is working for 303, but wil fails for lsf farm
 
 # python installer folder
-pyenv_dir="${EXT_DIR}/myDepency/python_suite/pyenv/${envMode}"
+pyenv_dir="${DEPENDENCY_DIR}/python_suite/pyenv/${envMode}"
 # expected_python_version="3.11.0"
 expected_python_version="3.12.0"
 

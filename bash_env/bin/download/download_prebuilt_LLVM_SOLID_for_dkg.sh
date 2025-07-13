@@ -7,7 +7,7 @@ bash_script_i
 # ${EXT_DIR}/repo/dkg_root/dynamic-kernel-generator/cmake/IncludeLLVM.cmake:132:  set(LLVM_BUILD_COMMIT_HASH fc1827b) # the artifact is built on 23-Oct-2024
 # search the the artifact with fc1827b
 # get :  https://urm.nvidia.com/artifactory/sw-fastkernels-generic/dkg/llvm/artifacts/llvm+mlir-x86_64-linux-gcc_9.4.0-assert-fc1827b.tar.gz
-# LLVM_PATH_PRE_ROOT=${EXT_DIR}/myDepency/prebuilt_LLVM_SOLID_for_dkg
+# LLVM_PATH_PRE_ROOT=${DEPENDENCY_DIR}/prebuilt_LLVM_SOLID_for_dkg
 # LLVM_PATH_PRE=${LLVM_PATH_PRE_ROOT}/assert_20241112
 
 function get_matched_llvm_solid_version() {
@@ -55,7 +55,7 @@ function download_prebuilt_LLVM_SOLID_for_dkg() {
     total_artifacts_src=${LLVM_PATH_PRE_ROOT}/artifacts.html
     source ${BASH_DIR}/bin/download/download.sh  "https://urm.nvidia.com/artifactory/sw-fastkernels-generic/dkg/llvm/artifacts" "${total_artifacts_src}"
     [[ ! -f  $total_artifacts_src ]] && { dumperr "Fails to download the artifacts" ; return 1 ; }
-    # ${EXT_DIR}/myDepency/prebuilt_LLVM_SOLID_for_dkg/artifacts.html
+    # ${DEPENDENCY_DIR}/prebuilt_LLVM_SOLID_for_dkg/artifacts.html
     
     echo
     fetch_keyword="x86_64-linux-gcc_8.5.0-assert-${required_llvm_solid_version}"

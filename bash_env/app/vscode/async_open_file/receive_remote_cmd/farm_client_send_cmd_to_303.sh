@@ -6,7 +6,7 @@ cmd_file_path=$1
 cmd_file_path_only=${cmd_file_path%%:*}
 
 if [[ -f "${cmd_file_path_only}" ]] ; then
-    # curl "http://10.32.208.143:8000/openfile?path=${EXT_DIR}/tmp/cache/bd1.sh"
+    # curl "http://10.32.208.143:8000/openfile?path=${CACHE_DIR}/bd1.sh"
     echo ssh xiaolongs@computelab-303 "curl -s 'http://computelab-303.nvidia.com:8000/openfile?path=${cmd_file_path}'"
     # curl "http://computelab-303.nvidia.com:8000/openfile?path=${cmd_file_path}"
     ssh xiaolongs@computelab-303 "curl -s 'http://computelab-303.nvidia.com:8000/openfile?path=${cmd_file_path}'"

@@ -10,7 +10,6 @@ import gdb
 import inspect
 
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-# print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_template_type.py ...")
 
 class bcolors:
     PURPLE = '\033[95m'
@@ -116,7 +115,7 @@ class nv_NotNull:
 
     def to_string(self):
         # debug output : print current source file and line no
-        # print("${BASH_DIR}/app/gdb/feature/pretty_printer/test/test_template_type_pretty-printer.py:50")        
+        # print(f"{BASH_DIR}/app/gdb/feature/pretty_printer/test/test_template_type_pretty-printer.py:50")        
         # print(f'\033[90m[debug] \033[91m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
         
         # if for void* member pointer 
@@ -142,5 +141,4 @@ pretty_printers_dict[re.compile ('^cask6::Span<.*>$')] = SpanPrettyPrinter
 
 gdb.pretty_printers.append(lookup_function)
 
-# print("--------- leaving ${BASH_DIR}/app/gdb/feature/pretty_printer/pretty_printer_template_type.py ...")
 print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

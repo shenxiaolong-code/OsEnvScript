@@ -1,8 +1,8 @@
 
 # usage 
-# ${BASH_DIR}/app/python/pdb/usage_example.sh
+# {BASH_DIR}/app/python/pdb/usage_example.sh
 
-# ln -s ${BASH_DIR}/app/python/pdb/python_pdb_init.py  ~/.pdbrc
+# ln -s {BASH_DIR}/app/python/pdb/python_pdb_init.py  ~/.pdbrc
 # used by python built-in debugger : pdb
 # suggest : alias pythonx   python -m pdb -c <init_script_file>  <user_py_src_file> [args]
 # -c <init_script_file> is similiar to ~/.pdbrc  
@@ -10,21 +10,22 @@
 # gdb --command=<init_script_file> --args <user_app_file> [args]
 
 # https://docs.python.org/3/library/pdb.html#debugger-commands
-# ln -s ${BASH_DIR}/app/python/pdb/python_pdb_init.py  ${HOME}/.pdbrc
+# ln -s {BASH_DIR}/app/python/pdb/python_pdb_init.py  ${HOME}/.pdbrc
 
 import sys
 import os
 import inspect
 from print_python_color             import *    # import  {py_xxx}, e.g. {py_green}, {py_end}
 from customized_common_function     import *    # import  addPath2Env
+from script_path_config             import *    # import BASH_DIR, ...
 
 print(f'\n\033[93mdebug python script in linux environment ... \033[0m')
 print( f"\033[92mloading {os.environ['HOME']}/.pdbrc:22 ...\033[0m")
-print( f"\033[92mloading ${BASH_DIR}/app/python/pdb/python_pdb_init.py:22 ...\033[0m")
-# print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print( f"\033[92mloading {inspect.stack()[0][1]}:{inspect.stack()[0][2]} ...\033[0m")
+# print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 # sys.path.insert(0, os.path.dirname(os.path.realpath(__file__))+'/init')
-sys.path.insert(0, '${BASH_DIR}/app/python/pdb/init')
-sys.path.insert(0, '${BASH_DIR}/app/python/pdb/cmds')
+sys.path.insert(0, f'{BASH_DIR}/app/python/pdb/init')
+sys.path.insert(0, f'{BASH_DIR}/app/python/pdb/cmds')
 # print(f'{py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
 
 ####################################### alias begin #################################################################
@@ -33,9 +34,9 @@ sys.path.insert(0, '${BASH_DIR}/app/python/pdb/cmds')
 #######    else pdb will throw below error:                                                                   #######
 #######    *** SyntaxError: invalid syntax                                                                    #######
 #####################################################################################################################
-alias rc        os.system(' find ${BASH_DIR}/app/python/pdb -maxdepth 1 -type f -print ')
+alias rc        os.system(f' find {BASH_DIR}/app/python/pdb -maxdepth 1 -type f -print ')
 alias cls       os.system('clear')
-alias helpx     os.system('echo ${BASH_DIR}/app/python/pdb/python_pdb_init.py:130')
+alias helpx     os.system(f'echo {BASH_DIR}/app/python/pdb/python_pdb_init.py:130')
 
 # Print command line arguments
 # print("Command line arguments:", sys.argv)
@@ -126,13 +127,13 @@ alias bl    b
 # pdb.set_trace()
 
 #################################### breakpoint begin ####################################################################
-print( f"\r\n\033[92m${BASH_DIR}/app/python/pdb/python_pdb_init.py:119 \033[0m")
+print( f"\r\n\033[92m{BASH_DIR}/app/python/pdb/python_pdb_init.py:119 \033[0m")
 print( f"\033[94m{os.environ['HOME']}/.pdbrc:111\nset a python breakpoint example:\nb some_file:12\033[0m")
 print( f"\033[94mset breakpoint in python source file : breakpoint()\033[0m")
 # condition breakpoint
 # b C:\Users\powlo\project\tests\TestCase.py:350, view.view_name == 'app.views.export'
 # ignore 1 1000         # ignore 1000 times on breakpoint 1
-# b ${EXT_DIR}/myDepency/gdb_pretty_printer/python/libstdcxx/v6/printers.py:91
+# b ${DEPENDENCY_DIR}/gdb_pretty_printer/python/libstdcxx/v6/printers.py:91
 
 b pre_build_action
 b ${EXT_DIR}/repo/dkg_root/debug_setup_public_llvm_ci/scripts/release.py:290
@@ -146,10 +147,10 @@ b ${EXT_DIR}/repo/dkg_root/debug_setup_public_llvm_ci/bloom/build.py:607
 
 #################################### breakpoint end ####################################################################
 # python_function()
-exec(open('${BASH_DIR}/app/python/pdb/python_pdb_function.py').read())
+exec(open(f'{BASH_DIR}/app/python/pdb/python_pdb_function.py').read())
 
 # print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-print( f"\033[92mDone : ${BASH_DIR}/app/python/pdb/python_pdb_init.py:133 \033[0m\n")
+print( f"\033[92mDone : {inspect.stack()[0][1]}:{inspect.stack()[0][2]} \033[0m\n")
 
 
 

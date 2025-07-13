@@ -2,6 +2,12 @@
 echo \033[36m+++++++++ loading \033[35m${BASH_DIR}/app/gdb/cuda_gdb/cuda_set_env_var.sh\033[37m ...
 # https://docs.nvidia.com/cuda/cuda-gdb/index.html#set-cuda-break-on-launch
 
+# https://docs.nvidia.com/cuda/cuda-gdb/index.html
+# Temporary Directory
+# warning : if only TMPDIR is set without CUDBG_APICLIENT_PID, it will cause cuda gdb internal error 
+# export  TMPDIR="${TEMP_DIR}"                      # used by cuda gdb
+# export  CUDBG_APICLIENT_PID=
+
 export  CUDA_LAUNCH_BLOCKING=1
 
 # # https://docs.google.com/presentation/d/1qZBUG_P87TZ8st1a_gjH9Fh_MclTQPUdaeR8fAwitKs/edit#slide=id.g2310ef90fc8_2_19

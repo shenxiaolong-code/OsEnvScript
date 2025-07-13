@@ -12,6 +12,7 @@ class SetLogPath(gdb.Command):
 
     def invoke(self, arg, from_tty):
         pid = os.getpid()
+        print(f'+++++++++ loading \033[36m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
         current_time = time.strftime("%Y%m%d_%H%M%S")
         app_full_path = gdb.current_progspace().filename
         print(f'\033[92mgdb app path : \033[95m{app_full_path}\033[0m')
@@ -34,6 +35,7 @@ class SetLogPath(gdb.Command):
         gdb.execute("set history filename {}".format(log_file))
         gdb.execute("set history save on")
         gdb.execute("show history")
+        print(f'--------- leaving \033[36m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 
 class ListFilesWithPID(gdb.Command):

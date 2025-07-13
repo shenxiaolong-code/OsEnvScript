@@ -1,13 +1,14 @@
 
 import sys
 import inspect
+from script_path_config import BASH_DIR
 print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 # print(f'\033[91mLog\033[0m \033[90m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 # valStr="\033[91m{}\033[0m  {} ".format(self.val['start_'],f'\033[90m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 def display_hook_stop(event):
     print(f'\033[90m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
-    print(f'\033[90m${BASH_DIR}/app/gdb/init/loadOptions_manual.gdb:15 \033[0m')
+    print(f'\033[90m{BASH_DIR}/app/gdb/init/loadOptions_manual.gdb:15 \033[0m')
     gdb.execute("psvar")
     # gdb.execute("backtrace")
     # gdb.execute("info locals")    

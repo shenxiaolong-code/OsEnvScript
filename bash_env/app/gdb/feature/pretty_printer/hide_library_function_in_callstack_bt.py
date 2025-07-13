@@ -21,13 +21,14 @@
 
 # copy from with improvement :
 # https://github.com/jefftrull/gdb_python_api 
-# ${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
+# ${DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py
 
 import gdb
 import re
 import  os
 
 import inspect
+from script_path_config import BASH_DIR
 # Python 2/3 way to get "imap", suggested by SO
 try:
     from itertools import imap
@@ -43,12 +44,12 @@ from gdb.FrameDecorator import FrameDecorator
 from print_python_color             import *    # import  {py_xxx}, e.g. {py_green}, {py_end}
 from customized_common_function     import *    # import  addPath2Env
 
-addPath2Env('${BASH_DIR}/app/gdb/feature/pretty_printer')
+addPath2Env(f'{BASH_DIR}/app/gdb/feature/pretty_printer')
 from enhance_callstack_bt_frame_filter import *
 
 nvidia_filter = NvidiaStackFrameFilter()
 
-print(f'+++++++++ loading {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 
 # ************************************************************************************************************
@@ -180,5 +181,5 @@ def toggleCustomizedStackFrameFilter():
 # toggleCustomizedStackFrameFilter()
 
 
-print(f'--------- leaving {py_green}{inspect.stack()[0][1]}:{inspect.stack()[0][2]}{py_end}')
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 

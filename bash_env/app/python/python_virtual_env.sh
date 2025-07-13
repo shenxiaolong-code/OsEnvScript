@@ -66,7 +66,7 @@ function setup_python_virtual_env_on_dir() {
     local python_big_version=$(python3 --version | grep -oP "\d+\.\d+" | sed 's#\.##')    # 3.9.x.y => 39
     [[ ${python_big_version} -lt 39 ]] && { dumperr "python virtual env need version 3.9 or later, current version is $(python3 --version)" ; return 1 ;}
     
-    local default_env_dir="${EXT_DIR}/myDepency/python_suite/generated_virtual_env/pyenv_$(date "+%Y%m%d_%H%M")"
+    local default_env_dir="${DEPENDENCY_DIR}/python_suite/generated_virtual_env/pyenv_$(date "+%Y%m%d_%H%M")"
     env_dir=${1:-${default_env_dir}}
     # check if there is the virtual environment
     is_exist_python_virtual_env_on_dir $env_dir && {  active_python_virtual_env_on_dir $env_dir  ; return $? ; }
@@ -89,7 +89,7 @@ function setup_python_virtual_env_on_dir() {
     # writevar virtual_env_last "$env_dir"
     dumpkey   PYTHON3_PATH
     dumpinfo "update the${brown} virtual_env_last=${env_dir} ${blue}if you want to use this virtual env next time"
-    grep -nH --color=always "virtual_env_last" ${EXT_DIR}/myDepency/ini_input/default.ini
+    grep -nH --color=always "virtual_env_last" ${DEPENDENCY_DIR}/ini_input/default.ini
     dumpinfo "Done.  run cmd${brown} deactivate ${blue}to exit the python virtual venv"
 }
 
@@ -114,11 +114,11 @@ function setup_dkg_python_module_dependency(){
     pip3 install typing_extensions
 }
 
-# setup_python_environment_for_dkg ${EXT_DIR}/myDepency/python_suite/generated_virtual_env/dkg_farm
+# setup_python_environment_for_dkg ${DEPENDENCY_DIR}/python_suite/generated_virtual_env/dkg_farm
 function setup_python_environment_for_dkg() {
     # https://gitlab-master.nvidia.com/dlarch-fastkernels/dynamic-kernel-generator/-/blob/master/bloom/README.md?ref_type=heads
     # https://nvidia.slack.com/archives/C0752R5M7C7/p1725652369501779?thread_ts=1725647087.148669&cid=C0752R5M7C7
-    local default_env_dir="${EXT_DIR}/myDepency/python_suite/generated_virtual_env/dkg_${envMode}"
+    local default_env_dir="${DEPENDENCY_DIR}/python_suite/generated_virtual_env/dkg_${envMode}"
     local env_dir=${1:-${default_env_dir}}
     env_dir=$(realpathx $env_dir)
     dumpinfox "install python virtual and dependency modules ..."

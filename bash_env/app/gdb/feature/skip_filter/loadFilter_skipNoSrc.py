@@ -5,7 +5,7 @@
 
 import os.path
 
-print("+++++++++ loading ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_skipNoSrc.py ...")
+print(f'+++++++++ loading \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
 
 class ContinueUntilSource(gdb.Command):
     def __init__(self):
@@ -35,4 +35,4 @@ class ContinueUntilSource(gdb.Command):
                         break
 ContinueUntilSource()
 
-print("--------- leaving ${BASH_DIR}/app/gdb/feature/skip_filter/loadFilter_skipNoSrc.py ...")
+print(f'--------- leaving \033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')

@@ -7,27 +7,27 @@ bash_script_i
 # gcc -v  or g++ -v or  clang++ -v -E clang++
 # g++ -E -v -xc++ /dev/null
 # search vector under /usr/include/
-
-[[ $envMode == "computeLabBuild" ]] && STD_LIB_PATH="/home/utils/gcc-11.2.0/include/c++/$(command ls /home/utils/gcc-11.2.0/include/c++/ | tail -n 1)"
-[[ $envMode == "farm"            ]] && STD_LIB_PATH="/home/utils/gcc-11.2.0/include/c++/$(command ls /home/utils/gcc-11.2.0/include/c++/ | tail -n 1)"
-[[ $envMode == "docker"          ]] && [[ -d "/home/utils/gcc/include/c++" ]] && STD_LIB_PATH="/home/utils/gcc/include/c++/$(command ls /home/utils/gcc/include/c++/ | tail -n 1)"
-[[ $envMode == "303"             ]] && STD_LIB_PATH="/usr/include/c++/$(command ls /usr/include/c++/ | tail -n 1)" && PLATFORM_LIB_PATH="/usr/include/x86_64-linux-gnu/c++/9"
-
-[[ ! -f ${STD_LIB_PATH}/vector ]] && STD_LIB_PATH=""
-[[ -d  ${STD_LIB_PATH} ]] && {
-    # e.g. /usr/include/c++/9
-    export  STD_LIB_PATH             # gcc C++ standard library path
-    # e.g. /usr/include/x86_64-linux-gnu/c++/9
-    export  PLATFORM_LIB_PATH      # gcc platform specific path, include arch spec, os spec, platform spec type etc.
-    dumpkey STD_LIB_PATH 
-    dumpkey PLATFORM_LIB_PATH
+function init_cpp_dev_path(){
+    local cpp_filter_cmd="echo '#include <type_traits>' | g++ -v -x c++ -c - 2>&1 | sed -n '/search starts here:/,/End of search list/{/search starts here:/b;/End of search list/b;p}'"
+    # gcc C++ standard library path , e.g. /usr/include/c++/9
+    CPP_INCLUDE_PATH=$(eval ${cpp_filter_cmd} | xargs )
+    CPP_STD_LIB_PATH=$(eval ${cpp_filter_cmd} | grep -v "x86_64-linux-gnu" | xargs )
+    # gcc platform specific path, include arch spec, os spec, platform spec type etc. e.g. /usr/include/x86_64-linux-gnu/c++/9
+    CPP_PLATFORM_LIB_PATH=$(eval ${cpp_filter_cmd} | grep "x86_64-linux-gnu" | xargs )
+    export CPP_INCLUDE_PATH
+    export CPP_STD_LIB_PATH
+    export CPP_PLATFORM_LIB_PATH
+    [[ ! -z STD_LIB_PATH ]] && {
+        dumpkey CPP_STD_LIB_PATH 
+        dumpkey CPP_PLATFORM_LIB_PATH
+    }
 }
 
 function show_cpp_dev_info() {
     dumppos
     dumpkey STD_LIB_PATH 
     dumpkey PLATFORM_LIB_PATH
-    echo '#include <type_traits>' | g++ -v -x c++ -c - 2>&1 | grep -A 20 "#include <...>"
+    echo '#include <type_traits>' | g++ -v -x c++ -c - 2>&1 # | grep -A 20 "#include <...>"
 }
 
 function find_cpp_header_compile_denpendency() {
@@ -36,6 +36,8 @@ function find_cpp_header_compile_denpendency() {
     echo "#include <${header_file}>" | g++ -v -x c++ -c - 2>&1 | grep -A 20 "#include <...>"
 }
 
+init_cpp_dev_path
 alias icpp=show_cpp_dev_info
+alias xcpp=find_cpp_header_compile_denpendency
 
 bash_script_o

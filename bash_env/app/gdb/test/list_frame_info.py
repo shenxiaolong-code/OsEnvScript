@@ -9,7 +9,7 @@ print(f'\033[90m90 \033[91m91 \033[92m92 \033[93m93 \033[94m94 \033[95m95 \033[9
 import gdb
 
 # 在 AI 中搜索 inferior_frame () 在 python 中的用法示例，越多越好，我自己筛选 ， 然后不停地叫继续
-# inferior_frame () 自来于 : ${EXT_DIR}/myDepency/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py 
+# inferior_frame () 自来于 : ${DEPENDENCY_DIR}/gdb_pretty_printer/gdb_python_api/gdb_util/backtrace.py 
 
 # 1. 获取当前帧的函数名
 frame = gdb.inferior_frame()

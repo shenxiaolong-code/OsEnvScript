@@ -4,13 +4,13 @@
 配置方法：
 可以直接搜索 MLIR ， 这样可以同时显示下面的三个配置项：
 注意： 那些文件可能没有运行权限，需要手工添加运行权限。
-chmod +x ${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/mlir-lsp-server
-chmod +x ${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/tblgen-lsp-server
-chmod +x ${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/mlir-pdll-lsp-server
+chmod +x ${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/mlir-lsp-server
+chmod +x ${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/tblgen-lsp-server
+chmod +x ${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/mlir-pdll-lsp-server
 
 
 Mlir: Tablegen_server_path: 
-${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/tblgen-lsp-server
+${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/tblgen-lsp-server
 让 vscode outline 支持 .td 文件解析
 确保工作区顶级目录下有一个名为 tablegen_compile_commands.yml 的文件，例如：
 ${EXT_DIR}/build/dkg_mlir_lsp_server/build/tablegen_compile_commands.yml
@@ -20,10 +20,10 @@ Mlir: Tablegen_compilation_databases ： <tablegen_compile_commands.yml>
 
 
 Mlir: Server_path : 
-${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/mlir-lsp-server
+${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/mlir-lsp-server
 ${EXT_DIR}/build/dkg_mlir_lsp_server/build/tools/mlir-lsp-server/nv-mlir-lsp-server
 让vscode 支持 .mlir 文件的语法高亮
 
 
 Mlir: Pdll_server_path:
-${EXT_DIR}/myDepency/llvm_mlir_for_dkg/assert_20241023/bin/mlir-pdll-lsp-server
+${DEPENDENCY_DIR}/llvm_mlir_for_dkg/assert_20241023/bin/mlir-pdll-lsp-server
