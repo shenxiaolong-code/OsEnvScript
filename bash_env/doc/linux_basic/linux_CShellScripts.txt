@@ -1,0 +1,483 @@
+# C Shell 脚本编程指南
+
+## 什么是 Shell 脚本？
+
+Shell脚本是一个包含shell命令的可执行文件。该脚本通过按顺序执行文件中的每个命令来作为一个"程序"运行。
+
+每个常见的5种shell都有自己的脚本语言。这些语言之间有相似之处，但也有差异。
+
+脚本语言由控制结构、shell命令、表达式和变量组成。
+
+如果shell脚本是用特定的脚本语言编写的，必须在相应的shell下运行，脚本的第一行应该指定它必须运行的shell。例如，C shell脚本的第一行应该是：
+
+```bash
+#!/bin/csh
+```
+
+脚本文件应该使用chmod命令赋予"执行"文件权限：
+
+```bash
+chmod u+x myscript
+```
+
+下面是一个可以在5种shell中任意一种下运行的简单shell脚本。这个脚本只是显示一个问候语和日期/时间。注释以井号(#)开头：
+
+```bash
+# Simple Script
+#
+echo 'Welcome to the world of script files'
+date
+```
+
+## 表达式
+
+表达式是由常量、变量和运算符组成的语句，用于确定结果。表达式可以是数学表达式或逻辑表达式。
+
+示例1：数学表达式，其中"a"和"t"是变量，"3"和"4"是常量，"="和"+"是运算符。
+```bash
+a = 3 + 4t
+```
+
+示例2：逻辑表达式，计算结果为"true"或"false"。字符串"exit"是常量，"var"是变量，"("、")"和"=="是运算符。
+```bash
+($var == exit)
+```
+
+### C Shell 运算符优先级（从高到低）：
+
+```
+()      - 括号 - 改变求值顺序
+-       - 一元减号/否定
+~       - 按位取反
+!       - 逻辑否定
+%       - 取余
+/       - 除法
+*       - 乘法
+-       - 减法
++       - 加法
+>>      - 右移
+<<      - 左移
+>       - 大于
+<       - 小于
+>=      - 大于或等于
+<=      - 小于或等于
+!=      - 不等于（字符串）
+==      - 等于（字符串）
+&       - 按位与
+^       - 按位异或
+|       - 按位或
+&&      - 逻辑与
+||      - 逻辑或
+```
+
+## 控制结构
+
+脚本语言使用编程控制结构，如"if"语句和"循环"。以下是C Shell的控制结构说明。
+
+### if 语句
+
+用于测试表达式，然后有条件地执行命令。如果指定的表达式计算为真，则执行带参数的单个命令。命令必须是简单命令，不能是管道、命令列表或带括号的命令列表。
+
+语法：
+```bash
+if (expr) command [arguments]
+```
+
+示例：
+```bash
+#!/bin/csh
+if ($#argv == 0) echo There are no arguments
+```
+
+除了C Shell的逻辑表达式外，还可以使用基于文件状态返回值的表达式。例如：
+```bash
+if (-e myfile) echo myfile already exists
+```
+
+文件状态表达式：
+```
+d    - 文件是目录
+e    - 文件存在
+f    - 文件是普通文件
+o    - 用户拥有该文件
+r    - 用户对文件有读取权限
+w    - 用户对文件有写入权限
+x    - 用户对文件有执行权限
+z    - 文件大小为零字节
+```
+
+### if / then / else 语句
+
+用于测试多个条件并为每个条件执行多个命令。
+
+语法：
+```bash
+if (expr) then
+    commands
+else if (expr2) then
+    commands
+else
+    commands
+endif
+```
+
+示例：
+```bash
+#!/bin/csh
+if ($#argv == 0) then
+    echo "No number to classify"
+else if ($#argv > 0) then
+    set number = $argv[1]
+    if ($number < 0) then
+        @ class = 0
+    else if (0 <= $number && $number < 100) then
+        @ class = 1
+    else if (100 <= $number && $number < 200) then
+        @ class = 2
+    else
+        @ class = 3
+    endif
+    echo The number $number is in class $class
+endif
+```
+
+### foreach / end 循环
+
+foreach语句是一种循环语句。变量name依次设置为wordlist的每个成员，并执行直到匹配的end语句的命令序列。
+
+语法：
+```bash
+foreach name (wordlist)
+    commands
+end
+```
+
+示例：
+```bash
+#!/bin/csh
+foreach color (red orange yellow green blue)
+    echo $color
+end
+```
+
+### while / end 循环
+
+while语句是另一种循环语句。while/end循环中的语句基于表达式的计算结果有条件地执行。
+
+语法：
+```bash
+while (expression)
+    commands
+end
+```
+
+示例：
+```bash
+#!/bin/csh
+set word = "anything"
+while ($word != "")
+    echo -n "Enter a word to check (Return to exit): "
+    set word = $<
+    if ($word != "") grep $word /usr/share/dict/words
+end
+```
+
+### break 语句
+
+用于中断foreach或while循环的执行。将控制转移到end语句之后的语句，从而终止循环。
+
+语法：
+```bash
+break
+```
+
+示例：
+```bash
+#!/bin/csh
+foreach number (one two three exit four)
+    if ($number == exit) then
+        echo reached an exit
+        break
+    endif
+    echo $number
+end
+```
+
+### continue 语句
+
+用于中断foreach或while循环的执行。将控制转移到end语句，从而继续循环。
+
+语法：
+```bash
+continue
+```
+
+示例：
+```bash
+#!/bin/csh
+foreach number (one two three exit four)
+    if ($number == exit) then
+        echo reached an exit
+        continue
+    endif
+    echo $number
+end
+```
+
+### goto 语句
+
+goto语句将控制转移到以label开头的语句：
+
+语法：
+```bash
+goto label
+```
+
+示例：
+```bash
+#!/bin/csh
+if ($#argv != 1) goto error1
+if ($argv[1] < 6) goto error2
+goto OK
+
+error1:
+    echo "Invalid - wrong number or no arguments"
+    echo "Quitting"
+    exit 1
+
+error2:
+    echo "Invalid argument - must be greater than 5"
+    echo "Quitting"
+    exit 1
+
+OK:
+    echo "Argument = $argv[1]"
+    exit 1
+```
+
+### switch / case / breaksw / endsw 语句
+
+switch结构允许您设置一系列测试，并根据字符串的值有条件地执行命令。如果在找到"default"标签之前没有标签匹配，则执行从default标签之后开始。
+
+每个case标签和default标签必须出现在行的开头。breaksw命令使执行在endsw之后继续。否则，控制可能会穿过case标签和default标签。如果没有标签匹配且没有default，则执行在endsw之后继续。
+
+语法：
+```bash
+switch (string)
+case str1:
+    commands
+    breaksw
+case str2:
+    commands
+    breaksw
+...
+default:
+    commands
+    breaksw
+endsw
+```
+
+示例：
+```bash
+#!/bin/csh
+if ($#argv == 0) then
+    echo "No arguments supplied...exiting"
+    exit 1
+else
+    switch ($argv[1])
+    case [yY][eE][sS]:
+        echo Argument one is yes.
+        breaksw
+    case [nN][oO]:
+        echo Argument one is no.
+        breaksw
+    default:
+        echo Argument one is neither yes nor no.
+        breaksw
+    endsw
+endif
+```
+
+## 中断处理
+
+onintr语句在您中断（CTRL-C）shell脚本时转移控制。控制被转移到以label开头的语句。这对于在程序被中断时优雅地清理临时文件和退出程序非常有用。
+
+语法：
+```bash
+onintr label
+```
+
+示例：
+```bash
+#!/bin/csh
+onintr close
+while (1 == 1)
+    echo Program is running
+    sleep 2
+end
+
+close:
+echo End of program
+```
+
+## 杂项
+
+以下是C Shell编程的其他一些重要任务和功能：
+
+### 1. 变量操作
+- 设置变量：`set var = value`
+- 数学运算：`@ result = $var1 + $var2`
+- 环境变量：`setenv VAR value`
+
+### 2. 参数处理
+- `$#argv` - 参数数量
+- `$argv[n]` - 第n个参数
+- `$*` - 所有参数
+
+### 3. 输入/输出
+- 标准输入：`$<`
+- 重定向：`>`, `>>`, `<`
+- 管道：`|`
+
+### 4. 返回值
+- `$status` - 最后一个命令的返回值
+- `exit n` - 以状态n退出
+
+### 5. 字符串操作
+- 字符串比较：`==`, `!=`
+- 模式匹配：`*`, `?`, `[]`
+
+### 6. 文件测试
+- `-e` 文件存在
+- `-f` 普通文件
+- `-d` 目录
+- `-r` 可读
+- `-w` 可写
+- `-x` 可执行
+
+### 7. 调试
+- 设置 `-x` 标志来显示执行的命令
+- 使用 `echo` 语句来跟踪变量值
+
+### 8. 最佳实践
+- 始终在脚本开头指定shell
+- 添加适当的注释
+- 使用有意义的变量名
+- 适当的错误处理
+- 清理临时文件
+- 提供使用说明
+
+Using quotes
+
+The shell uses both single (') quotes and double (") quotes. They have different effects.
+
+Single quotes:
+
+allow inclusion of spaces
+prevent variable substitution
+permit filename generation
+
+Double quotes:
+
+allow inclusion of spaces
+permit variable substitution
+permit filename generation
+
+  
+     
+     
+Example 1: Variable substitution
+
+     #!/bin/csh 
+     set opt=-l 
+     set x1='ls $opt' 
+     echo $x1 
+     set x2="ls $opt" 
+     echo $x2 
+
+Will produce the output: 
+     ls $opt 
+     ls -l 
+
+Example 2: Filename generation
+
+     #!/bin/csh 
+     set ls1='some files: [a-z]*' 
+     echo $ls1 
+
+     set ls2="some files: [a-z]*" 
+     echo $ls2 
+
+Sample output (identical): 
+     some files: csh.html images man misc other.materials 
+     some files: csh.html images man misc other.materials  
+
+Storing the output of a command
+
+The shell uses backquotes to obtain the output of the command enclosed within the backquotes. This output can be stored within an array variable. Each element
+can then be indexed and processed as required.
+
+Syntax:
+
+     set variable = `command`  
+
+Example:
+
+     #!/bin/csh 
+     set date_fields=`date` 
+     echo $date_fields 
+     echo $date_fields[1] 
+     echo $date_fields[2] 
+     foreach field(`date`) 
+
+     
+     
+  
+     
+       echo $field 
+     end 
+
+Sample output: 
+     Thu Mar 9 22:25:45 HST 1995 
+     Thu 
+     Mar 
+     Thu 
+     Mar 
+     9 
+     22:25:45 
+     HST 
+     1995 
+
+Reading user input
+
+Depending on your system, you can use either "$<" or the output of the "head -1" command to read stdin into a variable. Note that if you use the "head -1"
+command, it must be enclosed in backquotes.
+
+Note: Be careful on making sure that you use "$<" and not "<$". The latter case will usually cause your script to fail.
+
+Syntax:
+
+     set variable = $< 
+          - or - 
+     set variable = `head -1` 
+
+Example:
+
+     #!/bin/csh 
+     echo -n Input your value:  
+     set input = $< 
+     echo You entered: $input 
+
+             - or - 
+
+     #!/bin/csh 
+     echo -n Input your value:  
+     set input = `head -1` 
+     echo You entered: $input 
+
+This concludes the tutorial. Return to the Table of Contents
+
+     
+  
+     
+     

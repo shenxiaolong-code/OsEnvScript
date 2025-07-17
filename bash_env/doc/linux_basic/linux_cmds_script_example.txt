@@ -1,0 +1,29 @@
+[xiaoshen@srdcws1087 /local_vol1_nobackup/xiaoshen/navi31]$set v1=`cat P4CONFIG | grep P4CLI `
+[xiaoshen@srdcws1087 /local_vol1_nobackup/xiaoshen/navi31]$echo $v1
+P4CLIENT=xiaoshen_srdc_srdcws1087_mkwa_local_vol1_nobackup_xiaoshen_navi31
+
+
+#shell function
+demoUseParameter () {
+  num=${1:-5}                               //use No.1 parameter, and default value is 5
+  dmesg |grep -iw usb|tail -$num
+}
+
+demoUseParameter
+demoUseParameter 4
+
+useAllParamters () {
+/path/to/command "$@" ;                     //refer to all parameters
+ }
+ 
+ useAllParamters arg1 arg2 arg3
+ 
+//下列测试失败
+alias saveInput2VarD='{ IFS= read -r d && echo input value is "$d" ; } <<<'
+alias sd='{ IFS= read -r d && echo input value is "$d" ; } <<<'
+alias sd='{ read -r d && echo input value is "$d" ; } <<<'
+built-in cmd 'read' to read a string into a variable 'd'
+read input from stdin, like dos : set /p var=
+read input and save input into variable d , then show value of variable d
+
+alias te echo !:2 !:1 !:2

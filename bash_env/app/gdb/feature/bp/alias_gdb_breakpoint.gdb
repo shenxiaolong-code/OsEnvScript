@@ -1,12 +1,12 @@
 
 
-echo \033[36m+++++++++ loading \033[35m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb \033[37m...\r\n
+echo \033[36m+++++++++ loading \033[35m/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb \033[37m...\r\n
 
 # this is a wrapper script to resolve load error issue in inital loading.
 
 # this script should be called in inital script without any parameter , else it will throw below error.
-# /home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb:4: Error in sourced command file:
-# /home/xlshen/bash_env/nvidia/gdb_init_nvidia.gdb:215: Error in sourced command file:
+# /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb:4: Error in sourced command file:
+# /home/xlshenshell_script/bash_env/nvidia/gdb_init_nvidia.gdb:215: Error in sourced command file:
 # Invalid type combination in equality test.
 
 # for predefined_breakpoint_impl.gdb :
@@ -17,21 +17,21 @@ echo \033[36m+++++++++ loading \033[35m/home/xlshen/scratch/bash_env/app/gdb/fea
 
 define load_breakpoint_hints
     echo xxv manifest to query global variables
-    echo \r\n/home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb
+    echo \r\n/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb
     echo \r\nuse single commnad 'd' without parameter to cleanup all breakpoints. 'bl' to list all breakpoints.
-    echo \r\nUpdate filter         : \033[36m/home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb \033[37m
-    echo \r\nUpdate multiple debug : \033[36m/home/xlshen/scratch/bash_env/app/gdb/init/debug_multiple_thread_process.gdb \033[37m    
-    echo \r\nUpdate breakpoint map : \033[35m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py \033[37m    
+    echo \r\nUpdate filter         : \033[36m/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb \033[37m
+    echo \r\nUpdate multiple debug : \033[36m/home/xlshen/scratch/shell_script/bash_env/app/gdb/init/debug_multiple_thread_process.gdb \033[37m    
+    echo \r\nUpdate breakpoint map : \033[35m/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py \033[37m    
     echo \r\n\033[32mrun cmd '\033[33mbsave\033[32m' or '\033[33mbload\033[32m' to save/load breakpoint from file.\033[37m\r\n
     echo \r\n\033[32mrun cmd '\033[33mbps\033[32m' to open breakpoint file list.\033[37m\r\n
 
     # echo \r\n\033[32m1.Task-related    breakpoint :\033[31m /home/xlshen/scratch/myTasks/curTask/cutlass_ramp_up/breakpoint.gdb  \033[37m
-    echo \r\n\033[32m2.Project-related breakpoint :\033[35m /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb  \033[37m
-    echo \r\n\033[32m                             :\033[31m /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py  \033[37m
+    echo \r\n\033[32m2.Project-related breakpoint :\033[35m /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb  \033[37m
+    echo \r\n\033[32m                             :\033[31m /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py  \033[37m
     echo \r\n\033[32m2.1. app-related breakpoint  : 
     show_script_path " "
-    echo \033[32m3.General         breakpoint :\033[31m /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb  \033[37m
-    echo \r\n\033[32m4.Entry main      breakpoint :\033[31m /home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb  \033[37m
+    echo \033[32m3.General         breakpoint :\033[31m /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb  \033[37m
+    echo \r\n\033[32m4.Entry main      breakpoint :\033[31m /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb  \033[37m
 
     # e.g. Thread 1 "cask_forge" hit Breakpoint 14, 0x0000155553865910 in cask::TypeDeclEmitter::emit_(std::ostream&, cask::NotNull<cask::Type const*>)@plt () from /home/.../bin/libcask_core.so
     # https://stackoverflow.com/questions/28243549/prevent-plt-procedure-linkage-table-breakpoints-in-gdb
@@ -49,11 +49,11 @@ define bps
     if $argc == 0
         load_breakpoint_hints
     else
-        source /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb
+        source /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb
     end
 end
 document bps
-	reload gdb breakpoints : /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb
+	reload gdb breakpoints : /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_breakpoint_examples.gdb
 end
 
 b main
@@ -61,10 +61,10 @@ b main
     commands    
     # echo \033[36mLoading manual options after the module is loaded automatical ... \033[37m\r\n    
     echo \033[35mBreakpoint \033[32mmain \033[35mis hitted, load nvidia project seting ... \033[37m\r\n
-    echo \033[32m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb:59 \033[37m\r\n
-    source /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
-    source /home/xlshen/scratch/bash_env/app/gdb/init/loadOptions_manual.gdb
-    source /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
+    echo \033[32m/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb:59 \033[37m\r\n
+    source /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/skip_filter/loadFilter_nvidia.gdb
+    source /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadOptions_manual.gdb
+    source /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
     # d $bpnum
     printf "\nbreakpoint main number( $bpnum ) = %d \n", $main_bp    
     d $main_bp
@@ -76,12 +76,12 @@ end
 # ****************************************************************************************************************************************************************
 
 define bpw
-    source     /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_std_output.gdb
+    source     /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_std_output.gdb
 end
 
 document bpw
-    set breakpoint on std::cout function , /home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb
+    set breakpoint on std::cout function , /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb
 end
 
-echo \033[36m--------- leaving \033[35m/home/xlshen/scratch/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb\033[37m ...\r\n
+echo \033[36m--------- leaving \033[35m/home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/alias_gdb_breakpoint.gdb\033[37m ...\r\n
 

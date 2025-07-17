@@ -1,4 +1,4 @@
-echo \r\n\033[36m+++++++++ loading \033[35m/home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb \033[37m...\r\n
+echo \r\n\033[36m+++++++++ loading \033[35m/home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb \033[37m...\r\n
 # run single breakpoint in gdb test cmd
 
 # nvidia project related common breakpoint
@@ -8,9 +8,9 @@ echo \r\n\033[36m+++++++++ loading \033[35m/home/xlshen/scratch/bash_env/app/gdb
 # /home/xlshen/scratch/repo/cask6_2/include/cask/cask.hpp:183
 # b *ErrorCuda
 
-# source /home/xlshen/scratch/bash_env/app/gdb/cmds/load_possible_not_existing_script.py  ./cmds/gdb_breakpoints.ini
+# source /home/xlshen/scratch/shell_script/bash_env/app/gdb/cmds/load_possible_not_existing_script.py  ./cmds/gdb_breakpoints.ini
 
-source /home/xlshen/scratch/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py
+source /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/load_app_spec_breakpoint.py
 
 # source /home/xlshen/scratch/third_part_dependency/gdb_nvidia/breakpoint/bp_except_launch.gdb
 
@@ -60,13 +60,13 @@ define bps
     if $argc == 0
         load_breakpoint_hints
     else
-        source /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
+        source /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
         load_app_breakpoint
         # load_breakpoint_hints
     end
 end
 document bps
-	reload gdb breakpoints : /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
+	reload gdb breakpoints : /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb
 end
 
-echo \033[36m\r\n--------- leaving \033[35m/home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb:15  \033[37m ...\r\n
+echo \033[36m\r\n--------- leaving \033[35m/home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/gdb_init_nvidia.gdb:15  \033[37m ...\r\n

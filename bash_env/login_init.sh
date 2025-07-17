@@ -7,7 +7,7 @@ bash_script_i_blue
 # best shell script practice : use upper-case in shell env script.  in lower-case in user cmd script.
 
 # verify the environment variables
-# EXT_DIR is set in ${EXT_DIR}/bash_env/init/script_path_config.sh
+# EXT_DIR is set in ${EXT_DIR}shell_script/bash_env/init/script_path_config.sh
 [[ ! -d ${EXT_DIR} ]]  && {
     command echo -e "\e[1;31mError : \e[1;34mSCRATCH_DIR does not exist: \e[0;33m${EXT_DIR}\e[0;0m"    
     return 1

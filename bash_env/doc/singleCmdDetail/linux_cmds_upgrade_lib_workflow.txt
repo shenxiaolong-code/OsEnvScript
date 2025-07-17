@@ -1,0 +1,20 @@
+https://www.jianshu.com/p/5bb21028cde1
+
+升级libc库的命令流程：
+
+1. 下载libc 库
+   先切换到自己希望保存下载文件的目录
+wget https://ftp.gnu.org/gnu/glibc/glibc-2.15.tar.gz
+
+2. 解压及编译
+[root@hadoop101 opt]# tar -zxvf glibc-2.15.tar.gz
+[root@hadoop101 opt]# cd glibc-2.15
+[root@hadoop101 glibc-2.15]# mkdir build; 
+[root@hadoop101 glibc-2.15]# cd build
+[root@hadoop101 build]# ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+[root@hadoop101 build]# make -j 8
+[root@hadoop101 build]# make  install
+
+3. 检查升级结果
+[root@hadoop101 build]# strings /lib64/libc.so.6 | grep GLIBC
+如果出现了glibc 2.15则表明成功了

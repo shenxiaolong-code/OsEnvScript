@@ -1,0 +1,64 @@
+
+[[ -z $var ]] && echo "return true" || echo "return false"
+[[ -z $var ]] && ( cd ${one_dir} && echo "show true in sub-process" ) || ( echo "show false in sub-process" )
+[[ -z $var ]] && { echo "show true in sub-process" ; echo "run multiple cmds" ; } || { echo "show false in sub-process" ; echo "run multiple cmds" ; }
+
+
+文件测试
+-f FILE: 如果文件存在且为普通文件则为真
+-d FILE: 如果文件存在且为目录则为真
+-e FILE: 如果路径存在则为真
+
+-r FILE: 如果文件存在且可读则为真
+-w FILE: 如果文件存在且可写则为真
+-x FILE: 如果文件存在且可执行则为真
+-s FILE: 如果文件存在且非空则为真
+-L FILE: 如果文件存在且为符号链接则为真
+-b FILE: 如果文件存在且为块设备则为真
+-c FILE: 如果文件存在且为字符设备则为真
+-p FILE: 如果文件存在且为命名管道则为真
+-S FILE: 如果文件存在且为套接字则为真
+-g FILE: 如果文件存在且设置了SGID则为真
+-u FILE: 如果文件存在且设置了SUID则为真
+-k FILE: 如果文件存在且设置了粘着位则为真
+-O FILE: 如果文件存在且属于当前用户则为真
+-G FILE: 如果文件存在且默认组与当前用户相同则为真
+-N FILE: 如果文件存在且自上次读取后已被修改则为真
+
+文件比较
+FILE1 -nt FILE2: 如果FILE1比FILE2新则为真
+FILE1 -ot FILE2: 如果FILE1比FILE2旧则为真
+FILE1 -ef FILE2: 如果FILE1和FILE2引用相同的设备和节点号则为真
+
+变量测试
+-v VAR: 如果变量VAR已被设置则为真
+
+字符串比较
+-z STRING: 如果字符串为空则为真
+-n STRING: 如果字符串非空则为真
+STRING1 = STRING2: 如果两个字符串相等则为真
+STRING1 != STRING2: 如果两个字符串不相等则为真
+STRING1 < STRING2: 如果按字典顺序STRING1在STRING2之前则为真
+STRING1 > STRING2: 如果按字典顺序STRING1在STRING2之后则为真
+
+字符串匹配
+$STRING1 =~ $STRING2    : 如果字符串 STRING1 与正则表达式 STRING2 匹配则为真
+$STRING1 == *$STRING2*  : 如果字符串 STRING1 包含 STRING2 则为真
+$STRING1 == *$STRING2   : 如果字符串 STRING1 以 STRING2 结尾则为真
+$STRING1 == $STRING2*   : 如果字符串 STRING1 以 STRING2 开头则为真
+
+
+数值比较
+INT1 -eq INT2: 如果INT1等于INT2则为真
+INT1 -ne INT2: 如果INT1不等于INT2则为真
+INT1 -lt INT2: 如果INT1小于INT2则为真
+INT1 -le INT2: 如果INT1小于或等于INT2则为真
+INT1 -gt INT2: 如果INT1大于INT2则为真
+INT1 -ge INT2: 如果INT1大于或等于INT2则为真
+
+逻辑操作
+! EXPR: 如果EXPR为假则为真
+EXPR1 -a EXPR2: 如果EXPR1和EXPR2都为真则为真（AND）
+EXPR1 -o EXPR2: 如果EXPR1或EXPR2为真则为真（OR）
+其他
+-t FD: 如果文件描述符FD打开且指向一个终端则为真

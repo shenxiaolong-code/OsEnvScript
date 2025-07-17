@@ -1,5 +1,5 @@
 
-echo  +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/loadAlias_cudagdb.gdb ...\r\n
+echo  +++++++++ loading /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/loadAlias_cudagdb.gdb ...\r\n
 
 # https://stackoverflow.com/questions/6683721/check-global-device-memory-using-cuda-gdb
 define pd

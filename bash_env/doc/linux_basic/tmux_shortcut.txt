@@ -1,0 +1,41 @@
+CTRL+B，C —在现有的终端窗口中创建新的外壳
+CTRL+B，N—在外壳之间切换
+CTRL+B，一个数字—用相应的数字切换到所选的外壳
+CTRL+B，"—将当前窗口水平拆分为面板（面板在窗口内部）
+CTRL+B，o—在当前窗口中的面板之间切换
+CTRL+B，x—关闭面板
+
+https://confluence.nvidia.com/display/GCA/Productivity+Tools
+To use it:
+
+•         Add /home/utils/tmux-1.8/bin/ into your PATH
+•         Copy /home/mattf/.tmux.conf into your home directory
+•         Connect to the server with Putty and create a TMUX session with running tmux in the cmdline
+
+
+It supports multiple window, you can switch windows with mouse directly.
+
+Frequent shortcuts
+o   Ctrl-a c : create a new window
+o   Ctrl-a K (capital K): kill a window. You can also exit the terminal directly.
+o   Ctrl-a p: previous window
+o   Ctrl-a n: next window
+o   Ctrl-a Ctrl-a: switch to last window
+o   Ctrl-a -: split window into two horizontal panels
+o   Ctrl-a \: split window in two panels vertical
+o   Ctrl-a r: rename a window
+
+When you want to leave TMUX, you don’t need to do anything. Just close the Putty directly. And don’t worry about the network instability.
+When you want to reconnect to last TMUX session, use following cmds
+•         tmux ls: list the alive tmux sessions
+•         tmux attach-session -d -t session_num: reconnect tmux session
+
+If you don't like the Ctrl-a prefix, you can change it eaisly in .tmux.conf. Actually TMUX uses ctrl-b by default. I used ctrl-a to keep my original habit on GNU Screen.
+ 
+set -g prefix ^a
+unbind ^b
+bind ^a send-prefix
+bind ^a last-window
+
+
+https://www.ruanyifeng.com/blog/2019/10/tmux.html

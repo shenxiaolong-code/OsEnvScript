@@ -1,0 +1,112 @@
+/ backward search n to find the next occurrence and N to search in opposite direction
+? forward search
+cmd : 
+:set number         //显示行号
+:set wrap           //自动换行
+:set nowrap         //不自动换行
+
+
+edit file ~/.vimrc , add below line to enjoy MS style copy/cut/paste string
+imap <C-X> "+x
+imap <C-C> "+y 
+imap <C-V> "+gP
+
+gvim -p  file1  file2 file3 file4       //-p ： 在一个gvim窗口中使用多标签模式打开多个文件 ： 适宜于一个问题需要分析多个文件的场景，可以不和其它case的文件弄混。
+
+paste string: 
+hold Ctrl and Shift then hit 'R' and '+'  =>  Ctrl Shift R +       // '<Ctrl - R> +' will paste the X11 buffer.
+
+
+u : undo
+2u : undo 2 times
+crtl+r  : undo all
+
+v : selection  //V : select whole line
+d : cut or y : copy
+p : paste  // P paste after
+
+To enter input mode (actually enter text):
+i inserts at (before) current cursor position
+I inserts at beginning of current line
+a appends following current cursor position
+A appends to end of current line
+o opens up a new line after the current line
+O opens up a new line previous to the current line
+
+To delete text:
+x deletes a single character (at the cursor)
+d<unit> deletes curent textual unit, taken from above. So,
+dw deletes word, up to punctuation
+dW deletes word, ignoring punctuation
+d$ deletes to end of line
+
+/<string> searches forward for <string>
+n reexecutes last search
+N same thing, but other direction
+?<string> searches backward for <string>
+
+0 beginning of line
+$ end of line
+H top of screen
+G bottom of file
+<n>G the n'th line of the file
+L bottom of screen
+
+dL deletes to bottom of screen
+dG deletes from current cursor position to end of file
+dd deletes current line (entirely)
+
+To paste whatever unit of text was just deleted:
+p put, following the cursor.
+P put, preceding the cursor.
+
+To copy units of text w/out deleting them:
+y<unit> yank. So,
+yy yank current line to buffer (copy it)
+yw yank word
+Y copy to end of line (or y$)
+
+To start VI:
+$ vi <filename>
+Vi has 2 modes: input mode (where you just get to type into your file), and command mode. Keep reading.
+
+To save work:
+:w
+To quit:
+:q
+To save and quit:
+:wq
+To save without quit:
+:q!
+
+
+Moving around:
+h left
+j down
+k up
+l right
+
+w forward a word, counting punctuation
+b backward a word, counting punctuation
+W forward a word, not counting punctuation
+B backward a word, not counting punctuation
+
+^F <ctrl>F forward a screen
+^B <ctrl>B backward a screen
+
+[ESC] command mode
+
+To quote a character (insert a non-printing character)
+^V <ctrl>V
+
+To change text:
+c<unit> marks unit for overwrite, puts you in insert mode. So,
+cw change current word
+C change to end of line
+cc change current line (entirely)
+r replace current (single) character
+~ changes case of current character
+
+Other useful stuff:
+J joins current line to line below
+^L <ctrl>L refreshes the screen

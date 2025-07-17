@@ -1,13 +1,13 @@
 
 
-echo +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.gdb:3 ...\r\n
+echo +++++++++ loading /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.gdb:3 ...\r\n
 
 # experiment gdb_python_api
 # https://github.com/jefftrull/gdb_python_api
 # see video tutorial
 # https://youtube.com/watch?v=ck_jCH_G7pA
 
-source /home/xlshen/scratch/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.py
+source /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.py
 
 # if $_shell("test -f /home/xlshen/scratch/third_part_dependency/gdb_pretty_printer/gdb_python_api/gdb_util/stepping.py && echo 1 || echo 0") == 1
 if 1
@@ -28,10 +28,10 @@ if 1
 
 else
     # the source code download to : 
-    # /home/xlshen/scratch/bash_env/app/gdb/feature/gdb_python_api
+    # /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/gdb_python_api
     echo \r\nskip not existing external util.\r\n
     echo \033[33mNot existing dir : \033[31m/home/xlshen/scratch/third_part_dependency/gdb_pretty_printer/gdb_python_api\033[37m\r\n
     echo git clone https://github.com/jefftrull/gdb_python_api  /home/xlshen/scratch/third_part_dependency/gdb_pretty_printer/gdb_python_api \r\n\r\n
 end
 
-echo --------- leaving /home/xlshen/scratch/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.gdb:37 ...\r\n
+echo --------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/gdb_python_api/load_gdb_python_api.gdb:37 ...\r\n

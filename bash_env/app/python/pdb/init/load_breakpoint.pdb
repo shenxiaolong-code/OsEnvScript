@@ -1,5 +1,5 @@
 
-!import os !print(f"\nloading {os.environ['HOME']}/bash_env/app/pdb/load_breakpoint.pdb ...\n")
+!import os !print(f"\nloading {os.environ['HOME']}shell_script/bash_env/app/pdb/load_breakpoint.pdb ...\n")
 
 # set system breakpoint
 # setting the value of the PYTHONBREAKPOINT environment variable
@@ -10,7 +10,7 @@
 
 b ${REPO_DIR_CASK6}/frameworks/xmma/codegen/templates/cask5_adapter/cask5_adapter.hpp.j2:65
 
-!import os !print( "\nDone : {os.environ['HOME']}/bash_env/app/pdb/load_breakpoint.pdb \n")
+!import os !print( "\nDone : {os.environ['HOME']}shell_script/bash_env/app/pdb/load_breakpoint.pdb \n")
 
 
 

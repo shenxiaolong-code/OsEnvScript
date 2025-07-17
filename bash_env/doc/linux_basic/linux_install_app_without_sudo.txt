@@ -1,0 +1,6 @@
+https://unix.stackexchange.com/questions/42567/how-to-install-program-locally-without-sudo-privileges/42583
+
+apt-get source PACKAGE
+./configure --prefix=$HOME/myapps
+make
+make install

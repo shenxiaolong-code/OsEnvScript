@@ -1,5 +1,5 @@
 
-echo  +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/cuda_gdb/loadOptions_cudagdb.gdb ...\r\n
+echo  +++++++++ loading /home/xlshen/scratch/shell_script/bash_env/app/gdb/cuda_gdb/loadOptions_cudagdb.gdb ...\r\n
 
 # https://docs.google.com/presentation/d/1qZBUG_P87TZ8st1a_gjH9Fh_MclTQPUdaeR8fAwitKs/edit#slide=id.g2310ef90fc8_2_19
 

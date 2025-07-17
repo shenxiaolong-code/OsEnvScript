@@ -1,0 +1,26 @@
+https://github.com/microsoft/vscode-cpptools/issues/19
+
+With the 0.9.3 it seems that both GLIBC_2.18 & GLIBC_2.17 is required.
+However if you want a workaround try this:
+
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.18.tar.xz
+tar xvf glibc-2.18.tar.xz
+cd glibc-2.18
+mkdir build
+cd build
+../configure --prefix=/opt/glibc-2.18
+sudo make install
+
+Create a bash script file called Microsoft.VSCode.CPP.Extension.linux.sh in "~/.vscode/extension/ms-vscode.cpptools-0.9.3/bin" with the following contents...
+#!/bin/bash
+    /opt/glibc-2.18/lib/ld-linux-x86-64.so.2 --library-path /opt/glibc-2.18/lib:/lib64:/usr/local/lib64 ~/.vscode/extensions/ms-vscode.cpptools-0.9.3/bin/Microsoft.VSCode.CPP.Extension.linux  
+chmod a+x Microsoft.VSCode.CPP.Extension.linux.sh
+
+
+You can try to start it on the comand line ./Microsoft.VSCode.CPP.Extension.linux.sh
+If it starts silently without errors, then you are fine, otherwise add missing dependencies to the --library-path option in the script,
+if not you will see something like this,
+./Microsoft.VSCode.CPP.Extension.linux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.18' not found (required by ./Microsoft.VSCode.CPP.Extension.linux)
+./Microsoft.VSCode.CPP.Extension.linux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.17' not found (required by ./Microsoft.VSCode.CPP.Extension.linux)
+Modify "~/.vscode/extensions/ms-vscode.cpptools-0.9.3/out/src/LanguageServer/client.js"
+Change the following line from " extensionProcessName += '.linux'; " to " extensionProcessName += '.linux.sh'; "

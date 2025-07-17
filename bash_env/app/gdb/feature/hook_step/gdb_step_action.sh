@@ -9,10 +9,18 @@
 tmp_file_path=${1%%:*}
 
 if [[ -f "${tmp_file_path}" ]] ; then
-    echo "open file : ${tmp_file_path}"
-    echo ssh xiaolongs@computelab-303 "curl -s 'http://computelab-303.nvidia.com:8000/openfile?path=$1'"
+    # add readonly for system source file
+    [[ ${tmp_file_path} == "/usr/"* ]] && { 
+        echo -e "\033[30mreadonly mode for ${tmp_file_path} \e[0;0m" ; 
+        # chown -R ${tmp_file_path} ; 
+    }
+
+    echo -e "\e[0;34mOpen source file :\e[0;32m $1 \e[0;0m"
+    code --goto "$1"
+    # or open file in another remote machine
+    # ssh xiaolongs@computelab-303 "curl -s 'http://computelab-303.nvidia.com:8000/openfile?path=$1'"
 else
-    echo -e "${tmp_file_path} is not a valid file path."
+    echo -e "\e[0;31mInvalid source path :\e[0;33m ${tmp_file_path} \e[0;0m"
 fi
 
 # echo -e "# +++++++++ leaving ${BASH_SOURCE[0]}:$LINENO ..."

@@ -1,0 +1,455 @@
+.login 在登录时执行的文件。
+.cshrc 在每次调用shell时都执行的文件
+
+bash 特殊字符解释
+https://tldp.org/LDP/abs/html/special-chars.html#BRACEEXPREF
+ascii table :  
+https://www.rapidtables.com/code/text/ascii-table.html?viewsel=on
+
+
+可以用  cat /etc/shells 来查询当前的系统支持哪些 shell ，可以用 chsh 来改变缺省的 shell 但是需要管理员权限
+一些系统文件和目录:
+~/.dirOrFile     : 某些程序的配置文件或者目录
+~/.config/       ： 存放 用户软件 的运行时配置信息。 删除即可使使用恢复到初始安装状态。
+/etc             ： 存放 系统软件 对于当前机器特定的配置文件(非bin文件)。 e.g. /etc/ssh
+/proc            ： 存放 内核相关 的东西
+
+linux 系统有一个好处： 可以直接用 ~userName 来访问别人帐号目录下的文件信息 ， 而不需要对方在本server登陆过。 此功能非常方便在自己的环境下学习别人的环境配置。
+
+tab              : 显示当前的目录内容
+Ctrl + shift + T : 创建一个新的控制台窗口并进入到当前的路径。 （原窗口中的环境变量不继承）
+Ctrl + shift + T : 在当前控制台窗口输出中搜索字符串。
+ctrl+R           ： 搜索用过的历史命令. ctrl+O 或者按回车执行搜索出来的历史命令。 ctrl + G 退出历史命令搜索模式。
+ctrl+L           : 清屏
+shift + <-       : 切换到前一个控制台窗口
+shift + ->       : 切换到后一个控制台窗口
+ctrl+A/ctrl+E    ： 将光标移动到行道/行尾。 等价于home/end键
+
+上下光标键可以滚动命令的输入历史
+如果滚动出某一历史后修改了，则无法继续滚动了，这时不想要执行这个一长串命令字符串了，既可用长按退格删除的笨办法，也可以：
+Ctrl+U      : 直接清除掉光标前的任何命令，并且存入到bufferk中，可以用Ctrl+y 粘贴刚才删除的命令。 （ctrl+y不等于从剪贴板中的粘贴命令shift+insert，其粘贴的数据来源不一样，所以粘贴的结果也不一样）
+Ctrl+C      : 保留光标前输入的命令，但是不执行。直接跳转到下一次的命令提示符。
+
+当使用变量时，单引号阻止变量扩展，双引号允许变量扩展并且允许空格存在于字符串中成为一个整体。
+从图形界面模式进入控制台模式也很简单，往往按下Ctrl + Alt + Fn(n=1,2,3,4,5...)快捷键就能够来回切换。--- 验证无效
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+windows中没有linux中的 alias 命令 (windbg中有) ， 所以开始不清楚linux中 环境变量和 alias 的区别。
+linux中 环境变量 和 windows 中的 环境变量 用法与作用一样。  都是用 set 来设置和显示环境变量。  linux : ${envVar}   windows : %envVar%
+而别名 alias 不是一个变量， 可以理解为一个命令组合的缩写。  直接使用即可，不需要使用任何标记来引用它们。
+
+bash 中 alias 与 function 的区别：
+alias       : 相当于 C++ 中的宏. alias name='...'
+              alias 定义的最后， 不能使用分号 ; ，无论使用不使用引号来包含 alias 的宏定义内容。
+              但是不能带参数。 一个折衷的地方就是： 把需要的参数添加到别名别称中，从而使用多个类似的别名. alias name_a=;alias name_b=;alias name_c=;
+              
+function    : 类似于 C++ 的函数，function name()={ ... ; }              
+              函数定义的最后， 必须使用分号 ; 并且函数的定义内容，必须用{} 来包含起来。 函数里每一个语句（完整的命令行），必须用分号;来结尾。
+              但是不能提供返回值 -- 返回值可以通过设置变量来返回。
+
+在定义变量或者别名之前，最好用 where vv 来检查一下，以防止该变量或者别名已经被定义了，而且覆盖掉它而影响其它功能。
+man xxx              查看命令xxx 的帮助，类似于windows系统中的help命令。
+
+在*unix系统中，常用的shell有sh，bash，csh/tcsh, ksh.
+查看当前用的是什么shell : echo currrent using shell is $0 : $SHELL
+
+各个 shell 的能力各有不同， 有时候在一个shell中能够轻易实现的功能，在另外一个shell中可能无法实现，那么可以在 A shell　中来直接调用 Ｂ　ｓｈｅｌｌ的命令：
+在ｃｓｈ ｓｈｅｌｌ 中调用ｓｈｅｌｌ 的命令：
+bash -c  ' your bash shell cmd sequence '
+在 bash ｓｈｅｌｌ 中调用 tcsh ｓｈｅｌｌ 的命令：
+tcsh -c  ' your csh shell cmd sequence '
+e.g. 
+bash -c " read -t 5 -p 'continue auto after 5 second ' || true"
+
+显示当前目录下的文件名：
+find    . -print            // 每行一个文件路径. 输出相对路径。
+find -L . -print            // 每行一个文件路径. 输出绝对路径，类似于win平台的 : dir/s/b
+find . -print0              // 所有文件路径在一行，不同文件路径中间用空格区分
+
+~/test.sh 2>&1 | mailx -s"Cool title" xiaolongs@nvidia.com       //把输出信息发送给指定的邮件
+~/test.sh 2>&1 | tee log.txt        // tee从标准输入中读取，并将读入的内容写到标准输出以及文件中。 其好处是既输出到屏幕，也同时输出到文件
+
+source ~/test.sh |& tee log.txt
+source ~/test.sh |& unbuffer -p  tee log.txt            // 立即输出到文件，不使用buffer
+
+
+echo "$SSH_CLIENT"  查询ssh用的端口号
+netstat -natp       查询当前活动的网络连接
+
+which/where cmd     //命令的执行来源路径。 e.g.   where bootenv
+cmd[tab]            在按了一个命令的前几个字符后，再按tab ， linux系统会把以这几个字符开始的命令或者别名都列出来，这非常有用!
+
+rpm -qa xxx             查询一个命令或者程序安装了没有，如果安装了并显示其版本，也可以用where来实现
+yum -y install xxx      安装一个程序或者命令
+
+groups              查看自己属于哪些group -- 可以存取哪些组的资源
+id xiaoshen         查看自己可以存取哪些AMD projects
+finger xiaolongs    查看用户信息
+
+if ( $?prompt ) then
+    setenv BOOTENV_INTERACTIVE 1
+else
+    unsetenv BOOTENV_INTERACTIVE
+endif               // endif 后面必须紧跟一个空行，否则语法报错 ： then: then/endif not found.
+
+计算变量值:
+set test1 = 10
+set test2 = 15
+@ test3 = ( $test1 * $test2 )
+echo $test3
+
+echo hello  | od -A n -t x1                             # 打印字符串的 16 进制值 ( HEX )
+echo -e "\x4E"                                          # 打印hex的字符串值  https://www.baeldung.com/linux/character-hex-to-ascii
+
+
+command                     |& file                                 // tcsh shell 有效  : 把 stdout 和 stderr 都输出到file
+curl -IL "www.163.com"      >& /dev/null    && echo url exist
+curl -IL "www.163.com_1"    >& /dev/null    || echo url not exist
+curl -IL "www.163.com_1"    >& /dev/null    || ( echo url not exist && echo bb && echo cc )
+
+
+下面方法仅仅对 bash shell 有效
+command > /dev/null                 // 如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null
+command > /dev/null   2>&1          // 如果希望屏蔽 stdout 和 stderr
+command > file 2>&1                 //如果希望将 stdout 和 stderr 合并后重定向到 file
+curl -IL "www.163.com"   2>&1 > /dev/null    && echo url exist
+curl -IL "www.163.com_1" > /dev/null   2>&1  || echo url doesn't exist
+
+ldconfig        // 列出 LD_LIBRARY_PATH 搜索的 lib 库路径。  LD_LIBRARY_PATH 是 make 时使用的lib路径变量。
+
+在linux环境 csh shell 下，有三种环境变量：
+set     localVarName="valValue"                     // 该变量不能被子进程所继承 , 用 echo 来展示其内容                     , 用 unset    来取消设置
+setenv  envVarName   "valValue"                     // 该变量可被子进程所继承   , 用 echo 来展示其内容                    , 用 unsetenv 来取消设置      
+alias   varName      "valValue"                     // 该命令不能被子进程所继承 , 可以用 which/where varName 来显示内容 , 用 unalias  来取消设置
+bash :  alias   varName="valValue"                  // 定义的别名，缺省情况下，只能在交互式终端中使用。
+                                                    // 如果想在脚本中也使用在脚本中定义的别名，需要使用bash 选项: shopt -s expand_aliases 
+                                                    // https://stackoverflow.com/questions/33135897/bash-alias-command-not-found
+
+在linux环境 bash shell 下，有三种环境变量：
+        localVarName=varValue                       // 该变量不能被子进程所继承   <=> csh : set ,  用 unset    来取消设置
+export  envVarName=varValue                         // 该变量可被子进程所继承     <=> csh : setenv ,  用 unsetenv 来取消设置
+alias   varName="valValue"                          // 该命令不能被子进程所继承   <=> csh : alias  , 用 unalias   来取消设置
+                                                       bash shell 的 alias 不能像 csh shell 的alias那样带参数 \!:1。 如带参数，需要用function()  {  ...  }
+                                                    // export 不能用动态变量名，如 $1=32822629
+                                                    // 报告错误： bash: export: `=32822629': not a valid identifier
+                                                       
+把命令的输出作为变量的值(bash)
+varName=`cmd`                       // e.g.  curPath=`pwd`
+varName=$(cmd)                      // e.g.  curPath=$(pwd)                 <=>  curPath=${PWD}
+
+
+然后对应地可以用下面三种命令来查询所有的设置：
+set , env , alias
+set                                                 // 列出所有的用户/shell变量 ，该变量不能被子进程所继承
+env                                                 // 列出所有的环境变量，该变量可被子进程所继承
+
+使用 alias 的一个技巧：
+通常情况下 , 多个命令组成的 alias 值必须用引号'/"来括起来。 如果命令本身又包含多重单双引号时，而命令中使用的引号又不能使用转义，这时就无法直接定义 alias .
+可以使用下列的技巧： 把'/"用一个变量来表示，然后在 alias 的定义中使用变量名。 例如：
+set     q1="'"
+set     q2='"'
+alias   timeout     'bash -c " read -t 5 -p ${q1}continue auto after 5 second ${q1} || true" '
+
+4。环境变量和内部变量：后者不能被子进程继承（如同C里的局部变量）－－改环境变量就会自动改内部变量，反之不然。“set”可给出内部变量列表，“env”可给出环境变量列表。继承只对环境变量有效
+
+set 和 setenv 的区别：
+set     出来的变量只在 ***当前进程*** 中有效，属于shell里程的变量，相当于内部局部变量。
+        在当前shell中启动的新进程不会继承当前shell中设置的变量。
+        新起一个shell中就无效了，或者在shell里加载一个脚本，脚本里启动了一个其它的工作进程，则该变量在工作进程中无效。
+        例如 ： CMake/make 在运行时，通常会额外启动多个工作进程，用set设置的变量，则在这些工作进程中都是不可见，是无效的。此时要用 setenv 来设置。
+setenv  出来的变量在***当前进程及其子进程*** 都有效，在本进程中新起的工作进程都可以使用它。
+        在当前shell中启动的新进程会继承当前shell中设置的变量。
+        在cmake/make 等额外运行工作里程的环境中要用到的变量，必须要用 setenv 来设置。
+
+set 和 setenv 的最佳实践：
+如果一个环境变量的值是动态多步组装的，比较良好的做法是先用set ， 再用 setenv :  
+set     var=var_raw
+set     var=xxx:${var}
+set     var=yyy:${var}
+setenv  var  "${var}"
+如果在一个脚本中频繁对同一个变量使得 setenv ， 其最终的结果可能会不正确 --- 丢失部分值 或者不生效
+如果一个环境变量的值在同一个脚本中不是多次更新改变的，则可以直接使用 setenv
+   
+但无论是set还是 setenv 设置的变量，在下次登陆时都会丢失。 （即登陆shell初始化时，所以的环境变量都会被重置reset）
+所以在登陆init脚本中，使用下列语句不会造成newPath的重复多次叠加。
+而在非登陆init脚本中，使用下列语句就会造成newPath的重复多次叠加。
+所以setenv类似于windows的set， （ linux中的set/windows的setx都没有相应的对应物)。
+
+sh:   PATH=/usr/bin:$PATH ;      export PATH       －－注意：在export前 PATH 为内部变量，之后为环境变量。
+Csh： set PATH=/usr/bin:$PATH                       -- 设置当前进程的内部临时变量
+Csh： setenv PATH /usr/bin:$PATH                    --  设置全局有效的环境言归正传。 环境变量 setenv 赋值没有等号， 而内部变量的赋值(set)有等号。
+ 
+set var = $<                                        //从stdin读值，相当于windows的 set /p var=
+set abc = 'string with blank or special char'       变量值中包含特殊字符或者空格。 bat 中的方法是把变量名和值对完整地包含进来，csh中是引号只包含值    // windows bat 方法：  set "abc=string with blank or special char"
+
+设置搜索路径语法：(linux 没有类似于windows的动态永久设置路径的命令setx.exe。 如果要设置永久生效的变量或者path，把其加入到$HOME/.cshrc [/home/$user/.cshrc]文件中即可。)
+export      PATH=/some/new/path:$PATH
+setenv      PATH /usr/bin:/tool/pandora/bin:$PATH
+setenv      PATH /usr/bin/:$PATH
+set         myVarPath = (/usr/local/bin $cwd $path)
+setenv      myVarPath /dir/path1\:/dir/path2\:$path\:$cwd
+unsetenv    myVarPath
+envsubst    linux 不会自动扩展一个变量中的变量，这会导致变量中的变量被当成字符串来处理，一般情况下不符合预期。 可以使用 envsubst 命令来强制扩展变量字符串的变量。
+            <cmd> | envsubst
+
+meld                对比两个目录
+                    meld /proj/gfxip_mi300_runs/users/pubiswas/COMPASS/cp5150578_5/src/test/tools/block/pm4lib/ /proj/gfxip_pv_regress19/art_regression/mi300/compass/Round32/CL5174526/src/test/tools/block/pm4lib/
+
+
+附加日期时间的文件名：
+$ echo set logging /home/xiaoshen/linuxScript/gdb/test/gdb_log_`date +"%Y_%m_%d_%I_%M_%p".log`
+set logging /home/xiaoshen/linuxScript/gdb/test/gdb_log_2021_09_17_06_58_PM.log
+$ echo set logging /home/xiaoshen/linuxScript/gdb/test/gdb_log_`date +"%Y%m%d_%I%M_%p".log`
+set logging /home/xiaoshen/linuxScript/gdb/test/gdb_log_20210917_0701_PM.log
+
+创建临时的文件或者目录：
+mktemp                      // 缺省创建文件，-d 表示创建目录。
+                            // tcsh shell 没有 windows 的 %random% 变量，  bash有 $RANDOM 变量
+
+alias                   //列出所有的别名
+alias aliasName         //显示别名的值
+unalias m               //删除别名定义
+
+cp -R <source_folder> <destination_folder>     //复制目录 , e.g.   cp -R /etc /etc_backup
+在不同的主机间复制目录： 如果忽略主机名，则是当前主机。 如果忽略用户，则是当前用户
+注意： 远程主机的 .cshrc 不能有任何echo输出信息，否则其会破坏scp的log分析序列： scp靠分析返回的log来判断当前交互状态的。所以远程的任何.cshrc输出信息都会当前scp传输命令的失败
+scp 的远程主机必须工作在非交互模式下 ： 可以用 if ( $?prompt ) 来判断交互模式还是非交互模式
+scp -prq <src>  <dst>
+scp -prq username1@serverA:/path/to/directory       username2@serverB:/path/to/files/.
+scp -prq /path/to/directory                         username2@serverB:/path/to/files/.           //从当前主机向 serverB 复制目录
+scp -prq username1@serverA:/path/to/directory       /path/to/files/.                            //从 serverA 主机向当前主机复制目录
+
+
+// https://einverne.github.io/post/2015/02/xclip-command-line-interface-to-x-selections.html
+echo $HOSTNAME $PWD | xclip -selection clipboard        复制当前的路径到剪贴板中去 (xsel -ib 命令也行) ,或者简写为：  echo $HOSTNAME $PWD | xclip -sel c , 或者最简单的 echo hello | xclip
+                                                        不加参数只保存在当前终端的剪贴板中，不能共享给其它程序使用。 如果从实际使用意义角度上，应该加参数 -sel c
+xclip -o -sel clip                                      从当前剪贴板中读取数据(xsel -ob 命令也行),或者简写为：  echo $HOSTNAME $PWD | xclip -o -sel c  或者直接的 xclip -o
+                                                        到文件 : xclip -o > output_file.txt
+
+grep 不支持正则表达式， egrep 支持正则表达式
+grep -niR searchKeyString                               //在当前目录下的所有文件中搜索searchKeyString .
+grep DOORBELL tcore*                                    //在当前目录下所有的 tcore* 文件中搜索 DOORBELL
+find -type d -iname "pm4lib" | grep -v tools            //-v 排除匹配
+grep -Fn  "$"                                           //搜索字符串中含有需要转义的特殊字符
+grep 'extra\|value' sample.txt                          //正则表达式搜索 : 用\来转义|
+grep -e "extra" -e "value" sample.txt                   //不使用正则表达式搜索来搜索多个条件
+grep -w 'provide\|count' sample.txt                     //-w : 全字匹配搜索. providers 是不匹配的， provide 是匹配的。
+<long_output_cmds> | grep -v "*"                        // no more , 忽略命令的分屏显示，一次显示完所有的输出。  e.g. git log -n 10 --author=xiaolongs | grep -v "*"
+<long_output_cmds> | less 
+
+grep 选项:
+-n : 显示行号。 -i : 忽略大小写。 -R ： 搜索子目录  -c ： 统计结果总数  -e : 多个搜索条件，其可用正则表达式合并
+
+git -c color.branch=always branch -vv | nl -ba          // nl -ba 给输出加上行号
+
+find /home -type f -iname "*.txt"                       //不分大小写搜索文件。如果分大小写，使用-name。 更多用法见 linux_cmds_search_file.txt
+gunzip *.gz                                             //解压.gz文件到当前目录. unzip , unpack , uncompress
+tar -zxvf ×××.tar.gz                                    //解压文件.tar.gz到当前目录
+tar -zxvf backups.tgz -C /tmp/data                       //解压文件.tgz到指定目录，目录需要预先创建。
+
+定位库模块(lib)的路径：locate mod.so
+dc7-sim-i19-151:~/scratch/git/cask_sdk> locate libpthread.so
+/lib/libpthread.so.0
+/usr/lib/x86_64-redhat-linux5E/lib64/libpthread.so
+/usr/lib64/libpthread.so
+
+
+https://www.runoob.com/linux/linux-comm-xargs.html
+xargs                                                                       // 把前一个命令的输出当作下一个命令的输入参数
+                                                                             https://www.mkssoftware.com/docs/man1/xargs.1.asp
+                                                                            debug xagrs命令可加参数-t  :  | xargs -t
+tips:
+cat test.txt | xargs    多行输入，单行输出 , 如果不用 xargs ， 则需要使用 set ret=``的方法 -- 增加一个不必要的临时变量。
+echo ${str}  | xargs    除去所有单/双引号 ， 换行符
+echo ${str}  | tr ' ' '\n'   和 xargs 相反的过程 ： 把一行以空格为分隔符替换成多行
+cat "build_ci_info.txt" | xargs grep "dockerName=" | xargs -l bash -c ' printf "dir : %-88s  docker : %-s\n"  $0  $1 '        // format, align , column , 格式化对齐多列字符串      
+
+find $PWD -type f -iname "*.log" | xargs grep "ERROR"
+find ./ -type f -iname "2" | grep -v "/.svn/" | xargs rm ${1}               // ${1} 引用第一个参数， {} 引用所有的参数（类似于%*）
+find -L ${EXT_DIR}/tmp/docker/silicon/ -type f -iname "*.txt" | grep -v "${tmp_filter}" | xargs -I @ echo rm @ 
+find ./ -iname "*.txt" -print0 | xargs -0 -I file echo mv file ~/old.src    // 移动满足条件的文件到 ~/old.src 目录中去。   
+                                                                            // -0 选项用于处理文件路径中包含空格的情况，确保其被当成有效的文件路径. 
+                                                                            //    如果有多个文件不能用此选项，因为它把所有的输出都认为是一个文件路径。
+                                                                            // -I  指定代表每个文件路径的变量名， 相当于for循环中的 %i
+echo 1 2 3 4 5 | xargs -I@ echo the string is \" @ \" end                   // the string is " 1 2 3 4 5 " end
+cat /home/scratch.xiaolongs_gpu_1/build/_lastBuildDir.txt | xargs -I @ echo export @ | xargs            //执行命令
+
+
+# only bash supported:
+echo {1..8}                          输入 1 2 3 4 5 6 7 8
+echo argument1 argument2 argument3 | xargs -l bash -c 'echo this is first:$0    second:$1    third:$2'
+[bash-4.2]$ echo {1..8} | xargs -n2 sh -c 'echo "the number $1 comes before $2"' sh
+the number 1 comes before 2
+the number 3 comes before 4
+the number 5 comes before 6
+the number 7 comes before 8
+
+# Passing Three Arguments to the Script
+echo "Tom Likes Jerry" | xargs ./threeWords.sh 
+                                                                            
+bcompare dst1   dst2    // linux下Beyond文件比较工具.
+                        // bcompare $STEM/src/meta/flows/chiplevel.dv chiplevel.dv
+
+alias te echo No.1 parameter is !:1. No.2 parameters is !:2     //不可靠，输出似乎没有规律
+alias te 'echo current alias is !:1. all parameters are !:2'    //不可靠，输出似乎没有规律
+alias te 'echo demoParam: input 1st parameter is $1, all parameter is $*'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+qsub -Is -q o_cpu_2G_1H -m rel75 -P gpu_g000_arch_compute_fastkernels bash
+-Is : 交互模式
+-q  : 用的queue， 可以用list_queues 命令来列出所有的queue从而选择高性能的queue
+-P  ：project name ， NV 特有的必须项。查询项目详细信息命令： qsub --projectMode direct --debug   -P gpu_g000_arch_compute_fastkernels -q o_cpu_48G_96H
+
+ls -al                                  //查找所有文件及其权限
+tree -L 1 -fi .                         列出当前目录下的所有一级文件及目录，非常适宜于脚本解析目录文件，类似于win下的dir/s/b
+
+chmod +x the_file_name
+chmod u+r+x filename.sh
+    ./filename.sh
+
+chmod 640   filePath        //file is executalbe
+chmod 700   folderPath      //folder is executalbe
+chmod +x    demoloop.csh
+
+在linux终端先输入ls -al,可以看到如:
+   -rwx-r--r-- (一共10个参数)
+第一个跟参数跟chmod无关,先不管.
+2-4参数:属于user
+5-7参数:属于group
+8-10参数:属于others
+接下来就简单了:r==>可读 w==>可写 x==>可执行
+               r=4      w=2      x=1
+所以755代表 rwxr-xr-x
+
+
+cmd&                                    // 让命令后台运行，比如从命令行启动gui程序.  e.g.  navo&
+ctrl+z                                  // 暂停(suspend)当前正在运行的进程
+jobs                                    // 查看后台进程列表
+bg                                      // 继续后台运行指定的进程。  多个后台进程时，可用bg %n 来指定哪个后台进程
+fg                                      // 把一个后台进程放回前面， 可用jobs查询后台进程。 多个后台进程时，可用fg %n 来指定哪个后台进程
+ctrl+z                                  : 将当前任务暂停推向后台，然后执行其它程序任务。 然后执行fg命令返回到程序继续工作。
+
+To list currently running processes, use the cmd : ps , top
+force kill process :
+kill -9 pid                 //To kill process in Linux with PID:
+killall -9 appname          //To kill process in Linux with application name:
+pkill -9 code               //To kill vscode process
+
+ps  -a                      // list all process
+
+To find firefox pid run any one of the following commands:
+pidof firefox
+pgrep firefox
+ps aux | grep firefox       //find firefox process
+ps -ef | grep const
+xkill                       // kill mouse selected process.
+
+查找谁锁住了文件:
+lslocks | grep /var/lib/dpkg/lock
+sudo lsof /var/lib/dpkg/lock
+
+source scriptFile   //运行脚本，使脚本里设置内容立即生效。 e.g.   source $verif_release/cbwa_bootcore/$bootcore_ver/bin/_bootenv.csh
+gvim  !*
+cat                                     //和windows下的type命令功能一样：不打开文件显示文件内容。
+                                        //删除重复的空行合并为一个空行 : cat –s linuxmi.py
+                                        //显示制表符,                      加参数 -t :  cat –t linuxmi.py
+                                        //如果要显示行号，                  加参数 -n : cat -n linuxmi.py
+                                        //如果对于空行不想显示行号，        加参数-b  : cat –b linuxmi.py
+
+
+https://geekflare.com/linux-performance-commands/
+检测CPU负荷负载资源消耗，查看哪个进程导致了高CPU
+htop
+1. 系统很慢
+   使用 top 命令看看哪个用户哪个进程占用CPU/memory 太高，然后kill掉。
+
+检查目录用量公布： 清除不必要的文件
+https://www.2daygeek.com/linux-check-directory-size/
+du -hc /home/xiaoshen  -sh --exclude=.snapshot $HOME | sort -rh | head -20
+df -h   .                   显示当前目录对应的磁盘空间信息(disk usage)
+du -sh .vscode-server       显示.vscode-server目录大小。
+du -h --max-depth=1 .       显示当前目录下各个子目录/文件的大小。
+du -hcl . | sort -rn        显示当前目录下各个子目录/文件的大小。
+
+
+只显示文件前20行
+cat file.txt | head -20
+
+realpath  : realpath 命令将每个文件名参数转换为绝对路径名，该绝对路径名不包含符号链接或 special 组成部分 . 或 .. 目录条目。
+readlink 命令是 Linux 系统中一个常用工具，主要用来找出符号链接所指向的位置。
+
+ln -s   <srcPath> <dstPath>  相当于windows的 mklink ,创建软符号链接。
+                             ln -s  /home/scratch.xiaolongs_gpu_1/vscode_space/.vscode-server  ~/.vscode-server
+                             创建一个~/.vscode-server，其指向 /home/scratch.xiaolongs_gpu_1/vscode_space/.vscode-server
+mount   <srcPath> <dstPath>  挂载Linux系统外的文件.
+                             mount   /dev/hda1 /mnt                 // 将 /dev/hda1 挂在 /mnt 之下。
+mount -o ro /dev/hda1 /mnt             // 将 /dev/hda1 用只读模式挂在 /mnt 之下。 ro / rw / loop(将一个档案当成硬盘分割挂上系统)
+
+
+top                         性能排查：显示每个进程的信息，类似于win的任务管理器。
+uname -a                    查找系统版本信息 ，显示部分信息: uname -r
+lsof | grep deleted         查看是否删除掉的文件仍然被进程占用而没有进行实际删除。
+
+
+从非文本文件中(bin文件等)搜索字符串：strings
+strings <binaryFilePath> | grep <searchString>
+e.g.
+strings /lib64/libc.so.6 | grep GLIBCXX
+
+readelf --dyn-syms "./pm4/libsq_flat_scratch_sdata_2nd_cycle_pm4_01.so"             // dump 一个模块中的符号信息
+readelf --all -W    <lib name>                                                      // dump all info ,     windows : dumpbin.exe /all <lib name>
+c++filt             <symbols>                                                       // 显示一个符号的可读签名 . windows : undname.exe
+
+
+ldd ./pm4/libsq_flat_scratch_sdata_2nd_cycle_pm4_01.so      //查看一个模块的依赖库 及依赖库的确切路径
+查看 libc 库版本：
+ldd --version
+ldd (GNU libc) 2.12
+Copyright (C) 2010 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Written by Roland McGrath and Ulrich Drepper.
+某程序依赖高版本会报错:
+/lib64/libc.so.6: version `GLIBC_2.14' not found
+
+history  4      // 只显示最后四条命令
+history > his210512_vncserver.log
+
+mkdir               //新建目录
+mkdir -p            //递归新建多级目录
+
+rm  -r folderName   //删除非空目录
+pwd                 //显示当前路径。 提示符可能不显示当前路径。 等同于windows :  echo %cd%
+                    //pwd -L 显示当前的符号链接路径，而不是真实链接 ( 某些场景下很有用 ) ， 缺省的是 -P ，显示真实路径。
+
+注释commnet：
+单行注释： #
+多行注释： linux 没有直接的多行注释符，但可变通实现： 注意 :和'之间有空格，否则语法报错
+: '
+multile line
+comment
+example
+'
+
+Linux Shell 中需要转义的字符
+空格'\ `
+星号'*`
+井号 #
+换行符
+双引号'"'
+反引号 `
+美元符 \$
+反斜杠 \
+
+
+echo    如果 echo 的输出不加双引号，其中的连续空格会被替换成一个空格(这可能不符合排版对齐的期望)，如果希望保持原样输出，可以把输出内容用引号包含起来。（引号不会输出，除非使用转义符）
+echo    "$path"
+echo     $cwd
+echo    '"'$cwd'"' > ~/file         # 向文件中输入双引号或者单引号 ： 否则引号永远被过滤掉。
+echo     "current path is :"'"'$cwd "end."'"' > ~/file 
+printf "%s\n"  $path
+
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+sh来自于systemV的Unix，是传统的Unix的shell，直到现在很多的系统管理员仍然喜欢使用sh。
+bash来自于BSD Unix，语法非常类似于C语言，所以通常有C/C++编程背景的开发人员最喜欢使用。
+ksh是对sh的扩展，且吸收了csh的一些有用的功能，但是由于开始ksh的license是AT&T，所以后来出现了很多的ksh的开源版本，例如mksh，pdksh等。
+bash是现在很多Linux的发行版中默认的shell，综合了其他shell的很多优点。

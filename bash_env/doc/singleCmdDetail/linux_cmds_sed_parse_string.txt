@@ -1,0 +1,161 @@
+SED 命令常用示例与详解
+sed 中内置的特殊变量：
+$ 表示最后一行
+& 表示匹配的内容
+\b  表示单词边界 , 字母、数字或下划线. e.g.   echo "the these there the" | sed -n '/\bthe\b/p'     # 输出 the
+\B  表示非单词边界 , 空格、标点符号、行首或行尾
+
+1. 替换相关
+# 普通替换
+sed 's/old/new/' file                        # 替换每行第一个匹配
+sed 's/old/new/g' file                       # 替换每行所有匹配
+sed 's/old/new/2' file                       # 只替换第二个匹配
+sed -e 's/old1/new1/g' -e 's/old2/new2/g' file # 多重替换
+
+# 按模式/范围/行号替换
+sed '/pattern/s/old/new/' file               # 匹配pattern的行替换
+sed '/pattern/!s/old/new/' file              # 不匹配pattern的行替换
+sed '/start/,/end/s/old/new/' file           # 匹配范围替换
+sed '5s/old/new/' file                       # 只处理第5行
+sed '5,10s/old/new/' file                    # 处理5-10行
+sed '5,$s/old/new/' file                     # 从第5行到文件末尾
+sed "s/pattern/\x1B[32m&\x1B[0m/g" file      # 匹配内容高亮为绿色
+
+# 命令块{}
+# 命令块{} 前面必须是地址,比如
+#   行号：1, $, 1,5 等
+#   正则表达式：/pattern/, /^#/ 等
+#   范围：1,/pattern/, /pattern1/,/pattern2/ 等  (逗号,是范围表示符，不是离散地址表示符，分号;是多个命令分隔符)
+# 需要 命令块{} 的例子
+#   当需要在同一行执行多个命令时    
+#   当命令需要和地址（如 $）组合时 （命令块中的地址，比如 $ 是固定值，不是动态更新的）
+sed '/pattern/ {s/old/new/;p}' file.txt   # 在匹配行执行替换和打印
+sed '5{s/old/new/;d}' file.txt           # 在第5行执行替换和删除
+sed '5,8{s/old/new/;d}' file.txt         # 在第5~8行执行替换和删除
+sed '5{s/old/new/;d}; 8 {s/old/new/;d}' file.txt   # 在第5行, 第8行执行替换和删除. 不能写成 sed '5,8 {s/old/new/;d}' file.txt
+sed '${s/old/new/;d}' file.txt                    # 在最后一行执行替换和删除
+# 不需要 {} 的情况：
+#   当只执行单个命令时
+#   当命令不需要和地址（如 $）组合时
+sed '/pattern/s/old/new/' file.txt        # 不需要 {}
+
+# 注释处理
+sed 's/^[[:space:]]*#*[[:space:]]*/# /' file  # 添加注释（保证只有一个#）
+sed 's/^[[:space:]]*#*[[:space:]]*//' file    # 取消注释
+
+2. 删除/过滤相关
+sed '/pattern/d' file                        # 删除匹配行
+sed '/^$/d' file                             # 删除空行
+sed '5,10d' file                             # 删除5-10行
+sed -i '$d' file                             # 删除文件最后一行
+sed -i -e '$d' -e 's/\n$//' file             # 删除文件最后一行，并删除行尾的换行符
+sed -i -e '$d' -e '$s/^$//' file             # 删除文件最后一行，并删除可能存在或者不存在的行尾换行符
+
+3. 行操作
+sed -n '5p' file                             # 只显示第5行
+sed -n 81p file.txt                          # 打印第81行
+sed -n '5,10p' filename                      # 只显示第5~10行. sed 没有直接支持倒数第几行的选项，只能通过变量的办法。
+                                             # total_lines=$(wc -l < file )
+                                             # end_line=$((total_lines-n+1))
+                                             # sed -n "${start_line},${end_line}p"
+sed -n '/str1/,/str2/p'                      # 只显示 str1 和 str2 之间的行 (包含 str1 和 str2 行)
+sed -n '/str1/,/str2/{/str1/b; /str2/b; p}'  # 只显示 str1 和 str2 之间的行 (不包含 str1 和 str2 行)
+sed -n 's/banana/fruit/p' example.txt        # 替换并只显示发生替换的行
+
+4. 文件与批量处理
+sed -i 's/old/new/g' file                    # 直接修改文件
+sed -i -- 's/abc/dde/g' "${my_path}/*.*"     # 替换目录下所有文件
+sed -i -e 's/word1/word2/g' -e 's/xx/yy/g' input.file # 多重替换
+sed -e '1d' -e '2d' file.txt                 # <==>     sed '1d,2d' file.txt
+
+5. 变量与路径处理
+echo $PATH | sed "s#:${new_entry}:#:#g"                              # 删除PATH中的特定路径
+set PATH=${new_entry}:`echo $PATH | sed "s#:${new_entry}:#:#g"`      # 先删除再添加，避免重复
+set var=" ` echo ${str} | sed 's#.*=##g' | xargs `"                  # 使用xargs自动去除引号
+sed 's#/absolute/path/#relative/path/#g' file                        # 路径分隔符处理
+echo /path/to/file.cu | sed 's#/home/path/##' | sed 's#[^/]*$##' | sed 's#[^/]*#..#g' | sed 's#$#&/include/#g'    # 路径转相对路径
+
+6. 特殊字符/换行/分隔符处理
+cat "abc.txt" | tr '\n' '!' | <processText> | tr '!' '\n' # 先替换换行符为特殊字符
+sed -e 's/\x0/\n/g'                        # 把空字符替换为换行符
+echo "a;b" | sed 's/;/\n/g'                # 分隔符转换为换行
+
+简化的Sed操作符:
+sed "/pattern/i insert_new_line_string"      # 在 pattern 行前插入  : insert_new_line_string
+sed "/pattern/i\  insert_new_line_string"    # 在 pattern 行前插入  : 空格+insert_new_line_string 
+sed "/pattern/i\insert_new_line_string"      # i = insert
+sed "/pattern/a\insert_new_line_string"      # a = append
+sed "/pattern/d"                             # d = delete
+sed "/pattern/c\insert_new_line_string"      # c = change
+sed "s/pattern/111&2222/"                    # <==>  sed -e "/pattern/i\111" -e "/pattern/a\2222"    # 在匹配行前插入 111 ，在匹配行后追加 2222
+sed "/pattern/p"                             # p = print
+# g - 全局替换：sed "s/pattern/replacement/g"
+# i - 忽略大小写：sed "s/pattern/replacement/i"
+# n - 只打印匹配的行：sed -n "/pattern/p"
+
+7. 正则表达式
+# sed不支持"非贪婪"运算符。 即不支持 : aaa.*?bbb , 其总是支持最大匹配。如果需要非贪婪匹配，必须使用[^x]来排除
+sed -E 's#.*[cC][fF][kK].[0-9]{3,}.##g'      # 删除cfkxxx.的字符串，CFK不分大小写
+sed -E "s#^ hello #111 & 2222#g"             # &引用匹配内容: 111 hello 2222
+echo $strVar | sed 's/.*\(...\)/\1/'         # 只显示后面三个字符
+sed 's#\\(/home/[^ ]*\\.[^ ]*\\)#\\1#g'      # 删除/home/xxx.xxx
+echo "a-b-c-d" | sed 's/\(.*\)-/\1 /'                   # 仅仅替换最后一个匹配的 - , 原理 ： 贪婪匹配最长，直到最后一个匹配处检测到
+sed -i -E "${lineNo}s#(.*)${str}#\1${new_str}#" file    # 替换第lineNo行中，最后一个匹配的 str 字符串为 new_str ，注意 str 和 new_str 中不能包含正则表达式特殊字符
+
+8. 其他工具配合
+echo ${list} | sed -n 's/\(\([^,]*pattern[^,]*,\)*\).*/\1/p' # 提取所有满足条件的子字符串
+sort file | uniq                             # 滤除重复的行
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c # 使用cut选择第2列
+ps | grep node | awk '{print $2}' | xargs kill -9      # 使用awk选择第2列
+
+
+2. 语法说明
+基本格式：
+sed [选项] '[地址]操作/模式/替换/标记'
+
+常用选项：
+-i      直接修改文件
+-r/-E   使用扩展的正则表达式。-r 和 -E 是完全等价的，-E 是 POSIX 标准选项，-r 是 GNU 扩展选项，建议使用 -E 以保证更好的兼容性
+-n      禁止自动打印
+-e      允许多个命令
+-f file 从文件读取命令
+
+常用操作命令：
+s：替换    d：删除    p：打印
+i：插入    a：追加    c：更改
+y：转换    q：退出
+
+替换标记：
+g：全局替换（否则只替换每行第一个）
+n：替换第n个匹配（1~512之间的数字）
+p：打印替换的行
+w file：将替换结果写入文件
+I：忽略大小写
+&：表示匹配的内容
+
+3. 正则表达式说明
+常用字符类：
+[[:digit:]]  # 数字 [0-9]
+[[:alpha:]]  # 字母 [a-zA-Z]
+[[:alnum:]]  # 字母和数字
+[[:space:]]  # 所有空白字符 [\ t \ r \ n \ v \ f]
+[[:blank:]]  # 空格和制表符
+[[:lower:]]  # 小写字母
+[[:upper:]]  # 大写字母
+[[:punct:]]  # 标点符号  [-! " # $% & '() * +,. /:;? @ [] _` {} ~].
+[[:cntrl:]]  # Control characters [\ x00- \ x1F \ x7F]
+[[:graph:]]  # Any visible character (i.e. except blank) [\ x20- \ x7E]
+[[:print:]]  # Visible characters (ie except control characters) [\ x20- \ x7E]
+[[:xdigit:]] # Hexadecimal Number [0-9 a-f A-F]
+
+注意事项：
+1. 变量替换必须用双引号，不能用单引号
+2. 颜色代码必须用硬编码：\x1B[32m \x1B[39m
+3. 不支持\d，需用[[:digit:]]或[0-9]
+4. +需要转义为\+才表示正则含义
+5. 不支持非贪婪匹配(.*?)，需用[^x]代替
+6. BRE模式下特殊字符需转义：?,+,|,{,},(,)
+
+6. 参考资料
+GNU sed手册：https://www.gnu.org/software/sed/manual/
+正则表达式：https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html

@@ -1,0 +1,94 @@
+start "" "C:\Program Files (x86)\WinSCP\WinSCP.exe" scp://xiaoshen:pwd@srdcws1087.amd.com:/home/xiaoshen/bp/
+start "" "C:\Program Files (x86)\WinSCP\WinSCP.exe" scp://xiaoshen:pwd@srdcws1087.amd.com:/home/xiaoshen/bp/   /rawsettings LocalDirectory=c:\temp\ttt
+start "" "C:\Program Files (x86)\WinSCP\WinSCP.exe" "scp://xiaoshen:pwd@srdcws1087.amd.com:/home/xiaoshen/bp/" /rawsettings "LocalDirectory=c:\temp\ttt"
+
+:: scp://...:/path/folderName/      means to open/browser folder online
+:: scp://...:/path/folderName       means to download folder to local
+
+console :
+start "" "C:\Program Files (x86)\WinSCP\WinSCP.exe" /console /command "open scp://xiaoshen:pwd@srdcws1087.amd.com:/home/xiaoshen/bp/" "lcd C:\temp\ttt"
+"C:\Program Files (x86)\WinSCP\WinSCP.exe"  /help
+
+WinSCP, Version 5.17.10 (Build 11087)
+Copyright © 2000-2021 Martin Prikryl
+
+Usage:
+WinSCP site|workspace|folder
+WinSCP (sftp|scp|ftp[es]|dav[s]|s3)://[user[:password]@]host[:port][/path/[file]]
+WinSCP [mysession] /sessionname=<name>
+WinSCP [mysession] /newinstance
+WinSCP [mysession] /edit <path>
+WinSCP [mysession] /browse[=<file>]
+WinSCP [mysession] /synchronize [local_dir] [remote_dir] [/defaults]
+WinSCP [mysession] /keepuptodate [local_dir] [remote_dir] [/defaults]
+WinSCP [mysession] /refresh [path]
+WinSCP [mysession] [/privatekey=<file> [/passphrase=<passphrase>]]
+WinSCP [mysession] [/hostkey=<fingerprint>]
+WinSCP [mysession] [/clientcert=<file> [/passphrase=<passphrase>]]
+WinSCP [mysession] [/certificate=<fingerprint>]
+WinSCP [mysession] [/passive[=on|off]] [/implicit|explicit]
+WinSCP [mysession] [/timeout=<sec>]
+WinSCP [mysession] [/rawsettings setting1=value1 setting2=value2 ...]
+WinSCP [/console] [/script=<file>] [/command cmd1...] [/parameter // param1...]
+WinSCP [/log=<logfile> [/loglevel=<level>]] [/logsize=[<count>*]<size>]
+WinSCP [/xmllog=<logfile> [/xmlgroups]]
+WinSCP [/ini=<inifile>]
+WinSCP [/rawconfig config1=value1 config2=value2 ...]
+WinSCP [/rawtransfersettings setting1=value1 setting2=value2 ...]
+WinSCP /batchsettings <site_mask> setting1=value1 setting2=value2 ...
+WinSCP /keygen keyfile [/output=<file>] [/changepassphrase] [/comment=<text>]
+WinSCP /update
+WinSCP /info
+WinSCP /help
+
+ session              Name of site or direct session specification.
+ /sessionname=        Gives a name to the session
+ /newinstance         Open session in new window, even if WinSCP is running
+                      already.
+ /edit                Opens remote file in internal editor.
+ /browse              Selects the specified file in file panel(s).
+ /synchronize         Synchronizes content of two directories.
+ /keepuptodate        Starts Keep remote directory up to date function.
+ /refresh             Reloads remote panel of all running instances of WinSCP.
+                      If session (and optionally a path) is specified,
+                      refreshes only the instances with that session (and
+                      path).
+ /defaults            Starts operation without showing options dialog.
+ /privatekey=         SSH private key file.
+ /hostkey=            Fingerprint of server SSH host key.
+ /clientcert=         TLS/SSL client certificate file.
+ /certificate=        Fingerprint of server TLS/SSL certificate (FTPS protocol
+                      only).
+ /passphrase=         A passphrase for an encrypted private key or a client
+                      certificate
+ /passive=            Passive mode (FTP protocol only).
+ /implicit            Implicit TLS/SSL (FTP protocol only).
+ /explicit            Explicit TLS/SSL (FTP protocol only).
+ /timeout=            Server response timeout.
+ /rawsettings         Configures any session settings using a raw format as in
+                      an INI file.
+ /console             Console (text) mode. Default mode, when invoked using
+                      WinSCP.com.
+ /script=             Executes batch script file. If the script does not end
+                      with 'exit' command, normal interactive mode follows.
+ /command             Executes list of script commands.
+ /parameter           Passes list of parameters to script.
+ /log=                Turns on session logging to file.
+ /loglevel=           Logging level (0..2), add * to enable password logging.
+ /logsize=            Enables log rotation and optionally deleting of old logs.
+ /xmllog=             Turns on XML logging to file.
+ /xmlgroups           Group all XML log elements belonging to the same command.
+ /ini=                Path to configuration INI-file.
+ /rawconfig           Configures any settings using a raw format as in an INI
+                      file.
+ /rawtransfersettings Configures any transfer settings using a raw format as
+                      in an INI file.
+ /batchsettings       Updates settings of sites matching a mask using a raw
+                      format as in an INI file.
+ /keygen              Converts private key to .ppk format or edits key. Use
+                      /output= to specify output file. Use /changepassphrase
+                      to change or set passphrase. Use /comment= to change or
+                      set comment.
+ /update              Queries application homepage for updates.
+ /info                Prints list of supported ciphers and algorithms.
+ /help                Prints this usage.

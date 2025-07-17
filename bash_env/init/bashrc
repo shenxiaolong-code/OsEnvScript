@@ -38,7 +38,7 @@ if [[ $- == *i* ]] ; then
     source  $(dirname $(realpath ${BASH_SOURCE[0]}))/script_path_config.sh
     # echo "# +++++++++ loading ${HOME}/.bashrc"
     source   ${BASH_DIR}/init/bash_main.sh  "$@"
-    # ${EXT_DIR}/bash_env/init/bash_main.sh
+    # ${EXT_DIR}shell_script/bash_env/init/bash_main.sh
     # echo "# --------- leaving ${HOME}/.bashrc"
     echo -e "# --------- leaving ${BASH_SOURCE[0]}:${LINENO}  "
 fi

@@ -1,7 +1,7 @@
 # bash_script_i
 # Note : skip without arguments will skip current function, it is useful.
 
-echo +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:4 ...\r\n
+echo +++++++++ loading /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:4 ...\r\n
 
 if  0
     skip -gfi c++/*
@@ -48,6 +48,6 @@ end
 # To skip all .h files in /usr/include/c++/9/bits
 # skip -gfi /usr/include/c++/9/bits/*.h
 
-echo \r\n--------- leaving /home/xlshen/scratch/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:51 ...\r\n
+echo \r\n--------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/skip_filter/loadFilter_skipStd.gdb:51 ...\r\n
 
 

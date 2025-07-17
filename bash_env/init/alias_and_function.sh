@@ -612,7 +612,7 @@ function cp_file_template() {
 
 function cpany()    { cp_file_template $1                                                       ; }
 function cpsh()     { cp_file_template $1 ${BASH_DIR}/test/_template.sh    ; sed -i "s#main#main_$(basename "${1%.*}")#g" $target_path ;}
-function cpcsh()    { cp_file_template $1 ${HOME}/bash_env/test/_template.csh            ; }
+function cpcsh()    { cp_file_template $1 ${HOME}shell_script/bash_env/test/_template.csh            ; }
 function cptmp()    { code --goto ${TEMP_DIR}/del/temp_file.txt                                ; }
 
 alias   ienv='source ${BASH_DIR}/app/info/info_devlop_env.sh'
@@ -685,7 +685,7 @@ alias ofl='  vscode_open_newest_text_file_by_ls   $(pwd -L)'     # open last tex
 alias ofl2=' vscode_open_newest_text_file_by_find $(pwd -L) '    # open last text file  in current folder
 
 alias osh="vscode_add_folder ${BASH_DIR}/"
-alias ocsh="vscode_add_folder ${EXT_DIR}/bash_env/"
+alias ocsh="vscode_add_folder ${EXT_DIR}shell_script/bash_env/"
 
 
 # generate_cpp_source_from_td_file ${EXT_DIR}/repo/dkg_root/dkg_debug_dkg/collective_ir/include/collective_ir/Dialect/Collective/IR/CollectiveDialect.td

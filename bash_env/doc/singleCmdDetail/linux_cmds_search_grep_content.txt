@@ -1,0 +1,303 @@
+
+参考资料
+grep --help
+/home/scratch.xiaolongs_gpu/temp/grep_help.txt
+http://vansteve911.github.io/2015/11/12/bash-grep-defects/
+
+对于 grep 的输出，有一个好处就是 ： 如果把 grep 及 sed 的组合输出存放在一个变量里面，则其中的回车换行符会被自动过滤掉 ： 
+这特性非常适合于把一个多行文本合并成一个单行文件。
+
+1. 基本搜索与高亮
+grep --color=auto "pattern" file                # 自动高亮显示匹配内容
+grep --color=always "pattern" file              # 高亮显示匹配内容
+grep -A 5 "pattern" file                        # 匹配行及后5行
+grep -B 5 "pattern" file                        # 匹配行及前5行
+grep -C 5 "pattern" file                        # 匹配行及前后5行
+grep -m 1 "pattern" file                        # 只显示第一个匹配
+grep -m 1 -B 3 -A 5 "run_test" file             # 只显示第一个匹配行及前3后5行
+
+2. 递归与目录过滤
+grep -r "pattern" dir/                                # 递归搜索目录
+grep -R "pattern" dir/                                # 递归并跟踪符号链接
+grep -niRH --exclude-dir={.git,.svn} "pattern" dir/   # 排除特定目录递归搜索
+grep --include='*.txt' "pattern" dir/                 # 只搜索指定类型文件
+grep --exclude='*.bak' "pattern" dir/                 # 排除指定类型文件
+grep -niRH  "string"   /dir1/ /dir2/ /dir3/           # 搜索多个目录
+grep -niRH  IT_WRITE_DATA ./*                         # 搜索当前目录下所有文件
+grep -niRH  "xxxx"    ./*.h                           # 搜索当前目录下所有.h文件
+grep -E '^[[:space:]]*View:' file                     # 匹配非注释且以View:开头的行
+grep -P '^(struct|class) +[^;]*$' file                # 匹配C++结构体/类声明
+grep -P 'set\(\K[^ ]+' file                           # 只高亮set括号后的内容
+grep -E 'error:|note:' file                           # 多模式匹配
+grep -niRH --exclude-dir=.git  IT_WRITE_DATA ./*      # 排除.git目录递归搜索
+grep -snIRHPz --exclude-dir={.svn,.git,.vscode} --exclude='*.{md,txt,html}'  <pattern> <dir>  # 复杂过滤
+
+# include and exclude file and folder
+grep -sniHrP --include={*.txt,*.md} --exclude-dir={.svn,.git,.github} "abc|hello|find" /dir1 /dir2 /dir3                # 不支持的模式
+grep -sniHrP --include=*.{txt,md} --exclude-dir={.svn,.git,.github} "abc|hello|find" /dir1 /dir2 /dir3                  # 支持的模式
+grep -sniHrP --include=*.txt --include=*.md --exclude-dir={.svn,.git,.github} "abc|hello|find" /dir1 /dir2 /dir3        # 支持的模式
+# in script , use eval to avoid shell wildcard expansion , e.g. *.py expand to all files in current folder
+# local glob_pattern="{$2}"
+# eval "grep -sniHrP --include=$glob_pattern --exclude-dir={.svn,.git,.github} \"$1\" ${@:3}"
+grep --color=always -sniHrP --include=*.{py,txt,cmake} --exclude-dir={.svn,.git,.github} "module_cache" /dir             # 支持的模式
+grep -sniHrP "URM_USER|urm.nvidia.com" --include={*.py,*.cmake,CMakeLists.txt}  --exclude-dir={.svn,.git,.github} /dir   # 不支持的模式
+grep -sniHrP "URM_USER|generate_" --include='CMakeLists.txt'  --exclude-dir={.svn,.git,.github} /dir
+
+grep -niRH --exclude-dir=.git  IT_WRITE_DATA ./*              # 经实测: --exclude-dir 值列表中不能包含任何/，其只能是子目录的文件夹名字列表.
+grep -niRH --exclude-dir={.svn,.git,.vscode} "lspec"  pwd     # 即 --exclude-dir=${HOME}/linuxScript/.svn 是不能正确工作的。
+grep -snIRHPz --exclude-dir={.svn,.git,.vscode} --exclude='*.{md,txt,html}'  <str_fmt> <dir>    
+grep -niRH 'example' --exclude='*.bak' test/
+
+grep -niRH 'example' --include='*.txt' test/
+grep -niRH 'example' --include={*.txt,*.md} test/
+grep -niRH 'add_executable' --include='CMakeLists.txt'  /dir
+
+
+3. 正则表达式与高级匹配
+需要转义的字面字符 : ? + | { } ( )
+当正则表达式搜索时，建议使用 grep -P , 可以直接书写正常的正则表达式。 (虽然 egrep 更好，但是一些系统上 egrep 不支持 -P 选项)
+可以用^$来匹配行首尾，但是要注意的是：用 $ 来匹配行尾时，引号必须用单引号。
+因为双引号""会扩展变量，而行尾$会被认为变量标志，从而报错：Illegal variable name.
+grep -E "正则" file                             # 扩展正则（支持 | {} 等）
+grep -P "正则" file                             # Perl正则（支持(?=) (?<=) \K等）， 所以 -P 是更优先建议的
+grep -oP "pattern" file                         # 只输出匹配部分， -oP 表示只输出匹配部分,对于提取需要的字符串非常有用
+grep -oP "^cmake .*(?=cask_api)" file           # 只输出匹配部分 : 以 cmake 开头，直到 cask_api 为止 -- 此模式对于提取满足要求的中间子字符串非常实用
+grep -oP "^cmake .*(?=install$)" file           # 只输出匹配部分 : 以 cmake 开头，直到行尾包含install的行，但匹配到install前面为止
+grep -oP "set -x; \Kcmake .*(?=.{2}$)" file     # 只输出匹配部分 : 前面有 set -x;  ，以 Cmake 开头，直到行尾倒数第二个字符
+grep -oP "set -x; \Kcmake .*(?=..$)" file       # 只输出匹配部分 : 前面有 set -x;  ，以 Cmake 开头，直到行尾倒数第三个字符
+grep -niRPH --color=none "^(class|def) +\K\w+" file      # 匹配 Python 类或函数定义，输出类名或函数名。 \w+ 只匹配单词字符 [a-zA-Z0-9_] , 可以作为C++ 的符号(类名或者函数名)命名规则
+grep -niRPH --color=none "^(class|def) +\K\w+\b" file    # 同上，但只匹配完整的单词。 \b 表示单词边界， 其是表示单词定位符，不消耗任何字符串。单词边界帮助正则表达式精确匹配完整单词. 
+                                                         # e.g.  alias abc='echo hello'  # \w+ => abc=  , \w+\b => abc
+
+
+grep -e "pat1" -e "pat2" file                   # 多模式匹配
+tree -L 1 -F /boot/ | grep /$                   # 显示以/结尾的行
+echo one,two,three | grep -o '[^,]*$'           # 显示以,分割的最后一列
+grep "\-" file                                  # 搜索字符串需要转义的字符集 -
+grep "\\" file                                  # 搜索字符串需要转义的字符集 \
+grep -E '^[[:space:]]*View:' ${file}            # 匹配非注释且以View:开头的行
+grep -nIRP "^ *[a-z&A-Z_*]+ +[a-zA-Z_]+::[a-zA-Z_]+\(|^ *[a-z&A-Z_*]+ +[a-zA-Z_]+\(.*{"  file  # 匹配C++函数声明
+grep -P '^(struct|class) +[^;]*$' /dir          # 匹配C++结构体/类声明
+/bin/ls --color=always -lrth -1 | grep -oP "download_[^_]+"  # 提取字符串: 使用 grep -oP 的只显示匹配部分的功能
+
+# Perl正则常用特性
+# (?=...) 正向前瞻
+# (?<=...) 正向后顾
+# \K 重置匹配起点
+
+# 使用 grep -P 以支持 Perl 正则表达式, 来使用 (?=) 和 (?<=) 等正则表达式特性 : 定义而不匹配
+. 定位但是不匹配它们 (输出中不高亮显示它们).  语法 : grep -P '.*(?=pattern)' file
+/bin/ls --color=always -lrth -1 | grep -P --color=always "[^ ]+(?=download)"   # 匹配以download结尾的行
+/bin/ls --color=always -lrth -1 | grep -P --color=always "[^ ]+download"       # 匹配以download开头的行
+echo "/CMakeLists.txt:110  set(TILE_IR_BINARY_DIR xxx)" | grep --color=always -P 'set\(\K[^ ]+'     # only hightlight TILE_IR_BINARY_DIR
+#  set\(：匹配 set(，但不将其包括在输出中。
+#  \K：重置匹配，表示之前的部分不应包含在输出中。
+#  [^ ]+：匹配一个或多个非空格字符，这里就是 TILE_IR_BINARY_DIR。
+
+在正则表达式中，\K 和 (?=...) (?<=...) 都是用于定位的操作符，但它们的用途和行为有显著的不同。以下是对这两者的详细比较：
+以下是对 \K、(?=...) 和 (?<=...) 的整理和重述，方便您复制和使用：
+
+### 1. \K
+- 功能：重置当前匹配的起始位置，之前匹配的内容不会包含在最终的匹配结果中。
+- 语法：X\KY
+- 示例：
+  - 正则表达式 a\Kb 匹配字符串 "ab"，但只返回 b。
+- 用途：用于在匹配中排除某些字符，避免创建捕获组。
+
+### 2. (?=...)
+- 功能：正向前瞻，检查当前匹配位置后是否存在特定模式，但不消耗字符。
+- 语法：X(?=Y)
+- 示例：
+  - 正则表达式 \d+(?=€) 匹配数字，但仅在其后跟着欧元符号时成功。
+- 用途：确保某个模式在目标字符串之后存在。
+
+### 3. (?<=...)
+- 功能：正向后顾，检查当前匹配位置前是否存在特定模式，但不消耗字符。
+- 语法：(?<=Y)X
+- 示例：
+  - 正则表达式 (?<=\$)\d+ 匹配以美元符号 $ 开头的数字。
+- 用途：确保某个模式在目标字符串之前存在。
+
+### 总结
+| 特性               | \K                                      | (?=...)                                 | (?<=...)                                |
+|--------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------|
+| 功能           | 重置匹配起始位置，不包含之前的匹配      | 检查后面的模式                           | 检查前面的模式                           |
+| 消耗字符       | 消耗字符，但不包括在结果中               | 不消耗字符                               | 不消耗字符                               |
+| 应用场景       | 匹配某个字符串但不返回前面的部分        | 确保某个模式在目标字符串之后存在        | 确保某个模式在目标字符串之前存在        |
+
+
+6. 特殊技巧与实用例子
+grep -oP "download_[^_]+" file                   # 只显示匹配部分
+grep '/$' file                                   # 匹配以/结尾的行
+
+7. 组合其它命令
+find . -name "*.in" | xargs grep "pattern"      # 查找并搜索
+echo one,two,three | grep -o '[^,]*$'            # 显示以,分割的最后一列
+find /path/to/dir -type f -name '*.txt' -exec grep 'example' {} +
+cat -n ${curFile} | grep -E 'error:|note:'
+find / -type f -name "*.log" | xargs grep "ERROR"
+find . -name "*.in" | xargs grep "thermcontact"
+
+
+搜索目录建议选项 : -niRH
+搜索文件建议选项 : -niH
+# -n : 显示行号     -i : 忽略大小写         -w : 匹配整个单词       -v : 显示不匹配的行  
+# -c : 统计匹配行数 -r : 递归搜索目录       -R : 递归并跟踪符号链接
+# -H : 显示文件名   -l : 只显示匹配文件名   -L : 只显示不匹配文件名
+* -H : 显示文件路径 , -l : 只显示文件名, -L : 只显示不匹配的文件名
+* -n : 显示行号
+* -i : 忽略大小写
+* -r : 递归搜索目录. -R 同样，但是会跟踪符号链接。 -r 更通用，-R 在某些系统上可能不被支持。
+* -w : 匹配整个单词
+* -v : 搜索不匹配的行
+* -E : 使用扩展正则表达式     (支持 | 和 {} 等正则表达式特性)
+* -P : 使用 Perl 正则表达式   (支持 (?=) 和 (?<=) 等正则表达式特性)
+* -e : 多个搜索条件
+* -f : 从文件中读取搜索条件
+* -c : 显示匹配行的数量
+* -B : 显示匹配行的前几行
+* -A : 显示匹配行的后几行
+* -C : 显示匹配行的前后几行
+* -m : 只显示第一个匹配行
+* -o : 只显示匹配部分
+* -I : 不搜索二进制文件
+* -s : 不显示错误信息
+* -v : 显示不匹配的行
+* -d skip : 忽略子目录
+* -\ : 忽略正则表达式中特殊字符的原有含义
+
+8. 常用选项速查
+
+- -n  显示行号
+- -i  忽略大小写
+- -r/-R  递归目录
+- -H  显示文件名
+- -l/-L  只显示(不)匹配文件名
+- -w  匹配整个单词
+- -v  反向匹配
+- -E  扩展正则
+- -P  Perl正则
+- -o  只输出匹配部分
+- -A/-B/-C  上下文行
+- -m  匹配次数限制
+- --include/--exclude  文件过滤
+- --exclude-dir  目录过滤
+
+9. 正则表达式注意事项
+- 基本正则（BRE）：? + | { } ( ) 需转义
+- 扩展正则（-E）：直接支持 | {}
+- Perl正则（-P）：支持 (?=) (?<=) \K 等
+- 用单引号包裹正则，避免 $ 被shell解释
+
+
+为什么grep摒弃代码世界里"反斜杠表示转义"的通用规则反其道而行之？
+
+之前并未深究这个问题，得过且过，直到今天在刷leetcodeOJ时，看到新增的shell题型中有使用正则匹配的题目，自己在bash下老是试不出来，google一番后找到数篇科普文，终于茅塞顿开，现总结如下。
+
+一、正则表达式的类型
+
+1. 基本的正则表达式（Basic Regular Expression），又叫 Basic RegEx，简称 BREs
+2. 扩展的正则表达式（Extended Regular Expression），又叫 Extended RegEx，简称 EREs
+3. Perl 的正则表达式（Perl Regular Expression）又叫 Perl RegEx，简称 PREs
+
+二、常用shell命令的默认正则类型
+
++----------+------------------+----------------+--------------------------------+
+| 命令     | 支持的正则类型  | 默认正则类型  | 使用其他正则类型的方法        |
++----------+------------------+----------------+--------------------------------+
+| grep     | BREs,EREs,PREs   | BREs          | -E表示使用EREs,-P表示使用PREs |
+| egrep    | EREs,PREs        | EREs          | -P表示使用PREs                |
+| pgrep    | PREs             | -             | -                              |
+| fgrep    | 纯文本匹配      | -             | 不支持正则                     |
+| sed      | BREs             | BREs          | -r表示使用EREs                |
+| awk      | EREs             | EREs          | -                              |
++----------+------------------+----------------+--------------------------------+
+
+三、grep/sed为BREs打的"补丁"
+
+BREs缺少了EREs和PREs的很多特性，很多特殊字符也不支持，如|，{}，()等。然而作为shell中最常用工具之一的grep和sed却不能无视这些缺陷，因此这些命令用一种独特的方式，给BREs原本不支持的特殊字符打上"补丁"：加反斜杠转义。
+
+之所以这么麻烦，是因为这些工具的诞生时间很早，正则表达式的许多功能却是逐步发展演化出来的。之前这些元字符可能并没有特殊的含义，为保证向后兼容，就只能使用转义。
+
+在使用BREs时，下列特殊字符前须加上反斜杠，以区别它们的special meaning：
+? , + , | , { , } , ( , )
+
+而BREs原本支持的特殊符号，如*, $, ^等则不需要转义。
+
+四、各种正则表达式特殊符号一览
+
+注：BREs不支持的特殊符号，在使用时均用转义的方法表示。
+
+1. 基础匹配符号
+
++----------+-------------+-------------+------------------------------------------+
+| 字符     | Basic RegEx | Extended    | 说明                                    |
++----------+-------------+-------------+------------------------------------------+
+| 转义     | \          | \          | 转义字符                                |
+| ^        | ^          | ^          | 匹配行首                                |
+| $        | $          | $          | 匹配行尾                                |
+| ^$       | ^$         | ^$         | 匹配空行                                |
+| ^string$ | ^string$   | ^string$   | 匹配整行                                |
+| \<       | \<         | \<         | 匹配单词开头                            |
+| \>       | \>         | \>         | 匹配单词结尾                            |
+| \<x\>    | \<x\>      | \<x\>      | 匹配完整单词                            |
+| ()       | \(\)       | ()         | 分组                                    |
+| ?        | \?         | ?          | 匹配0次或1次                            |
++----------+-------------+-------------+------------------------------------------+
+
+2. 特殊字符说明
+
+- ^ : 匹配行首，例如'^dog'匹配以字符串dog开头的行（注意：awk指令中，'^'则是匹配字符串的开始）
+- $ : 匹配行尾，例如：'dog$'匹配以字符串dog为结尾的行（注意：awk指令中，'$'则是匹配字符串的结尾）
+- . : 匹配除换行符外的任意单个字符
+- * : 匹配前面的子表达式0次或多次
+- + : 匹配前面的子表达式1次或多次
+- {n} : 匹配前面的子表达式n次
+- {n,} : 匹配前面的子表达式至少n次
+- {n,m} : 匹配前面的子表达式n到m次
+
+3. 字符类
+
+- [0-9] : 匹配任意数字
+- [a-z] : 匹配小写字母
+- [A-Z] : 匹配大写字母
+- [xyz] : 匹配字符集合中的任意字符
+- [^xyz] : 匹配不在字符集合中的任意字符
+
+4. 预定义字符类
+
+- \d : 匹配数字 [0-9]
+- \D : 匹配非数字 [^0-9]
+- \w : 匹配单词字符 [A-Za-z0-9_]
+- \W : 匹配非单词字符
+- \s : 匹配空白字符
+- \S : 匹配非空白字符
+
+5. POSIX字符类
+
++------------+------------------------------------------+
+| 字符类     | 说明                                    |
++------------+------------------------------------------+
+| [:alnum:]  | 字母和数字 [A-Za-z0-9]                 |
+| [:alpha:]  | 字母 [A-Za-z]                          |
+| [:digit:]  | 数字 [0-9]                             |
+| [:lower:]  | 小写字母 [a-z]                         |
+| [:upper:]  | 大写字母 [A-Z]                         |
+| [:space:]  | 空白字符                                |
+| [:blank:]  | 空格和制表符                            |
+| [:graph:]  | 可见的打印字符                          |
+| [:print:]  | 可打印字符                              |
+| [:cntrl:]  | 控制字符                                |
+| [:punct:]  | 标点符号                                |
+| [:xdigit:] | 十六进制数字 [0-9a-fA-F]               |
++------------+------------------------------------------+
+
+注意：POSIX方括号表示法与PCRE字符组的主要差别：
+1. POSIX字符组中，反斜线\不是用来转义的
+2. 要在字符组中表达字符]，应当让它紧跟在字符组的开方括号之后
+3. 要表达字符-，必须将它紧挨在闭方括号]之前
+
+结论：既然BREs使用如此复杂，建议使用egrep来替代grep。但是在阅读他人脚本时，还是需要熟记这些转义"补丁"的规则。
+
+
+

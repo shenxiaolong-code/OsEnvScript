@@ -1,5 +1,5 @@
-echo +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/init/loadPath.gdb:1 ... \n
-# source /home/xlshen/scratch/bash_env/app/gdb/init/loadPath_python.py
+echo +++++++++ loading /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadPath.gdb:1 ... \n
+# source /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadPath_python.py
 
 # if auto-load is on, then gdb will load the module in : /usr/share/gdb/auto-load
 # set debug auto-load on
@@ -9,11 +9,11 @@ echo +++++++++ loading /home/xlshen/scratch/bash_env/app/gdb/init/loadPath.gdb:1
 # add pre-defined source code path
 # https://sourceware.org/gdb/onlinedocs/gdb/Source-Path.html
 # show directories  | directory
-echo \033[33madd directory   : \033[32m/home/xlshen/scratch/third_part_dependency/src_in_docker/c++\033[37m\r\n
-directory       "/home/xlshen/scratch/third_part_dependency/src_in_docker/c++"
+echo \033[33madd directory   : \033[32m/home/xlshen/scratch/third_part_dependency/cpp/c++\033[37m\r\n
+directory       "/home/xlshen/scratch/third_part_dependency/cpp/c++"
 # https://ftp.gnu.org/gnu/glibc/
-echo \033[33madd directory   : \033[32m/home/xlshen/scratch/third_part_dependency/src_in_docker/glibc-2.23\033[37m\r\n
-directory       "/home/xlshen/scratch/third_part_dependency/src_in_docker/glibc-2.23"
+echo \033[33madd directory   : \033[32m/home/xlshen/scratch/third_part_dependency/cpp/glibc-2.23\033[37m\r\n
+directory       "/home/xlshen/scratch/third_part_dependency/cpp/glibc-2.23"
 
 # directory     "${cur_repo_dir}"
 # directory     "/home/utils/gcc-4.1.1/gcc-4.1.1/libstdc++-v3/libsupc++"
@@ -26,11 +26,11 @@ directory       "/home/xlshen/scratch/third_part_dependency/src_in_docker/glibc-
 # set substitute-path /usr/include/c++/4.8.2  /usr/include/c++/9
 # on 303  :  /usr/include/c++/4.8.2     =>  /usr/include/c++/9
 # on sm75 :
-echo \033[33mmap source code : \033[32m/usr/include/c++ \033[33m => \033[32m /home/xlshen/scratch/third_part_dependency/src_in_docker/c++ \033[37m\r\n
-set substitute-path /usr/include/c++            /home/xlshen/scratch/third_part_dependency/src_in_docker/c++
-echo \033[33mmap source code : \033[32m/build/glibc-S7Ft5T \033[33m => \033[32m /home/xlshen/scratch/third_part_dependency/src_in_docker \033[37m
-set substitute-path /build/glibc-S7Ft5T     /home/xlshen/scratch/third_part_dependency/src_in_docker
-set substitute-path /build/tmp              /home/xlshen/scratch/third_part_dependency/src_in_docker
+echo \033[33mmap source code : \033[32m/usr/include/c++ \033[33m => \033[32m /home/xlshen/scratch/third_part_dependency/cpp/c++ \033[37m\r\n
+set substitute-path /usr/include/c++            /home/xlshen/scratch/third_part_dependency/cpp/c++
+echo \033[33mmap source code : \033[32m/build/glibc-S7Ft5T \033[33m => \033[32m /home/xlshen/scratch/third_part_dependency/cpp \033[37m
+set substitute-path /build/glibc-S7Ft5T     /home/xlshen/scratch/third_part_dependency/cpp
+set substitute-path /build/tmp              /home/xlshen/scratch/third_part_dependency/cpp
 
 # how to find the system build src :  https://developer.aliyun.com/article/498552
 # info sources 
@@ -47,12 +47,12 @@ set substitute-path /build/tmp              /home/xlshen/scratch/third_part_depe
 # https://sourceware.org/gdb/onlinedocs/gdb/Auto_002dloading-safe-path.html
 # gdb will load the module in : /usr/share/gdb/auto-load
 # show auto-load safe-path   |   set auto-load safe-path   <reset_load_path1:reset_load_path2:reset_load_path3>
-add-auto-load-safe-path     /home/xlshen/scratch/bash_env/app/gdb/cmds
-add-auto-load-safe-path     /home/xlshen/scratch/bash_env/app/gdb/feature/bp
+add-auto-load-safe-path     /home/xlshen/scratch/shell_script/bash_env/app/gdb/cmds
+add-auto-load-safe-path     /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp
 add-auto-load-safe-path     /home/utils/gcc-11.2.0/lib64
 
 echo \nshow auto-load safe-path : \n
 show auto-load safe-path
 
-echo --------- leaving /home/xlshen/scratch/bash_env/app/gdb/init/loadPath.gdb:57  \n 
+echo --------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadPath.gdb:57  \n 
 

@@ -1,0 +1,118 @@
+可以同时在prompt中设置终端窗口标题 wndTitleStr 和提示符 promptStr 。
+syntax : 
+set prompt='%{\033]0;wndTitleStr\007%}promptStr'
+上面的%{\033[0;控制符不要改动，否则会出现乱码。
+
+set prompt='%{\033]0;%/\007%}promptStr'
+
+推荐的：
+for bash : export PS1="[\e[0;35m\t\e[0;36m \u@\h\e[0;32m \w\e[0m]\e[0;33m[\s-\v]\e[0;31m\$ \e[0m"
+for csh  : set prompt='%{\e]0;%c-%n@%m\007%}[%{\e[0;36m%}%T%{\e[0;32m%} %n@%m  %{\e[0;36m%}%B%/ %{\e[0m%}]%{\e[1;33m%}[csh]%{\e[1;31m%} $ ';
+
+example : try below every one to check the affect
+set prompt='%{\033]0;%c-%n@%m\007%}[%T %n@%m:%{\033[0;36m%}%B%/ %{\033[0m%}] %{\033[1;31m%}$ ';
+set prompt='%{\033]0;%n@%m:%c\007%}[%T %n@%m]\t%{\033[0;36m%}%B%/\n$ %{\033[0m%}'
+
+set prompt='%{\033]0;%n@%m:%c\007%}[%n@%m %/]%#'
+set prompt='%{\033]0;%n@%m:%c\007%}[%T %n@%m]\t%B%/\n$ %{\033[0m%}'
+set prompt='%{\033]0;%n@%m:%c\007%}[%T %n@%m]\t%{\033[0;36m%}%B%/\n$ %{\033[0m%}'
+
+%{\033[1;31m%}%m%{\033[0m%}
+0 - normal
+1 - bold
+2 - normal again
+3 - background color
+4 - underline the text
+5 - blinking
+
+variable:
+%/  The current working directory.
+%~  The current working directory, but with one's  home  direc‐
+    tory  represented  by `~' and other users' home directories
+    represented  by  `~user'  as  per  Filename   substitution.
+    `~user'  substitution happens only if the shell has already
+    used `~user' in a pathname in the current session.
+%c[[0]n], %.[[0]n]
+    The trailing component of the current working directory, or
+    n  trailing  components if a digit n is given.  If n begins
+    with `0', the number  of  skipped  components  precede  the
+    trailing  component(s)  in the format `/<skipped>trailing'.
+    If the ellipsis shell variable is set,  skipped  components
+    are  represented  by  an  ellipsis  so  the  whole  becomes
+    `...trailing'.  `~' substitution is done as in `%~'  above,
+    but  the  `~'  component  is ignored when counting trailing
+    components.
+%C  Like %c, but without `~' substitution.
+%h, %!, !
+    The current history event number.
+%M  The full hostname.
+%m  The hostname up to the first `.'.
+%S (%s)
+    Start (stop) standout mode.
+%B (%b)
+    Start (stop) boldfacing mode.
+%U (%u)
+    Start (stop) underline mode.
+%t, %@
+    The time of day in 12-hour AM/PM format.
+%T  Like `%t', but in 24-hour format (but see  the  ampm  shell
+    variable).
+%p  The  `precise'  time  of  day in 12-hour AM/PM format, with
+    seconds.
+%P  Like `%p', but in 24-hour format (but see  the  ampm  shell
+    variable).
+\c  c is parsed as in bindkey.
+^c  c is parsed as in bindkey.
+%%  A single `%'.
+%n  The user name.
+%N  The effective user name.
+%j  The number of jobs.
+%d  The weekday in `Day' format.
+%D  The day in `dd' format.
+%w  The month in `Mon' format.
+%W  The month in `mm' format.
+%y  The year in `yy' format.
+%Y  The year in `yyyy' format.
+%l  The shell's tty.
+%L  Clears  from the end of the prompt to end of the display or
+    the end of the line.
+%$  Expands the shell or environment variable name  immediately
+    after the `$'.
+%#  `>'  (or the first character of the promptchars shell vari‐
+    able) for normal users, `#' (or  the  second  character  of
+    promptchars) for the superuser.
+%{string%}
+    Includes string as a literal escape sequence.  It should be
+    used only to change terminal attributes and should not move
+    the  cursor  location.  This cannot be the last sequence in
+    prompt.
+%?  The return code of the command  executed  just  before  the
+    prompt.
+%R  In prompt2, the status of the parser.  In prompt3, the cor‐
+    rected string.  In history, the history string.
+
+`%B', `%S', `%U' and `%{string%}' are available in only  eight-
+bit-clean shells; see the version shell variable.
+
+The  bold,  standout  and underline sequences are often used to
+distinguish a superuser shell.  For example,
+
+# Colors!
+set     red="%{\033[1;31m%}"
+set   green="%{\033[0;32m%}"
+set  yellow="%{\033[1;33m%}"
+set    blue="%{\033[1;34m%}"
+set magenta="%{\033[1;35m%}"
+set    cyan="%{\033[1;36m%}"
+set   white="%{\033[0;37m%}"
+set     end="%{\033[0m%}"           # rest color , This is needed at the end... :(
+
+# Setting the actual prompt.  I made two separate versions for you to try, pick
+# whichever one you like better, and change the colors as you want.  Just don't
+# mess with the ${end} guy in either line...  Comment out or delete the prompt you don't use.
+
+set prompt="${green}%n${blue}@%m ${white}%~ ${green}%%${end} "
+set prompt="[${green}%n${blue}@%m ${white}%~ ]${end} "
+
+# Clean up after ourselves...
+unset red green yellow blue magenta cyan yellow white end

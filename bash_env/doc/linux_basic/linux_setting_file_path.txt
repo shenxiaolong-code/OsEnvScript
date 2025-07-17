@@ -1,0 +1,24 @@
+on srdcws1087 :
+/proj/verif_release_ro/cbwa_bootcore/140/bin
+
+
+AMD用的是cshell , 其配置 ： 
+~richli/.projalias   or  ~richli/.cshrc
+refer to :  ~richli/.projalias   or  ~richli/.cshrc
+
+三种环境变量在c shell中：
+读取顺序:
+.profile        : 
+.cshrc          : 每次终端session打开读取一次
+.login          : 每次登陆读取一次
+
+
+三种环境变量在bash shell中：
+所有用户永久环境变量 : /etc/profile文件, root（超级用户）下才能修改。我们可以在etc目录下使用ls -l查看这个文件的用户及权限。 
+当前用户永久环境变量 : 隐藏文件  ~/.bashrc  或者   ~/.bash_profile 。 
+                    .bash_profile文件只会在用户登录的时候读取一次,.bashrc 在每次打开终端进行一次新的会话时都会读取
+临时环境变量        : 直接使用export指令添加
+
+1. 用export指令添加环境变量。   
+2. 修改环境变量文件后，使用source命令使用配置文件立即生效，否则只能下次登陆时才生效
+   e.g. source /etc/profile

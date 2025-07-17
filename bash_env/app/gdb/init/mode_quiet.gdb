@@ -6,7 +6,7 @@ set complaints 0
 set trace-commands off
 set debug auto-load off
 
-source /home/xlshen/scratch/bash_env/app/gdb/init/loadInfo.gdb
+source /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadInfo.gdb
 
 echo done to load quiet mode.
-echo \r\n --------- leaving /home/xlshen/scratch/bash_env/app/gdb/init/mode_quiet.gdb ...\r\n
+echo \r\n --------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/mode_quiet.gdb ...\r\n

@@ -1,0 +1,31 @@
+
+https://unix.stackexchange.com/questions/11238/how-to-get-over-device-or-resource-busy
+
+查看哪些进程锁定了一个路径：
+lsof +D /path
+
+example:
+[6:58 xiaolongs@computelab-303  ${HOME}/.vscode-server ][csh] $ rd bin/
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/.nfs00000000d974057d00003dbc': Device or resource busy
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/.nfs00000000d86fdd1000003c6a': Device or resource busy
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/bin/.nfs00000000d811334700003dbb': Device or resource busy
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/node_modules/node-pty/build/Release/.nfs00000000d9d3d26900003dbd': Device or resource busy
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/node_modules/spdlog/build/Release/.nfs00000000d8b6110000003dbe': Device or resource busy
+rm: cannot remove 'bin/f80445acd5a3dadef24aa209168452a3d97cc326/node_modules/vsda/build/Release/.nfs00000000d841c66600003dbf': Device or resource busy
+
+lsof +D ${HOME}/.vscode-server
+
+
+force kill process :
+kill -9 pid                 //To kill process in Linux with PID:
+killall -9 appname          //To kill process in Linux with application name:
+pkill -9 code               //To kill vscode process
+
+ps  -a                      // list all process
+
+To find firefox pid run any one of the following commands:
+pidof firefox
+pgrep firefox
+ps aux | grep firefox       //find firefox process
+ps -ef | grep const
+xkill	                    // kill mouse selected process.

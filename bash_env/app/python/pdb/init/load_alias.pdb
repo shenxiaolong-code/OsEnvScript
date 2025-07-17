@@ -1,4 +1,4 @@
-!import os !print(f"\nloading {os.environ['HOME']}/bash_env/app/pdb/load_alias.pdb ...\n")
+!import os !print(f"\nloading {os.environ['HOME']}shell_script/bash_env/app/pdb/load_alias.pdb ...\n")
 
 # Print instance variables (usage "pi classInst")
 alias pi for k in %1.__dict__.keys(): print(f"%1.{k} = {%1.__dict__[k]}")
@@ -27,12 +27,12 @@ alias xxv   globals()
 # show local variable and value.  dir()  only show local variable name without value.
 alias dv    locals()
 
-alias rc    os.system(' find /${HOME}/bash_env/app/pdb -maxdepth 1 -type f -print ')
+alias rc    os.system(' find /${HOME}shell_script/bash_env/app/pdb -maxdepth 1 -type f -print ')
 
 import os
 alias cls   os.system('clear')
 
-!import os !print(f"\nDone : {os.environ['HOME']}/bash_env/app/pdb/load_alias.pdb ...\n")
+!import os !print(f"\nDone : {os.environ['HOME']}shell_script/bash_env/app/pdb/load_alias.pdb ...\n")
 
 
 

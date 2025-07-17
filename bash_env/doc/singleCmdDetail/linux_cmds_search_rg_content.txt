@@ -1,0 +1,62 @@
+参考资料
+rg --help
+https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+
+1. 基本搜索与高亮
+rg --color=auto "pattern" file                # 自动高亮显示匹配内容
+rg --color=always "pattern" file              # 始终高亮显示匹配内容
+rg -A 5 "pattern" file                        # 匹配行及后5行
+rg -B 5 "pattern" file                        # 匹配行及前5行
+rg -C 5 "pattern" file                        # 匹配行及前后5行
+rg -m 1 "pattern" file                        # 只显示第一个匹配
+
+2. 递归与目录/文件过滤
+rg "pattern" dir/                             # 递归搜索目录，默认递归
+rg "pattern" dir1 dir2                        # 同时搜索多个目录
+rg -g "*.txt" "pattern" dir/                  # 只搜索指定类型文件
+rg -g "!*.bak" "pattern" dir/                 # 排除指定类型文件
+rg -g "!build/" -g "!third_party/" "pattern" dir/   # 排除多个目录
+rg -g "*.{cpp,h}" "pattern" dir/              # 搜索多种类型文件
+rg --type cpp --type h "pattern" dir/         # 用内置类型过滤
+rg --type-not rust "pattern" dir/             # 排除内置类型
+
+3. 正则表达式与高级匹配
+rg "str1|str2|str3" file                      # 多模式匹配（默认支持正则）
+rg -F "string" file                           # 纯字符串匹配（不使用正则）
+rg -w "word" file                             # 匹配整个单词
+rg -i "pattern" file                          # 忽略大小写
+rg -o "pattern" file                          # 只输出匹配部分
+
+4. 常用选项速查
+- -n  显示行号
+- -H  显示文件名
+- -l  只显示匹配文件名
+- -c  只统计匹配行数
+- -v  反向匹配
+- -A/-B/-C  上下文行
+- -m  匹配次数限制
+- -g  文件/目录过滤（可多次使用）
+- --type/--type-not  内置类型过滤
+- --color=always/auto  彩色高亮
+- -F  纯字符串匹配
+- -e  多个搜索条件
+
+5. 组合其它命令
+find . -name "*.in" | xargs rg "pattern"      # 查找并搜索
+ls | rg "pattern"                             # 管道配合
+
+6. rg 与 grep 区别与优势
+- rg 默认递归，速度快，支持多平台
+- 支持多次 -g 组合过滤，语法简洁
+- 默认支持正则，无需 -E/-P
+- 忽略.git等常见目录，无需手动排除
+- 支持内置类型过滤（--type）
+- 输出高亮美观，适合代码工程
+
+7. 实用例子
+rg "TODO|FIXME" -g "*.cpp" -g "*.h" src/      # 查找源码中的TODO/FIXME
+rg "main" -g "!test/" -g "!build/" .         # 排除test和build目录
+rg "pattern" --type py --type sh .           # 只查找python和shell文件
+rg -i "error" -g "*.log" /var/log            # 日志中查找error
+
+# 更多用法详见: rg --help 或官方文档 

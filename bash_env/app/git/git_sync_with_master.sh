@@ -26,7 +26,7 @@ local_master_branch_name=$(get_master_name_local)
 local_cur_branch_name=$(get_branch_name_local)
 # dumpkey local_cur_branch_name
 
-# revert change from :   ${HOME}/bash_env/nvidia/bin/reduce_device_debug_symbol.csh
+# revert change from :   ${HOME}shell_script/bash_env/nvidia/bin/reduce_device_debug_symbol.csh
 repo_type=$(get_current_repo_type)
 if [[ "${repo_type}" == "cask5" ]] ; then
     git checkout  cask_core/CMakeLists.txt

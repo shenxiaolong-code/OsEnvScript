@@ -1,0 +1,128 @@
+find /home -type f -iname "*.txt"       //不分大小写搜索文件。如果分大小写，使用-name。 更多用法见 linux_cmds_search_file.txt         
+find命令是完全匹配的，比如搜索abc.txt则结果中不会出现abc.txt.bakup文件
+https://www.tutorialspoint.com/25-practical-examples-of-linux-find-command
+https://www.tutorialspoint.com/using-the-find-exec-command-option-on-linux
+
+find $PWD -maxdepth 1 -type f  -print | xargs grep -rIl ""		            # 不搜索 binary 文件,只显示文件路径
+find $PWD -maxdepth 1 -type f  -print | xargs grep -rI  ""		            # 不搜索 binary 文件,不显示文件路径,只显示搜索出来的字符串
+
+# search text file   :  grepc -rIl .
+# search binary file :  grepc -rIL .
+find ${HOME}/linuxScript  -type f -name "*.csh" | xargs grep -nIR "\!:1"
+
+${EXT_DIR}/myReference/note/tester_help/cmd
+-I      -- 不搜索二进制(binary)文件
+-i      -- 不区分大小写。 （ 缺省是区分 ） 
+-l      -- 只显示文件路径不显示搜索结果。 ( 适用场景 ： 根据 str1 找到文件，再在文件中找 str2 )
+            files-with-matches    print only names of FILEs with    selected lines
+-L      -- files-without-match   print only names of FILEs with no selected lines
+-n      -- 打印行号
+-H      -- 打印文件名，当搜索多个文件时是缺省的，搜索单个文件时不是缺省选项
+-R      -- 搜索子目录， 
+-r      -- 不搜索子目录
+-s      -- suppress error messages , e.g. grep 'xxxx' No such file or directory
+-v      -- 输出所有不匹配的行。
+-E      -- 将样式为延伸的正则表达式来使用。
+-w      -- 匹配整个单词。
+-d skip -- 忽略子目录。
+-o      -- 只打印匹配行的匹配部分，每个这样的部分在单独的输出行上。
+\       -- 忽略正则表达式中特殊字符的原有含义。
+[ ]     -- 单个字符，如[A]即A符合要求。
+[ - ]   -- 范围，如[A-Z]，即A、B、C一直到Z都符合要求。
+.       -- 所有的单个字符。
+*       -- 所有字符，长度可以为0。
+
+e.g. 
+find $PWD -type f -iname filename.txt
+find /home -type f -not -name "*.pdf"
+find /home -type f "*.pdf" -exec chmod -777 {} \;
+find . -name "*.[!r]*" -exec grep -i -l "search for me" {} \;
+find -L `pwd` -maxdepth 1 -type f  -print | xargs grep -rIl ""																			    # 不搜索 binary 文件
+find -L $PWD -type f \( -iname "cask_tester" -o -iname "cask-sdk-cask-tester" -o -iname "cutlass_profiler" \) -executable -print		# 搜索多个目标
+find -L $PWD -type f ! -path '*/.svn/*' ! -path '*/.git/*' ! -path '*/.vscode/*'														# 排除目录 .svn , .git , .vscode
+
+# -L      : parse the symbol link
+
+搜索 : bin/(cask_tester|cask-sdk-cask-tester|cutlass_profiler)
+find . -type d -name "bin" -exec find {} -maxdepth 1 -type f \( -name "cask_tester" -o -name "cask-sdk-cask-tester" -o -name "cutlass_profiler" \) \;
+find . -type f -regex '.*/bin/\(cask_tester\|cask-sdk-cask-tester\|cutlass_profiler\)'
+
+搜索单个 : bin/cask_tester
+find "$(pwd -L)" -path "*/bin/cask_tester" -print
+
+正则表达式搜索多个文件： -o, which means "or": https://stackoverflow.com/questions/1133698/using-find-to-locate-files-that-match-one-of-multiple-patterns
+find $OUT_HOME/$PROJECT \( -name "tcore*.log" -o -name "*_*sim.ini" -o -name "*_emu.ini" \)
+find . -regex '.*myfile[0-9][0-9]?'
+
+find命令查询的结果使用绝对路径还是相对路径 与后面的路径名有关：
+若路径名为绝对路径，则查询出的结果以绝对路径展示；
+若路径名为相对路径，则查询出的结果以相对路径展示。
+cd /local_vol1_nobackup/xiaoshen/pm4_main/out/linux_3.10.0_64.VCS/navi31/config/gc/run/block/cp/cp_simple_triangle_pm4_01
+$ find $PWD  -type f -iname "tcore2_device_0x200_pf_csim.log"
+/local_vol1_nobackup/xiaoshen/pm4_main/out/linux_3.10.0_64.VCS/navi31/config/gc/run/block/cp/cp_simple_triangle_pm4_01/tcore2_device_0x200_pf_csim.log
+$ find ./ -type f -iname "tcore2_device_0x200_pf_csim.log"
+./tcore2_device_0x200_pf_csim.log
+
+
+-type f参数用于搜索文件。
+其它可用的参数.
+f: regular files
+d: directories
+l: symbolic links
+c: character devices
+b: block devices
+p: named pipe
+s: sockets
+
+
+搜索指定大小文件
+The -size flag allows you to search for files that take up a particular amount of space on the disk. 
+搜索1GB的文件:
+find /home -type f -size 1G
+搜索小于1GB的文件(-)
+find /home -type f -size -1G
+搜索小于1GB的文件(+)
+find /home -type f -size +1G
+搜索指定大小范围的文件
+find /home -type f -size +1M -size -10M
+
+可用的文件大小单位:
+b: 512-byte blocks
+c: bytes
+w: two-byte words
+k: Kilobytes
+M: Megabytes
+G: Gigabytes
+
+搜索时指定搜索层级：-maxdepth
+find . -maxdepth 1 -type f |grep -v "haha2"
+
+使用时间戳来搜索文件
+使用修改时间戳来搜索文件：
+find /home -type f -name "*.txt" -mtime 5
+-atime ： 存取时间
+-ctime 修改时间 
+可以+/-来限制时间范围
+find /home -type f -name "*.txt" -mtime +5
+
+根据特定存取权限来搜索文件
+find /home -type f -perm 777
+
+用正斜杠/来列至少一个权限满足标准的出文件
+find /home -type f -perm /777
+
+根据owner来搜索文件
+find /home -user randomuser
+
+删除所有满足要求的文件 ： 搜索并删除
+删除所有在/home目录下的.pdf文件
+find /home -type f -name "*.pdf" -delete
+
+
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ bash_script_i
 # backup folder without repeat -- use md5sum string to recoginze the existed folder
 # e.g. source ./backup_folder_best.sh <src_dir> <dst_dir_root> <ID_file_path> [opt_subFolder]
 
-# set src_dir="${HOME}/bash_env/test"
+# set src_dir="${HOME}shell_script/bash_env/test"
 # set src_dir=`pwd -L`
 src_dir=$1
 # set dst_dir_root=${BACKUP_DIR}/test

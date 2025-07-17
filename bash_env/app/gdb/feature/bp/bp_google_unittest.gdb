@@ -1,5 +1,5 @@
 
-echo load /home/xlshen/scratch/bash_env/app/gdb/feature/bp/bp_google_unittest.gdb ... \r\n
+echo load /home/xlshen/scratch/shell_script/bash_env/app/gdb/feature/bp/bp_google_unittest.gdb ... \r\n
 
 if 1
     b TestBody

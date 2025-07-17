@@ -1,0 +1,31 @@
+
+
+# bash internal variable
+# https://tldp.org/LDP/abs/html/internalvariables.html
+
+next()  { runreq  $*  }
+bash: xxxx: line 26: syntax error: unexpected end of file
+fix :
+next()  { runreq  $* ; }
+
+if [ $var1 -gt 30] ; then
+bash: [: missing `]'
+fix : lack blank before ]
+if [ $var1 -gt 30 ] ; then
+
+maxThreadNumber = $(nproc)
+maxThreadNumber: command not found
+fix:blank is unnecessary
+maxThreadNumber=$(nproc)
+
+alias somecmd=source ${HOME}/csh_env ${BASH_DIR}
+bash: alias: ${HOME}/csh_env: not found
+bash: alias: ${BASH_DIR}: not found
+fix : bash alias must use quote to include blank char
+alias somecmd='source ${HOME}/csh_env ${BASH_DIR}'
+
+bdx()   { load ${BASH_DIR}/nvidia/build/build_x.sh '$1' ;  }
+bash: ${BASH_DIR}/nvidia/loadEnv/loadEnv_build_farm.sh: line 16: syntax error near unexpected token `('
+bash: ${BASH_DIR}/nvidia/loadEnv/loadEnv_build_farm.sh: line 16: `bdx()   { load ${BASH_DIR}/nvidia/build/build_x.sh '$1' ;  }'
+fix : 
+function bdx()   { load ${BASH_DIR}/nvidia/build/build_x.sh '$1' ;  }

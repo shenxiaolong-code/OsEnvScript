@@ -1,0 +1,9 @@
+LD_PRELOAD 
+是Linux 系统中的一个环境变量，它可以影响程序的运行时的链接（Runtime linker），它允许你定义在程序运行前优先加载的动态链接库。 这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。
+一般情况下，其加载顺序为  LD_PRELOAD  >  LD_LIBRARY_PATH   >   /etc/ld.so.cache  >  /lib  >  /usr/lib。
+
+LD_LIBRARY_PATH
+相当于windows的 lib 路径，用来加载动态链接库
+
+PATH
+相当于windows的 path 路径，用来搜索二进制可执行模块路径。

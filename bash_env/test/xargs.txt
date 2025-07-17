@@ -1,0 +1,55 @@
+bash_script_i
+echo
+
+# https://www.runoob.com/linux/linux-comm-xargs.html
+xargs                                                                       #  // 把前一个命令的输出当作下一个命令的输入参数
+                                                                            #   https://www.mkssoftware.com/docs/man1/xargs.1.asp
+                                                                            #  debug xagrs 命令可加参数 - t  :  | xargs -t
+
+
+# ps -u xiaolongs -f | grep ".vscode-server" | head -n -1
+# xiaolon+  247495  247409  0 05:52 ?        00:00:00 sh ${HOME}/.vscode-server/bin...
+# xiaolon+  247575  247495  1 05:52 ?        00:00:35 ${EXT_DIR}/vscode_...
+# xiaolon+  247692  247575  0 05:52 ?        00:00:09 ${EXT_DIR}/vscode_...
+
+# xagrs 中使用 -I 和不使用 -I 的区别：
+ps -u xiaolongs -f | grep ".vscode-server" | head -n -1  | awk '{print $2}' | xargs      echo kill -9 
+# kill -9 247495 247575 247692
+ps -u xiaolongs -f | grep ".vscode-server" | head -n -1  | awk '{print $2}' | xargs -I @ echo kill -9 @
+# kill -9 247495
+# kill -9 247575
+# kill -9 247692
+
+tips:
+cat test.txt | xargs    多行输入，单行输出，如果不用 xargs ， 则需要使用 set ret=`` 的方法 -- 增加一个不必要的临时变量。
+echo ${str}  | xargs    除去所有单 / 双引号 ， 换行符
+cat "build_ci_info.txt" | xargs grep "dockerName=" | xargs -l bash -c ' printf "dir : %-88s  docker : %-s\n"  $0  $1 '        //format, align , column , 格式化对齐多列字符串      
+
+find $PWD -type f -iname "*.log" | xargs grep "ERROR"
+find ./-type f -iname "2" | grep -v "/.svn/" | xargs rm ${1}               // ${1} 引用第一个参数， {} 引用所有的参数（类似于 %*）
+find -L ${CACHE_DIR}/docker/silicon/ -type f -iname "*.txt" | grep -v "${tmp_filter}" | xargs -I @ echo rm @ 
+find ./-iname "*.txt" -print0 | xargs -0 -I file echo mv file ~/old.src    // 移动满足条件的文件到～/old.src 目录中去。   
+                                                                            //-0 选项用于处理文件路径中包含空格的情况，确保其被当成有效的文件路径. 
+                                                                            //    如果有多个文件不能用此选项，因为它把所有的输出都认为是一个文件路径。
+                                                                            //-I  指定代表每个文件路径的变量名， 相当于 for 循环中的 % i
+echo 1 2 3 4 5 | xargs -I@ echo the string is \" @ \" end                   // the string is " 1 2 3 4 5 " end
+cat ${EXT_DIR}/build/_lastBuildDir.txt | xargs -I @ echo export @ | xargs            // 执行命令
+
+
+# only bash supported:
+echo {1..8}                          输入 1 2 3 4 5 6 7 8
+echo argument1 argument2 argument3 | xargs -l bash -c 'echo this is first:$0    second:$1    third:$2'
+[bash-4.2]$ echo {1..8} | xargs -n2 sh -c 'echo "the number $1 comes before $2"' sh
+the number 1 comes before 2
+the number 3 comes before 4
+the number 5 comes before 6
+the number 7 comes before 8
+
+# Passing Three Arguments to the Script
+echo "Tom Likes Jerry" | xargs ./threeWords.sh 
+
+
+
+
+echo
+bash_script_o

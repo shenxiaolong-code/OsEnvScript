@@ -10,10 +10,10 @@ echo "[NOTE] code command MUST run in computelab-303 host terminal."
 
 # in gdb debug session :
 # | frame 0 | grep ":" > ${EXT_DIR}/temp/gdb_cmd_output.txt
-# !source ${HOME}/bash_env/app/vscode/bin/vscode_open_file_goto_line.csh
+# !source ${HOME}shell_script/bash_env/app/vscode/bin/vscode_open_file_goto_line.csh
 # echo\r\n
 
-echo "From : ${HOME}/bash_env/app/vscode/bin/vscode_open_file_goto_line.csh"
+echo "From : ${HOME}shell_script/bash_env/app/vscode/bin/vscode_open_file_goto_line.csh"
 echo "example of gdb command output => shell script input"
 line=`cat ${EXT_DIR}/temp/gdb_cmd_output.txt | sed 's#.*/home#/home#g'`
 echo ${line}

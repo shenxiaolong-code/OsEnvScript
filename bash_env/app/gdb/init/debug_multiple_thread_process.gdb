@@ -105,4 +105,4 @@ if 0
     p $_thread
 end
 
-echo \r\n --------- leaving /home/xlshen/scratch/bash_env/app/gdb/init/debug_multiple_thread_process.gdb ...\r\n
+echo \r\n --------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/debug_multiple_thread_process.gdb ...\r\n

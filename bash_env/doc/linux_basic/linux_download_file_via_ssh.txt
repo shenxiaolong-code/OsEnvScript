@@ -1,0 +1,30 @@
+从远程linux机器下载文件到本地windows机器：
+scp your_username@remotehost.edu:foobar.txt /local/dir
+scp username@hostname:/path/to/remote/file /path/to/local/file
+
+从本地windows机器上传文件到远程linux机器：
+scp /path/to/local/file username@hostname:/path/to/remote/file      
+
+
+从远程机器1上传文件到远程机器2：
+scp username1@hostname1:/path/to/file username2@hostname2:/path/to/other/file   
+
+注意：不要在windows的batch脚本中使用linux下表示用户home目录的~。 因为DOS中的~有特殊含义且无法转义。
+scp xiaoshen@srdcws1087.amd.com:~/xiaoshen/bp.txt ./bp.txt          //错误 : 里面有特殊字符~
+
+scp -P [port number] [username]@[server name or IP]:[path to file on server] [path to file on local PC]
+
+scp -P 7022 root@206.196.xxx.xxx:/root/filetodownload.txt C:\Users\[UserName]\Desktop\
+
+scp xiaoshen@srdcws1087.amd.com:/home/xiaoshen/bp/init.gdb C:\temp\ttt\
+
+scp -P 7022 xiaoshen@srdcws1087.amd.com:/home/xiaoshen/bp/init.gdb C:\temp\ttt\
+
+
+e.g. (Fails to verify below OP)
+download /home/xiaoshen/bp/init.gdb  from  srdcws1087.amd.com   ： 
+scp srdcws1087.amd.com:/home/xiaoshen/bp/init.gdb  ./bp.txt
+scp -p xiaoshen@srdcws1087.amd.com:/home/xiaoshen/bp/init.gdb ./bp.txt
+scp -p xiaoshen@srdcws1087.amd.com:/home/xiaoshen/bp/init.gdb ./bp.txt
+
+/home/xiaoshen/bp/init.gdb

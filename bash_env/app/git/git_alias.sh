@@ -68,7 +68,7 @@ alias isGitRepo='git rev-parse --is-inside-work-tree > /dev/null 2>&1 '
 #'git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s "'
 
 alias url=show_git_svn_repo_url
-alias nvgit='cat ${HOME}/bash_env/nvidia/nvGitGuide.txt'
+alias nvgit='cat ${HOME}shell_script/bash_env/nvidia/nvGitGuide.txt'
 alias nvpush='source ${BASH_DIR}/nvidia/bin/nvGitPush.sh'
 
 function check_tail_blank_char_in_file(){

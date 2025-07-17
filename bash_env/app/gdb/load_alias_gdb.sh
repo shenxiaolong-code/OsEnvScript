@@ -18,7 +18,7 @@ function only_test_gdb_script(){
 # general gdb shortcut
 function debug_with_gdb()     { 
         gdb -q --command=${BASH_DIR}/app/gdb/init/project_init.gdb  --args "$@"  ;  
-        echo "\n${red}more debug info, see${brown} ${HOME}/bash_env/nvidia/bin/show_nv_debug_option.csh ${end}"  ; 
+        echo "\n${red}more debug info, see${brown} ${HOME}shell_script/bash_env/nvidia/bin/show_nv_debug_option.csh ${end}"  ; 
         }
 function debug_with_cuda_gdb()                      { ${CUDA_PATH}/bin/cuda-gdb -q --command=${BASH_DIR}/app/gdb/init/project_init.gdb --args "$@"     ; }
 function check_with_cuda_compute_sanitizer ()       { ${CUDA_PATH}/bin/compute-sanitizer  "$@"     ; }

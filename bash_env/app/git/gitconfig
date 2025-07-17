@@ -1,5 +1,5 @@
 
-# ln -s ${HOME}/bash_env/app/git/gitconfig  ${HOME}/.gitconfig
+# ln -s ${HOME}shell_script/bash_env/app/git/gitconfig  ${HOME}/.gitconfig
 # open this file by cmdline : git config --global -e
 
 [user]

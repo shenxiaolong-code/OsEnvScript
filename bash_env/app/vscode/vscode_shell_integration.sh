@@ -117,6 +117,6 @@ function vscode_add_folder() {
 
 alias codeopen=vscode_open_file
 alias ox=vscode_add_folder
-alias killide='source /home/scratch.xiaolongs_gpu_1/bash_env/app/vscode/bin/vscode_kill_process_new.sh'
+alias killide='source /home/scratch.xiaolongs_gpu_1shell_script/bash_env/app/vscode/bin/vscode_kill_process_new.sh'
 
 bash_script_o

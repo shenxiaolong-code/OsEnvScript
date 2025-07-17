@@ -1,0 +1,275 @@
+# quick usage
+# compact output : jq -c '.' <compact_or_formatted_file>
+# format  output : jq    '.' <compact_or_formatted_file>
+
+# format json string to readable format (pretty-printed output)
+jq '.' ${output_file_compact} > ${output_file_formatted}
+# python3 -m json.tool ${output_file_compact} > ${output_file_formatted}
+# jq is better than python3 -m json.tool because it has colorized output and more powerful
+
+# pretty-printed output  => compact output
+#   -c   compact instead of pretty-printed output;
+# . represents the root object.
+jq -c '.' ${output_file_formatted} > ${output_file_compact}
+
+# 
+echo '{"foo": 0}'                                | jq .
+echo '{"foo": {"bar": "baz"}}'                   | jq .
+echo '{"foo": {"bar": "baz"}}'                   | jq .foo
+echo '{"foo": [{"bar": "baz"}, {"bar": "qux"}]}' | jq .foo
+echo '{"foo": {"bar": "baz"}}'                   | jq .foo.bar
+echo '{"foo": {"bar": "baz"}}'                   | jq .foo.bar.baz
+
+# jq . ${EXT_DIR}/tmp/to_del/ok.json
+# [] means array , use node[] to access
+# {} means object , use node. to access
+
+jq '.buildSpecs[].build.buildSuffix'  # 使用节点名
+jq '.[][].build.buildSuffix'          # 使用层级引用
+
+
+# 调试jq过滤和正则匹配
+echo "1. 显示所有buildSuffix值："
+jq -r '.buildSpecs[].build.buildSuffix' ${EXT_DIR}/tmp/to_del/dd.json
+# cutlass_ir_gcc_8.5.0
+# cutlass_ir_gcc_8.5.0_public_release
+# cask_api_gcc_8.5.0
+# cask_api_gcc_8.5.0_public_release
+
+echo -e "\n2. 测试 cask_api_gcc|public_release 匹配格式重新格式化输出："
+jq '{ buildSpecs: [ .buildSpecs[] | select(.build.buildSuffix | test("cask_api_gcc|public_release")) ] }' ${EXT_DIR}/tmp/to_del/dd.json
+jq '{ buildSpecs: [ .buildSpecs[] | select(.build.buildSuffix | test("cask_api_gcc|public_release")) ] }' ${EXT_DIR}/tmp/to_del/dd.json | jq -r '.buildSpecs[].build.buildSuffix'
+# cutlass_ir_gcc_8.5.0_public_release
+# cask_api_gcc_8.5.0
+# cask_api_gcc_8.5.0_public_release
+
+
+echo -e "\n3. 匹配节点数量："
+jq '.[] | select(.a.b.a == "OK")'                   file.json
+jq '.[] as $e | select($e.a.b.a == "OK")'           file.json
+jq --arg val "OK" '.[] | select(.a.b.a == $val)'    file.json      # 使用变量 val ， 其值为 "OK"
+jq '.buildSpecs | [ .[] | select(.build.buildSuffix | test("cask_api_gcc|public_release")) ] | length' file.json
+jq '.[] | select(.result?.is_success == false)' file.json   # 测试 result 是否存在，并且只匹配 result 节点存在且 result.is_success为false的节点
+
+# 3
+
+# fetch node in first array
+# jq '.buildSpecs[0].build' ${EXT_DIR}/tmp/to_del/ok.json
+# fetch node in all arrays
+# jq '.buildSpecs[].build' ${EXT_DIR}/tmp/to_del/ok.json
+# fetch node in all arrays
+# jq '.buildSpecs[].build.buildSuffix' ${EXT_DIR}/tmp/to_del/ok.json
+
+# Some of the options include:
+#   -c               compact instead of pretty-printed output;
+#   -n               use `null` as the single input value;
+#   -e               set the exit status code based on the output;
+#   -s               read (slurp) all inputs into an array; apply filter to it;
+#   -r               output raw strings, not JSON texts;
+#   -R               read raw strings, not JSON texts;
+#   -C               colorize JSON;
+#   -M               monochrome (don't colorize JSON);
+#   -S               sort keys of objects on output;
+#   --tab            use tabs for indentation;
+#   --arg a v        set variable $a to value <v>;
+#   --argjson a v    set variable $a to JSON value <v>;
+#   --slurpfile a f  set variable $a to an array of JSON texts read from <f>;
+#   --rawfile a f    set variable $a to a string consisting of the contents of <f>;
+#   --args           remaining arguments are string arguments, not files;
+#   --jsonargs       remaining arguments are JSON arguments, not files;
+#   --               terminates argument processing;
+
+# jq 常用用法示例（带实例说明）
+
+# 1. 基础查询示例
+# 假设有如下JSON:
+# {
+#   "name": "张三",
+#   "profile": {
+#     "age": 25,
+#     "city": "北京"
+#   },
+#   "scores": [85, 90, 95]
+# }
+
+# 提取特定字段
+jq '.name' file.json              # 输出: "张三"
+
+# 提取嵌套字段
+jq '.profile.age' file.json       # 输出: 25
+
+# 提取数组中的特定元素
+jq '.scores[0]' file.json         # 输出: 85 (第一个元素)
+jq '.scores[-1]' file.json        # 输出: 95 (最后一个元素)
+
+# 2. 数组操作示例
+# 假设有如下JSON数组:
+# [
+#   {"name": "张三", "age": 25},
+#   {"name": "李四", "age": 30},
+#   {"name": "王五", "age": 35}
+# ]
+
+# 获取所有数组元素
+jq '.[]' file.json                # 将输出所有对象，每个一行
+
+# 获取数组长度
+jq 'length' file.json             # 输出: 3
+
+# 数组切片
+jq '.[1:3]' file.json             # 输出第2和第3个元素
+
+# 3. 过滤和条件示例
+# 使用上面的数组示例
+
+# 过滤数组元素
+jq '.[] | select(.age > 30)' file.json     # 输出年龄大于30的记录
+# 结果:
+# {"name": "王五", "age": 35}
+
+# 条件判断
+jq '.[] | select(.name == "张三")' file.json
+# 结果:
+# {"name": "张三", "age": 25}
+
+# 多条件过滤
+jq '.[] | select(.age > 25 and .name == "李四")' file.json
+# 结果:
+# {"name": "李四", "age": 30}
+
+# 4. 转换和映射示例
+# 使用上面的数组示例
+
+# 只获取特定字段组成新数组
+jq '[.[] | .name]' file.json
+# 结果: ["张三", "李四", "王五"]
+
+# 创建新的对象结构
+jq '.[] | {person_name: .name, person_age: .age}' file.json
+# 结果:
+# {
+#   "person_name": "张三",
+#   "person_age": 25
+# }
+
+# 数值计算
+jq '.[] | .price * .quantity' file.json
+
+# 5. 组合使用
+# 获取所有name字段，并组成数组
+jq '[.[] | .name]' file.json
+
+# 计算总和
+jq '[.[] | .value] | add' file.json
+
+# 获取最大值
+jq '[.[] | .value] | max' file.json
+
+# 6. 格式化输出
+# 美化输出（默认）
+jq '.' file.json
+
+# 压缩输出
+jq -c '.' file.json
+
+# 原始输出（不带引号）
+jq -r '.name' file.json
+
+# 7. 复杂查询
+# 深层嵌套过滤
+jq '.items[] | select(.metadata.type == "book")' file.json
+
+# 分组统计
+jq 'group_by(.category) | map({category: .[0].category, count: length})' file.json
+
+# 排序
+jq '.[] | sort_by(.name)' file.json
+
+# 8. 数据转换示例
+# 对象转数组示例
+# 输入:
+# {
+#   "name": "张三",
+#   "age": 25,
+#   "city": "北京"
+# }
+
+jq 'to_entries' file.json
+# 结果:
+# [
+#   {
+#     "key": "name",
+#     "value": "张三"
+#   },
+#   {
+#     "key": "age",
+#     "value": 25
+#   },
+#   {
+#     "key": "city",
+#     "value": "北京"
+#   }
+# ]
+
+# 数组转对象示例
+# 输入:
+# [
+#   {"key": "name", "value": "张三"},
+#   {"key": "age", "value": 25}
+# ]
+
+jq 'from_entries' file.json
+# 结果:
+# {
+#   "name": "张三",
+#   "age": 25
+# }
+
+# 字符串操作
+jq '.name | ascii_downcase' file.json
+
+# 9. 条件判断和默认值示例
+# 假设有JSON:
+# {
+#   "name": "张三",
+#   "profile": {
+#     "age": null
+#   }
+# }
+
+# 设置默认值
+jq '.profile.age // "未知"' file.json    # 如果age为null，输出"未知"
+
+# if-then-else示例
+jq '.profile.age | if . > 18 then "成年" else "未成年" end' file.json
+
+# 10. 管道组合示例
+# 假设有商品列表:
+# {
+#   "items": [
+#     {"name": "手机", "price": 5999},
+#     {"name": "耳机", "price": 999},
+#     {"name": "电脑", "price": 8999}
+#   ]
+# }
+
+# 提取价格大于1000的商品名称和价格
+jq '.items[] | select(.price > 1000) | {name, price}' file.json
+# 结果:
+# {"name": "手机", "price": 5999}
+# {"name": "电脑", "price": 8999}
+
+# 计算平均价格
+jq '[.items[].price] | {avg: (add/length)}' file.json
+# 结果:
+# {
+#   "avg": 5332.33
+# }
+
+# 关键点说明：
+# - . 表示当前对象：从根开始的完整JSON文档
+# - [] 用于数组操作：可以是索引[0]或展开所有元素[]
+# - | 用于管道操作：将左边的输出作为右边的输入
+# - select() 用于过滤：类似SQL的WHERE子句
+# - -r 参数用于原始输出：去除字符串的引号
+# - -c 参数用于压缩输出：将JSON压缩成一行

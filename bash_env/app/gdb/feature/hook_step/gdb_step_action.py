@@ -25,7 +25,7 @@ class StepHandler(gdb.Command):
         # print(f'\033[92m{inspect.stack()[0][1]}:{inspect.stack()[0][2]}\033[0m')
         symbol_info=gdb.execute("info line", to_string=True)
         src_path=self.extract_last_path(symbol_info)
-        gdb.execute(f"shell {BASH_DIR}/app/gdb/feature/hook_step/gdb_step_action.sh '{src_path}'")  
+        gdb.execute(f"shell source {BASH_DIR}/app/gdb/feature/hook_step/gdb_step_action.sh '{src_path}'")  
 
 StepHandler()
 

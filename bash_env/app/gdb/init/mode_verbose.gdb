@@ -7,10 +7,10 @@ set complaints 99
 set trace-commands on
 set debug auto-load on
 
-source /home/xlshen/scratch/bash_env/app/gdb/init/loadInfo.gdb
+source /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/loadInfo.gdb
 
 
 
 
 echo done to load verbose mode.
-echo \r\n --------- leaving /home/xlshen/scratch/bash_env/app/gdb/init/mode_verbose.gdb ...\r\n
+echo \r\n --------- leaving /home/xlshen/scratch/shell_script/bash_env/app/gdb/init/mode_verbose.gdb ...\r\n

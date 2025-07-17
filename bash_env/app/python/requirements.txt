@@ -1,6 +1,6 @@
 
 # install python prerequisites packages
-# pip install -r ${BASH_DIR}/bash_env/app/python/requirements.txt
+# pip install -r ${BASH_DIR}shell_script/bash_env/app/python/requirements.txt
 # the supported format
 # version is higher than xxx : pip>=23.1.2
 # version is equal to xxx : numpy==1.19.5

@@ -1,0 +1,40 @@
+no verified:  https://wiki.archlinux.org/title/Color_output_in_console
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+
+-----------------------------------------------------------------------------
+
+Foreground color codes, reset = 0, black = 30, red = 31, green = 32, yellow = 33, blue = 34, magenta = 35, cyan = 36, and white = 37.
+background color codes, reset = 0, black = 40, red = 41, green = 42, yellow = 43, blue = 44, magenta = 45, cyan = 46, and white=47, are the commonly used color codes.
+
+https://unix.stackexchange.com/questions/148/colorizing-your-terminal-and-shell-environment
+# Colors! : \033 == \e
+set 	     end='\e[0m'                          set 	       end='\033[0m'             #no color , reset , This is needed at the end...
+set 	   black='\e[0;30m'                       set 	     black='\033[0;30m'
+set 	    gray='\e[1;30m'                       set 	      gray='\033[1;30m'
+set 	     red='\e[0;31m'                       set 	       red='\033[0;31m'
+set    light_red='\e[1;31m'                       set    light_red='\033[1;31m'
+set 	   green='\e[0;32m'                       set 	     green='\033[0;32m'
+set  light_green='\e[1;32m'                       set  light_green='\033[1;32m'
+set 	   brown='\e[0;33m'                       set 	     brown='\033[0;33m'
+set 	  yellow='\e[1;33m'                       set 	    yellow='\033[1;33m'
+set 	    blue='\e[0;34m'                       set 	      blue='\033[0;34m'
+set   light_blue='\e[1;34m'                       set   light_blue='\033[1;34m'
+set 	  purple='\e[0;35m'                       set 	    purple='\033[0;35m'
+set light_purple='\e[1;35m'                       set light_purple='\033[1;35m'
+set 	    cyan='\e[0;36m'                       set 	      cyan='\033[0;36m'
+set   light_cyan='\e[1;36m'                       set   light_cyan='\033[1;36m'
+set   light_gray='\e[0;37m'                       set   light_gray='\033[0;37m'
+set        white='\e[1;37m'                       set        white='\033[1;37m'
+
+example : 
+set prompt="${green}%n${blue}@%m ${white}%~ ${green}%%${end} "
+set prompt="[${green}%n${blue}@%m ${white}%~ ]${end} "
+echo -e "\e[1;31m This is red text \e[0m"
+echo -e "\033[1;31m This is red text \033[0m"
+echo "[${green}%n${blue}@%m ${white}%~ ]${end} "
+
+# Clean up after ourselves...
+unset red green yellow blue magenta cyan yellow white end
