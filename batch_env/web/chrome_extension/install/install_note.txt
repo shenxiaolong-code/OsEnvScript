@@ -1,0 +1,21 @@
+
+1. the path in below file MUST be hardcoded to the local path, the environment variable will not work.
+   .\localapploader_install.reg
+
+2. the com.example.localapploader MUST be the same in below two files: 
+    ./localapploader_install.reg
+   ../chrome_native_handler.json
+   else local_app_loader.bat wil be not called.
+
+3. the path MUST match below pattern (\\, can't be \ or /) in the file ./chrome_native_handler.json
+   "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.bat",
+   or
+   "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.exe",
+   else the local_app_loader.bat will not be called.
+
+4. bat or exe in file .\chrome_native_handler.json
+   they have the same function, but different way to run.
+   a. there is a console windows when you run the native host handler.
+      "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.bat",
+   b. there is no console windows when you run the native host handler.
+      "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.exe",

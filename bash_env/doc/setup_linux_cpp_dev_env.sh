@@ -4,6 +4,8 @@
 sudo apt update
 sudo apt upgrade -y
 
+sudo apt install tree -y                    # tree cmd
+
 sudo apt install build-essential -y         # Install essential packages for building software (includes g++, make, etc.)
 sudo apt install g++ -y                     # Install the GNU C++ compiler
 sudo apt install gdb -y                     # Install the GNU Debugger

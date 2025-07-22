@@ -17,6 +17,9 @@
 /batch_env/TODO.txt
 /batch_env/script_skill.txt
 
+/batch_env/web/chrome_extension/install/generate
+/batch_env/web/chrome_extension/doc
+
 /batch_env/Windbg/dumpbin
 /batch_env/Windbg/contextMenu/template
 /batch_env/Windbg/debugext/*

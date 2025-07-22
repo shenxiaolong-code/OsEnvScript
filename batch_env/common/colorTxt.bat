@@ -2,7 +2,7 @@
 ::show color text , usage example see cecho test.bat
 ::string can't include char (need escape) : < >
 ::or use built-in findstr.exe option /a to print color string in console window and use back space char to erase unnecessary output char.
-::e.g. findstr.exe /p /r /a:0c "call" "D:\work\shenxiaolong\coreshell_script\batch_env\common\tools_userInput.bat" nul
+::e.g. findstr.exe /p /r /a:0c "call" "D:\work\shenxiaolong\core\shell_script\batch_env\common\tools_userInput.bat" nul
 
 @if {"%_Echo%"}=={"1"} ( @echo on ) else ( @echo off )
 rem @echo [      %~nx0] commandLine: %0 %*

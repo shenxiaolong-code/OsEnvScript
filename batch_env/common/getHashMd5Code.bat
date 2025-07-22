@@ -1,6 +1,6 @@
 
 :: get string (e.g. url, filePath) has md5 code , to avoid repeat thing
-:: usage example : .\getHashMd5Code.bat  bbb "C:\work\OneDrive\work_skills\svnRepo\shenxiaolong\coreshell_script\batch_env\common\getHashMd5Code.bat"
+:: usage example : .\getHashMd5Code.bat  bbb "D:\work\svnRepo\shenxiaolong\core\shell_script\batch_env\common\getHashMd5Code.bat"
 ::                 set bbb=a9fe80d9a6fd07b79269df5c1e3e7128
 
 :: python version

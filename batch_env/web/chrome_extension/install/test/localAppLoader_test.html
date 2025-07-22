@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>LocalAppLoader Test</title>
+   <script>
+   document.addEventListener('DOMContentLoaded', function(){
+      document.getElementById('srcPath').innerText = document.URL.substring(8,document.URL.length);    
+   }, false);
+   </script>
+</head>
+
+<body>
+<a href="localLoader://testURL:/local_vol1_nobackup/xiaoshen/tmp/"> localLoader://testURL:/local_vol1_nobackup/xiaoshen/tmp/ </a></p>
+<a href="localLoader:testURL:/local_vol1_nobackup/xiaoshen/tmp/"> localLoader:testURL:/local_vol1_nobackup/xiaoshen/tmp/ </a>
+<hr>
+if a message box popups after you click any one link , the install/test is sucessfully, else fails.
+<hr>
+The file path : <h3 style="display: inline;" > <nobr id="srcPath"  >source file path info</nobr>&nbsp;&nbsp; <br>
+<a href="" onclick='(function(){ location.href = "localLoader://locatePath:" + document.URL.substring(8,document.URL.length); })();'>open folder</a>  &nbsp;&nbsp;
+<a href="" onclick='(function(){ location.href = "localLoader://editFile:" + document.URL.substring(8,document.URL.length); })();'>edit source file</a> &nbsp;&nbsp;
+<a href="localloader://testURL:/local_vol1_nobackup/xiaoshen/tmp/" >test customized protocol localloader</a> &nbsp;&nbsp;
+<hr>
+</body>
+</html>

@@ -76,7 +76,7 @@ goto :eof
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 set curPid=
 ::MS bug : JIT always deliver parameter -p , e.g. 
-:: E:\work\shenxiaolong\coreshell_script\batch_env\Windbg\tools_windbg.bat dbgPid -p 15328
+:: E:\work\shenxiaolong\core\shell_script\batch_env\Windbg\tools_windbg.bat dbgPid -p 15328
 if not 	{"%~2"}=={""} if {"%~1"}=={"-p"} 	set curPid=%~2
 if 		{"%~2"}=={""} 						set curPid=%~1
 if     defined curPid       call :dbgPid.verifyPID.checkExist 	curPid 	%curPid%

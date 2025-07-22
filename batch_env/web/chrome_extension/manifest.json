@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "shen xiaolong's LocalAppLoader Extension",
+  "version": "1.0",
+  "description": "Handles localloader protocol URLs, xlshen2002@hotmail.com",
+  "permissions": [
+    "nativeMessaging",
+    "activeTab",
+    "scripting",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "file:///*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "chrome_msg_listener.js"
+  },
+  "content_scripts": [
+    {
+      // "matches": ["<all_urls>"],
+      "matches": ["file:///*.html","file:///*.htm","file:///*/"],
+      "js": ["native_host_handler.js"]
+    }
+  ]
+}

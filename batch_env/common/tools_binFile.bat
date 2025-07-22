@@ -86,7 +86,7 @@ goto :eof
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 call tools_error.bat checkPathExist "%~fs1" "%~fs0" dumpBin_mark
 set "dumpbinFile=%temp%\dumpBin_%~n1.txt"
-call "%ToolRootPath%\coreshell_script\batch_env\Windbg\dumpbin_x86\dumpbin.exe" /all "%~fs1" > "%dumpbinFile%"
+call "%ToolRootPath%\core\shell_script\batch_env\Windbg\dumpbin_x86\dumpbin.exe" /all "%~fs1" > "%dumpbinFile%"
 call tools_txtFile.bat openTxtFile "%dumpbinFile%"
 goto :eof
 
@@ -105,7 +105,7 @@ goto :eof
 :downloadPdb
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 call tools_error.bat checkPathExist "%~fs1" "%~fs0" downloadPdb_mark
-call "%ToolRootPath%\coreshell_script\batch_env\Windbg\tools_windbg.bat"  downloadPdb  %*
+call "%ToolRootPath%\core\shell_script\batch_env\Windbg\tools_windbg.bat"  downloadPdb  %*
 goto :eof
 
 :setToolRootPath

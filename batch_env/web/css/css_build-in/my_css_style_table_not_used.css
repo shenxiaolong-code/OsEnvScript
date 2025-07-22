@@ -1,0 +1,20 @@
+table {
+        table-layout: fixed;
+        margin : 0 auto;
+}
+
+table th:nth-child(1) {
+  width: 15%;
+}
+
+table th:nth-child(2) {
+  width: 20%;
+}
+
+table th:nth-child(3) {
+  width: 15%;
+}
+
+table th:nth-child(4) {
+  width: 35%;
+}

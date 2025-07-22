@@ -262,7 +262,7 @@ call set "_tmpToShortPathVal=%%%~1%%"
 if {"%_tmpToShortPathVal%"}=={""} goto :eof
 :: for /f "tokens=*"  %i in ( "%VS140COMNTOOLS%..\.." ) do echo "%~fsi"
 for /f "tokens=*" %%i in ( "%_tmpToShortPathVal%" ) do set "%~1=%%~fsi"
-rem for /f %%i in ( "D:\work\shenxiaolong\coreshell_script\batch_env\common\tools_path.bat " ) do set "%~1=%%~fsi"
+rem for /f %%i in ( "D:\work\shenxiaolong\core\shell_script\batch_env\common\tools_path.bat " ) do set "%~1=%%~fsi"
 goto :eof
 
 ::[DOS_API:ShowShortPath] show short path of one possible long path to 
@@ -303,10 +303,10 @@ goto :eof
 
 ::[DOS_API:getFolderPath]get dir by one path (folder or file)
 ::call e.g  : call :getFolderPath TestPath dir
-::            call :getFolderPath D:\work\shenxiaolong\coreshell_script\batch_env\common\tools_path.bat    dir
-::            call :getFolderPath D:\work\shenxiaolong\coreshell_script\batch_env\common\                  dir
-::            call :getFolderPath D:\work\shenxiaolong\coreshell_script\batch_env\common                   dir
-::result e.g: set dir=D:\work\shenxiaolong\coreshell_script\batch_env\common
+::            call :getFolderPath D:\work\shenxiaolong\core\shell_script\batch_env\common\tools_path.bat    dir
+::            call :getFolderPath D:\work\shenxiaolong\core\shell_script\batch_env\common\                  dir
+::            call :getFolderPath D:\work\shenxiaolong\core\shell_script\batch_env\common                   dir
+::result e.g: set dir=D:\work\shenxiaolong\core\shell_script\batch_env\common
 :getFolderPath
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 if {"%~2"}=={""} call tools_message.bat errorMsg "parameter is not enough."

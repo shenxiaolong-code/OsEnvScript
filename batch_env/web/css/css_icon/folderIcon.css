@@ -1,0 +1,77 @@
+/*
+usage <tag class="folder">
+*/
+
+.folder {
+  text-align: center;
+  color: red;
+}
+
+.tabShape {
+    background-color: yellow; 
+    color: #222;
+    clip-path: polygon(0 23%, 0 7%, 4% 0, 29% 0, 32% 7%, 60% 7%, 98% 7%, 100% 10%, 100% 100%, 15% 100%, 0 100%, 0% 85%);
+}
+
+/*
+https://blog.51cto.com/u_15274085/2918949
+adjust width and height to check the shape and size
+*/
+.folderIcon {
+    display: inline-block;
+    background-color: transparent;
+    overflow: hidden;
+    font-size: 1px;
+}
+.folderIcon:before {
+    content: '';
+    float: left;
+    background-color: #9da0a0;
+    width: 10px;
+    height: 2px;
+    margin-left: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow: 2px 2px 0 0 #9da0a0;
+}
+.folderIcon:after {
+    content: '';
+    float: left;
+    clear: left;
+    background-color: #697070;
+    width: 22px;
+    height: 15px;
+    border-radius: 1px;
+}
+
+.audioIcon {
+    color: #9da0a0;
+    position: relative;
+    width: 12px;
+    height: 14px;
+    border-left: solid 1px currentColor;
+    border-right: solid 1px currentColor;
+    border-bottom: solid 1px currentColor;
+    border-radius: 0 0 50% 50%;
+    display: inline-block;
+}
+.audioIcon:before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: -6px;
+    width: 8px;
+    height: 17px;
+    border: solid 1px currentColor;
+    border-radius: 4px;
+    background-color: currentColor;
+}
+.audioIcon:after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    bottom: -4px;
+    width: 1px;
+    height: 4px;
+    background-color: currentColor;
+}

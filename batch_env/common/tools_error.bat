@@ -144,7 +144,7 @@ goto :eof
 ::[DOS_API:checkLabel] check whether the label exists in specified batch files.
 ::call e.g  : call :checkLabel labelNameWithoutPrefix  filePath bRet
 ::          : call :checkLabel "myLable"  "%~f0" bRet
-::          : call :checkLabel "myLable"  "C:\work\OneDrive\work_skills\svnRepo\shenxiaolong\coreshell_script\batch_env\common\tools_error.bat" bRet
+::          : call :checkLabel "myLable"  "D:\work\svnRepo\shenxiaolong\core\shell_script\batch_env\common\tools_error.bat" bRet
 ::          : set bRet=1
 :checkLabel
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*

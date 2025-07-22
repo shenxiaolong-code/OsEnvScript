@@ -4,7 +4,7 @@ rem set _Debug=1
 if defined _Debug (
 cd /d "%~dp0"
 rem copy test context to below file to simple the test procedure.
-rem type D:\work\shenxiaolong\coreshell_script\batch_env\Windbg\script\test\tt.xt | clip
+rem type D:\work\shenxiaolong\core\shell_script\batch_env\Windbg\script\test\tt.xt | clip
 echo.
 powershell Get-Clipboard
 echo.

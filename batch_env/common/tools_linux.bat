@@ -105,7 +105,7 @@ goto :eof
 :: open local example:
 :: start code.cmd "C:/work/shenxiaolong/core/shell_script/batch_env/"
 :: start /B code.cmd -n --locale zh-cn "%~1"
-:: start "" "vscode://file/C:\work\shenxiaolong\coreshell_script\batch_env\Companys\AMD\tools_dailyWork.bat"
+:: start "" "vscode://file/C:\work\shenxiaolong\core\shell_script\batch_env\Companys\AMD\tools_dailyWork.bat"
 
 :: below way will cause this console window can't exit automaticall, use code.exe directly to workaround not-exit-auto issue
 :: start /B Code.cmd  %*

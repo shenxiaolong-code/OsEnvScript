@@ -149,7 +149,7 @@ goto :eof
 
 ::[DOS_API:makePortalbe] collect necessary files for special feature.
 ::usage     : call :makePortalbe cmd_or_bat_file
-::call e.g. : call :makePortalbe "D:\work\shenxiaolong\coreshell_script\batch_env\common\tools_miscellaneous.bat"
+::call e.g. : call :makePortalbe "D:\work\shenxiaolong\core\shell_script\batch_env\common\tools_miscellaneous.bat"
 :makePortalbe
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 call tools_error.bat checkFileExist "%~fs1"

@@ -35,7 +35,7 @@ bash_script_i
 # open this vscode setting file : ctrl+shift+p : shortcuts : open keyboard shortcuts(JSON) 
 dumpinfo ctrl+O :  'C:\Users\xiaolongs\AppData\Roaming\Cursor\User\keybindings.json'
 dumpinfo ctrl+O :  'C:\Users\xiaolongs\AppData\Roaming\Cursor\User\settings.json'
-dumpinfo ctrl+O :  'C:\work\OneDrive\work_skills\svnRepo\shenxiaolong\setupEnvironment\setup_vscode\config\settings_mini.json'
+dumpinfo ctrl+O :  'D:\work\svnRepo\shenxiaolong\setupEnvironment\setup_vscode\config\settings_mini.json'
 
 if [[ ! -d $PWD ]] ; then
     dumpinfo "not existed folder : $PWD"

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CSS style test</title>
+    <link rel="stylesheet" type="text/css" href="./my_css_style_test.css">
+    <script type="text/javascript" charset="utf-8" src="D:/work/svnRepo/shenxiaolong/core/shell_script/batch_env/web/chrome_extension/dynamic_create.js"></script>
+
+<script>
+     document.addEventListener('DOMContentLoaded', function()
+    {
+        document.getElementById('srcPath').innerText = document.URL.substring(8,document.URL.length);    
+    }, false); 
+</script>
+
+</head>
+<body>
+    
+<hr>
+The file path : <h3 style="display: inline;"> <nobr id="srcPath">source file path info</nobr> &nbsp;&nbsp; 
+<a href="" onclick='(function(){ location.href = "localLoader://editFile:" + document.URL.substring(8,document.URL.length); })();'>edit source file</a> &nbsp;&nbsp;
+<a href="" onclick='(function(){ location.href = "localLoader://vscodeOpen:" + document.URL.substring(8,document.URL.length)+"/.."; })();'>vscode open source folder</a>  &nbsp;&nbsp;
+<a href="" onclick='(function(){ location.href = "localLoader://locatePath:" + document.URL.substring(8,document.URL.length); })();'> explorer open css folder  </a>
+<hr>
+
+css图标： <a href="https://css.gg/app">https://css.gg/app </a> <br>
+css 教程：<a href="https://www.tutorialrepublic.com/css-tutorial/css-get-started.php">https://www.tutorialrepublic.com/css-tutorial/css-get-started.php</a>
+<div>
+<h1>test External Style Sheet</h1>
+</div>
+
+<br><hr> inline-block :<br>
+folder icon         : <a  href="" class="folderIcon"> </a>  文字信息-1
+folder icon         : <a  href="" class="folderIcon"> </a>
+gg-folder icon      : <a  href="" class="gg-folder"> </a>  文字信息-2
+gg-folder icon      : <a  href="" class="gg-folder"> </a>
+<hr>
+block:<br>
+folder-remove icon  : <a  href="" class="gg-folder-remove"> </a>文字信息-3
+folder-add icon     : <a  href="" class="gg-folder-add">  </a>文字信息-4
+
+<hr>
+open    : <a  href="" class="folderIcon"> </a>
+browse  : <a  href="" class="folderIcon"> </a>
+
+<hr>
+
+
+<pre>
+在css文件里,
+图标换行  ： display: block;
+图标不换行： display: inline-block;
+
+不显示文字;
+overflow: hidden;
+font-size: 1px;
+
+</pre>
+
+
+</p>
+<table width="80%" border=2>
+<tr>
+    <td align="left"> test-1-0  </td>
+    <td> test-1-1 </td>
+    <td> test-1-2  </td>
+</tr>
+<tr>
+    <td align="left"> test-2-0  </td>
+    <td> test-2-1 </td>
+    <td> test-2-2  </td>
+</tr>
+<tr>
+    <td align="left"> test-3-0  </td>
+    <td> test-3-1 </td>
+    <td> test-3-2  </td>
+</tr>
+
+<!--- here is line comments --->
+<img src="res/03.png" alt="测试图片"  onclick="show_node_parent_hierarchy(this)" ></br>
+<h1  onclick="show_node_parent_hierarchy(this)" >主标题h1</h1>
+<h2>顶层标题h2</h2>
+<h3>子标题h3</h3>
+<h4>次子标题h4</h4>
+<hr> hr间距并且不换行，但是上面插入一横线。 使用段落模式使用hr
+源代码中新行测试1,源代码中换行符展示为一个空格。
+<br> br间距会换行,使用紧凑模式换行使用br
+源代码中新行测试2,源代码中换行符展示为一个空格。
+<ol>
+  <li>First item</li>
+  <li>Second item</li>
+  <li>Third item</li>
+  <li>Fourth item</li>
+</ol>
+
+</body>
+</html>                            

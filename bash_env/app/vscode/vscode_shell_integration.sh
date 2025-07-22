@@ -57,7 +57,7 @@ function icode() {
     echo "${purple}C:\\Users\\xiaolongs\\AppData\\Roaming\\Code\\User\\settings.json ${end}"
     echo
     echo "${green}backup path${end}"
-    echo "${purple}C:/work/OneDrive/work_skills/svnRepo/shenxiaolong/setupEnvironment/VSCode_setting/config/settings_mini.json ${end}"
+    echo "${purple}D:/work/oneDrive/work_skills/svnRepo/shenxiaolong/setupEnvironment/VSCode_setting/config/settings_mini.json ${end}"
 }
 
 function cleanup_vscode_unnecessary_process() {

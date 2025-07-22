@@ -50,5 +50,7 @@ my_customized_prompt() {
 PROMPT_COMMAND=my_customized_prompt
 '
 
+dumpinfo "hostname :${brown} $(hostname -f) ${blue}, IP :${brown} $(hostname -I)"
+
 bash_script_o
 

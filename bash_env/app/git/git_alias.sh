@@ -38,6 +38,31 @@ else
     fi
 fi
 
+function enable_git_part_checkout() {
+    # enable git sparse checkout
+    # git sparse-checkout init
+    # git sparse-checkout set src docs
+    # git sparse-checkout list
+    local part_src_dir_list=("${@}")
+    [[ ${#part_src_dir_list[@]} -eq 0 ]] && { dumperr "part src dir list is empty" ; return 1 ; }
+    dumpinfo "enable git sparse checkout for ${part_src_dir_list[*]}"
+    dumpcmd "git sparse-checkout init"
+    git sparse-checkout init
+    dumpcmd "git sparse-checkout set ${part_src_dir_list[*]}"
+    git sparse-checkout set "${part_src_dir_list[@]}"
+    dumpcmd "git sparse-checkout list"
+    git sparse-checkout list
+}
+
+function disable_git_part_checkout() {
+    # disable git sparse checkout
+    dumpinfo "disable git sparse checkout"
+    dumpcmd "git sparse-checkout disable"
+    git sparse-checkout disable
+}
+
+alias gitpart=enable_git_part_checkout
+alias gitpartd=disable_git_part_checkout
 
 function show_git_help_function() {    
     list_function_in_script_file  ${BASH_DIR}/app/git/git_alias.sh

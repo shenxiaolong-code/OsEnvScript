@@ -53,12 +53,14 @@ sed -i -e '$d' -e '$s/^$//' file             # 删除文件最后一行，并删
 
 3. 行操作
 sed -n '5p' file                             # 只显示第5行
+sed -n '5,$p' filename                       # 只显示从第5行到最后一行
 sed -n 81p file.txt                          # 打印第81行
 sed -n '5,10p' filename                      # 只显示第5~10行. sed 没有直接支持倒数第几行的选项，只能通过变量的办法。
                                              # total_lines=$(wc -l < file )
                                              # end_line=$((total_lines-n+1))
                                              # sed -n "${start_line},${end_line}p"
 sed -n '/str1/,/str2/p'                      # 只显示 str1 和 str2 之间的行 (包含 str1 和 str2 行)
+sed -n '/str/,$p' filename                   # 从匹配 str 的行开始，显示到文件末尾
 sed -n '/str1/,/str2/{/str1/b; /str2/b; p}'  # 只显示 str1 和 str2 之间的行 (不包含 str1 和 str2 行)
 sed -n 's/banana/fruit/p' example.txt        # 替换并只显示发生替换的行
 

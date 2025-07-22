@@ -46,8 +46,8 @@ echo.
 
 echo.
 set "regFile=%temp%\myApp.exe\MonitorAppExit.reg"
-echo test MonitorAppExit.Generate myApp.exe "%regFile%" "D:\shenxiaolong\coreshell_script\batch_env\Test\test1.bat"
-call :MonitorAppExit.Generate myApp.exe "%regFile%" "D:\shenxiaolong\coreshell_script\batch_env\Test\test1.bat"
+echo test MonitorAppExit.Generate myApp.exe "%regFile%" "D:\shenxiaolong\core\shell_script\batch_env\Test\test1.bat"
+call :MonitorAppExit.Generate myApp.exe "%regFile%" "D:\shenxiaolong\core\shell_script\batch_env\Test\test1.bat"
 echo generated regFile : %regFile%
 type "%regFile%"
 echo.
@@ -142,7 +142,7 @@ goto :eof
 
 ::[DOS_API:MonitorAppExit.Generate] generate reg file which is used to monitor application exit automatically
 ::usage         : MonitorAppExit.Generate appName.exe regfile   [monitorProcessFullPath]
-::e.g.          : MonitorAppExit.Generate myApp.exe  outRegfile "D:\shenxiaolong\coreshell_script\batch_env\Test\test1.bat"
+::e.g.          : MonitorAppExit.Generate myApp.exe  outRegfile "D:\shenxiaolong\core\shell_script\batch_env\Test\test1.bat"
 :MonitorAppExit.Generate
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 call tools_reg.bat makeRegPath "%temp%\AppExitDump\"  LocalDumpFolder

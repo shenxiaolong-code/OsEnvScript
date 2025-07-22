@@ -1,0 +1,76 @@
+/*
+https://www.tutorialrepublic.com/codelab.php?topic=css&file=create-zebra-striped-table
+https://codedragontech.com/createwithcodedragon/easy-ways-to-style-html-tables/
+some chars of line head will show strange cell effect , remove to check the table style change , the table shows split bolder.  -- don't know why
+e.g. / , some 
+*/
+enable loose mode
+
+table {        
+        border: 0px solid black;
+        width: 90%;        
+        text-align : center;
+        border-spacing:0;
+        border-collapse: collapse;
+        empty-cells: show;
+        font-family: arial, sans-serif;
+}
+    
+table.hovertable tr {
+    background-color:#46bac9;
+}
+tr:hover {
+    background-color: rgb(60, 64, 62);
+}
+
+table th, td {
+    border: 0px solid black;    
+    padding: 1px;
+    /* white-space: nowrap; */
+    /* text-align: right; */
+    /* cursor: pointer; */
+}
+
+table tr {
+    /* border-style:solid; */
+    /*border-bottom: 1px dotted #06ed06;*/
+    border-bottom: 0px dotted #06ed06;
+    /* background-image: linear-gradient(to left, black, rgb(5, 95, 5)); */
+}
+
+table tr:nth-child(even) {
+    /* border-color: #b91baf; */
+    /* border-style: dotted; */
+    background-color: rgb(24, 24, 24);
+    border-bottom: 0px dotted #dee2e6;
+    /* background-image: linear-gradient(to left, black, #1b4049); */
+}
+
+table td {
+    /* padding-inline-start: 2em; */
+    color: #90708e;    
+}
+
+table td:nth-child(even)  {
+    color: #7373cd;
+}
+
+table th {
+    /* color:#0c978c;    */ 
+    background-image: linear-gradient(to left, black, rgb(5, 95, 5));
+    font-size:14;
+    color: #9c6028;
+    text-align: right;
+}
+table th:nth-child(even) {
+    /* color:#336edb; */
+    background-image: linear-gradient(to left, black, #1b4049);
+}
+/*
+table th:nth-child(3) {    
+    color:#336edb;
+    background-image: linear-gradient(to left, black, #1b4049);
+}   
+*/ 
+
+

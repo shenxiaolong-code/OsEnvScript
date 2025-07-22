@@ -6,4 +6,4 @@ when use source server to get exact version source file, windbg will popup secur
 here is solution: add svn.exe as trusted application and add it into new .ini file
 
 to use one different source server file, set environment variable SRCSRV_INI_FILE to new file full path , example :
-set SRCSRV_INI_FILE=D:\work\shenxiaolong\coreshell_script\batch_env\Windbg\setup\symSrv\srcSrv.ini
+set SRCSRV_INI_FILE=D:\work\shenxiaolong\core\shell_script\batch_env\Windbg\setup\symSrv\srcSrv.ini

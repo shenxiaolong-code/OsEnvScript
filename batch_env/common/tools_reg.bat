@@ -39,7 +39,7 @@ call :deleteRegVariable "%tc_regVar%"
 
 echo.
 echo [TC] test call :importRegFile
-set "tc_regFile=D:\work\shenxiaolong\coreshell_script\batch_env\Windbg\contextMenu\template\appLaunch.reg"
+set "tc_regFile=D:\work\shenxiaolong\core\shell_script\batch_env\Windbg\contextMenu\template\appLaunch.reg"
 echo call :importRegFile "%tc_regFile%"
 call call :importRegFile "%tc_regFile%"
 
@@ -102,7 +102,7 @@ goto :eof
 
 ::[DOS_API:importRegFile] import specified registry directory
 ::call e.g  : call :importRegFile registryFile
-::result e.g: call :importRegFile "D:\work\shenxiaolong\coreshell_script\batch_env\Windbg\contextMenu\template\appLaunch.reg"
+::result e.g: call :importRegFile "D:\work\shenxiaolong\core\shell_script\batch_env\Windbg\contextMenu\template\appLaunch.reg"
 :importRegFile
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 call tools_error.bat checkPathExist "%~fs1"  "%~f0" importRegFileMark
@@ -112,7 +112,7 @@ goto :eof
 ::[DOS_API:makeRegPath] convert specified file path to registry path
 ::Note          : use double blash '\\' to represent one blash.
 ::call e.g  : call :makeRegPath filePath  regFilePath
-::result e.g: call :makeRegPath "D:\work\shenxiaolong\coreshell_script\batch_env\Windbg\contextMenu\template\deme.txt"  regOutPath
+::result e.g: call :makeRegPath "D:\work\shenxiaolong\core\shell_script\batch_env\Windbg\contextMenu\template\deme.txt"  regOutPath
 ::            set "regOutPath=D:\\work\\shenxiaolong\\core\shell_script\batch_env\\Windbg\\contextMenu\\template\\deme.txt"
 :makeRegPath
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*

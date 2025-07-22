@@ -1,0 +1,14 @@
+
+/*
+link <A target="_blank"> xxx </A> has not alternative of css.
+but it can be done by javascript insert attribute in DOM elements.
+https://www.w3schools.com/cssref/css3_pr_target-new.asp
+see : openLinkInNewTab 
+in D:\work\svnRepo\code_pratice_new_language\web\javascript\in_using\dynamic_create.js
+*/
+
+A           { margin : px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; font-weight : normal;          }
+A:visited   { color : rgb(51, 104, 51);    text-decoration : none;         background-color : transparent;      }
+A:link      { color : rgb(98, 116, 98);     text-decoration : underline;                                        }
+A:hover     { color : red;      text-decoration : none;         background-color : rgb(8, 75, 34);           }
+A:active    { color : #ccdf1d;                                  background-color : transparent;                 }
