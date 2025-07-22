@@ -10,7 +10,8 @@ call :syncRepo "%myRepoRoot%"
 :: google drive use mirror mode, instead of the stream mode, it can use normal local path.
 :: call :syncRepo "G:\My Drive\mySvnRepo"
 call :syncRepo "%OneDriveConsumer%\work_skills\svnRepo"
-call :syncRepo "D:\temp\git_svn_sync\svn_MiniMPL"
+call :syncRepo "D:\work\git_svn_sync\MiniMPL"
+call :syncRepo "D:\work\git_svn_sync\shell_script"
 call :syncRepo "C:\work\googleDrive\svn_repo"
 goto :END
 

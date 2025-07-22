@@ -1,7 +1,7 @@
 {
     "name": "com.example.localapploader",
     "description": "Native Host for handling localloader protocol URLs",
-    "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.exe",
+    "path": "D:\\work\\svnRepo\\shenxiaolong\\core\\shell_script\\batch_env\\web\\chrome_extension\\chrome_native_handler.bat",
     "type": "stdio",
     "supports_native_initiated_connections": true,
     "allowed_origins": [
