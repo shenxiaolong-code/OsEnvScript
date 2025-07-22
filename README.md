@@ -1,6 +1,7 @@
 # Platform Environment Initialization Script Library [🌏 中文版](README_CN.md)
+This repository provides automation script libraries for Windows and Linux environments to simplify daily development and boost productivity.
 
-# WinDbg Enhancement Scripts [Directory](batch_env/windbg)
+# WinDbg Enhancement Scripts [Directory](batch_env/Windbg)
 Significantly improves WinDbg debugging experience for high-frequency issue analysis:
 - **Context menu integration**: One-click execution of complex debugging tasks, no need to memorize commands.
 - **Scenario-based analysis scripts**: Built-in commands for lost call stacks, deadlocks, crashes, memory leaks, etc. Quickly locate issues via double-click or guided steps.
@@ -8,6 +9,7 @@ Significantly improves WinDbg debugging experience for high-frequency issue anal
 - **Auto-load debug configs**: Automatically load target-specific configs for seamless switching.
 
 **Proven in production**: Efficiently handles 50+ dump files daily, greatly improving team response speed.
+See [READMEN.md](batch_env/Windbg/README.md) for details.
 
 # Workhub (Chrome Extension) [Directory](batch_env/web/chrome_extension)
 Integrate web HTML files with local batch scripts (.bat) to centralize routine tasks in a web page. Includes Chrome extension and real examples (e.g., wokhub.html).
@@ -37,7 +39,7 @@ Automate daily Windows tasks:
 - **Usage examples**: For unit testing and usability
 - **Easy maintenance**: No redundant code
 
-# [Linux script bash_env](bash_env)
+[Linux script bash_env](bash_env)
 
 # Linux GDB Enhancement Scripts [Directory](bash_env/app/gdb)
 Provides efficient, cross-platform debugging with native GDB + Bash, matching Windows WinDbg experience:

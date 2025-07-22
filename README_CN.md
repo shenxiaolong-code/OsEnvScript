@@ -2,7 +2,7 @@
 本 repo 包含适用于 Windows 和 Linux 环境的自动化脚本库, 可以帮助简化日常开发工作并提升工作效率
 
 [Windows script batch_env](batch_env) 
-# WinDbg 增强脚本 [跳转目录](batch_env/windbg)
+# WinDbg 增强脚本 [跳转目录](batch_env/Windbg)
 本脚本集大幅提升了 WinDbg 在高频故障分析场景下的调试体验：
 - **右键菜单集成常用操作**：一键执行复杂调试任务，无需记忆繁琐命令。
 - **场景化专用分析脚本**：内置针对二次异常调用栈丢失、死锁、崩溃、内存泄漏等典型场景的专用分析命令。用户可通过鼠标双击命令或分步提示，快速定位问题。
@@ -10,6 +10,7 @@
 - **自动加载专属调试配置**：可根据目标程序自动加载专属调试配置，实现零切换成本，一站式入口。
 
 **实战验证**：已在生产环境中日均高效处理 50+ dump 文件，大幅提升团队问题定位与响应速度。
+详细用法见 [README_CN.md](batch_env/Windbg/README_CN.md)
 
 # 工作hub (chrome扩展) [跳转目录](batch_env/web/chrome_extension)
 实现网页 HTML 文件与本地批处理脚本（.bat）的交互，将常用工作集成到网页中，提高工作效率。包含 Chrome 扩展及其实际样例（如 wokhub.html）。
@@ -39,7 +40,7 @@
 - **用例示例**：帮助单元测试和提升易用性。
 - **易于维护和更新**：无冗余代码。
 
-# [linux script bash_env](bash_env) 
+[linux script bash_env](bash_env) 
 
 # Linux GDB 增强脚本  [跳转目录](bash_env/app/gdb)
 本套脚本通过原生 GDB + Bash 实现了对标 Windows WinDbg 的高效跨平台调试体验：
