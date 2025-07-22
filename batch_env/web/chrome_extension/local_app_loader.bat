@@ -5,8 +5,8 @@
 
 :: parameter %* example : "localLoader://vscodeOpen:C:/work/shenxiaolong/core/shell_script/batch_env/userSetting/contextMenu/localAppLoader/"
 
-::@set _Echo=1
-::set _Stack=%~nx0
+:: @set _Echo=1
+:: @set _Stack=%~nx0
 @if {"%_Echo%"}=={"1"} ( @echo on ) else ( @echo off )
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo. & @echo [+++++ %~nx0] commandLine: %0 %*
 where "%~nx0" 1>nul 2>nul || set "path=%~dp0;%path%"
@@ -42,16 +42,7 @@ goto :eof
 
 :openSshRemoteFile
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
-@where tools_virtualbox.bat 1>nul 2>nul || @set "path=%myWinScriptPath%\common;%path%"
-call tools_virtualbox.bat startVMdefault && for /f "tokens=2 delims=:" %%i in ('call tools_virtualbox.bat queryRunningDefaultVMIP ^| findstr "Value: "') do set "vm_ip=%%i"
-call tools_string.bat TrimString "%vm_ip%" vm_ip
-where code.cmd 1>nul 2>nul || @set "path=%LOCALAPPDATA%\Programs\Microsoft VS Code\bin;%path%"
-set "vm_username=xlshen"
-:: start code.cmd --folder-uri "vscode-remote://ssh-remote+%vm_username%@%vm_ip%//home/xlshen/scratch/shell_script/bash_env/" --add "/home/xlshen/scratch/tmp/"
-:: echo start code.cmd --folder-uri "vscode-remote://ssh-remote+%vm_username%@%vm_ip%//home/xlshen/scratch/shell_script/bash_env/"
-:: start code.cmd --folder-uri "vscode-remote://ssh-remote+%vm_username%@%vm_ip%//home/xlshen/scratch/shell_script/bash_env/"
-echo start code.cmd --file-uri "vscode-remote://ssh-remote+%vm_username%@%vm_ip%//home/xlshen/scratch/shell_script/bash_env/app/vscode/workspace/daily.code-workspace"
-start code.cmd --file-uri "vscode-remote://ssh-remote+%vm_username%@%vm_ip%//home/xlshen/scratch/shell_script/bash_env/app/vscode/workspace/daily.code-workspace"
+call tools_dailyWork.bat openSshRemoteFile
 goto :eof
 
 :copy2clip
@@ -231,7 +222,7 @@ goto :eof
 :openFileWithExplorer
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 @where tools_txtFile.bat 1>nul 2>nul || @set "path=%myWinScriptPath%\common;%path%"
-echo open word file : %~f1
+echo explorer.exe open file : %~f1
 start /B explorer.exe "%~f1"
 goto :eof
 

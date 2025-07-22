@@ -1,5 +1,5 @@
-::@set _Echo=1
-::set _Stack=%~nx0
+:: @set _Echo=1
+:: set _Stack=%~nx0
 @if {"%_Echo%"}=={"1"} ( @echo on ) else ( @echo off )
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo. & @echo [+++++ %~nx0] commandLine: %0 %*
 where VBoxManage.exe 1>nul 2>nul || set "path=C:\Program Files\Oracle\VirtualBox;%path%"
@@ -37,6 +37,8 @@ call :isVmRunning %~1 && (
 call colorTxt.bat "{%green_L%}startVM{%end%} {%red%}%~1{%end%}{%br%}"
 echo VBoxManage.exe startvm "%~1" --type headless
 VBoxManage.exe startvm "%~1" --type headless
+call colorTxt.bat "{%green_L%}Waiting for the VM to finish initialization ...{%end%}{%br%}"
+timeout /T 6 > nul
 :: GUI
 :: call colorTxt.bat "{%green_L%}startVM{%end%} {%red%}%~1{%end%}{%br%}"
 :: echo VBoxManage.exe startvm "%~1" --type gui
@@ -53,9 +55,36 @@ goto :eof
 :startVMdefault
 @if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
 REM Use the exact VM name as shown by 'VBoxManage.exe list vms', without extra quotes
-echo Starting virtual machine linux_ubuntu...
+call colorTxt.bat "{%green_L%}Starting virtual machine linux_ubuntu...{%end%}{%br%}"
 call :startVM linux_ubuntu
 exit /b %errorlevel%
+goto :eof
+
+:startVMdefaultGUI
+@if defined _Stack @for %%a in ( 1 "%~nx0" "%0" ) do @if {"%%~a"}=={"%_Stack%"} @echo [      %~nx0] commandLine: %0 %*
+REM Use the exact VM name as shown by 'VBoxManage.exe list vms', without extra quotes
+set "vmName=linux_ubuntu"
+VBoxManage.exe list runningvms | findstr %vmName% >nul
+if %errorlevel%==0 (
+    call colorTxt.bat "{%green%}virtual machine %vmName% is running.{%end%}{%br%}"
+    exit /b 0
+) else (
+    call colorTxt.bat "{%red%}virtual machine %vmName% is not running.{%end%}{%br%}"
+    exit /b 1
+)
+
+echo VBoxManage.exe startvm "%vmName%" --type gui
+VBoxManage.exe startvm "%vmName%" --type gui
+call colorTxt.bat "{%green_L%}Waiting for the VM to finish initialization ...{%end%}{%br%}"
+timeout /T 6 > nul
+call :isVmRunning %vmName% || (
+    :: echo Failed to start virtual machine %vmName%.
+    call colorTxt.bat "{%red%}Error: Failed to start virtual machine %vmName%.{%end%}{%br%}"
+    call colorTxt.bat "{%red%}Please check if the VM name is correct and if VirtualBox is properly installed.{%end%}{%br%}"
+    exit /b 1
+)
+exit /b 0
+
 goto :eof
 
 :stopVM
